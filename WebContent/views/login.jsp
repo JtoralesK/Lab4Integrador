@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
  <script src="https://cdn.tailwindcss.com"></script>
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
 <div>
