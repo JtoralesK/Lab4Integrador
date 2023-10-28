@@ -69,35 +69,9 @@
             </table>
         </div>
     </div>
-    
-<div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
-        <div class="modal-content py-6 text-center px-6">
-            <div class="mb-4">
-                <h3 class="text-3xl font-semibold text-blue-600">¡Transferencia Exitosa!</h3>
-            </div>
-            <p class="text-gray-700 mb-4">La transferencia se ha realizado con éxito.</p>
-            <div class="text-center mt-6">
-                <button id="closeModal" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">
-                    Cerrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+    <%request.setAttribute("texto", "¡Transferencia Exitosa!"); %>
+    <%request.setAttribute("modal", true); %>
+    <jsp:include page="modal.jsp" />
 
-    <script>
-	    const closeModalButton = document.getElementById('closeModal');
-	    const modal = document.getElementById('modal');
-	
-	    closeModalButton.addEventListener('click', () => {
-	        modal.classList.add('hidden');
-	    });
-	
-	    const urlParams = new URLSearchParams(window.location.search);
-	    if (urlParams.has('modal')) {
-	        modal.classList.remove('hidden');
-	    }
-    </script>
 </body>
 </html>
