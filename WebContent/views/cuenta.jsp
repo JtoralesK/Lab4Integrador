@@ -7,12 +7,12 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <title>Cuenta</title>
 </head>
-<body class="h-screen  ">
+<body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 <br>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
-	<table class="min-w-full divide-y divide-gray-200">
+	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
 				<th
@@ -72,7 +72,7 @@
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
 <br>
 	
-	<table class="min-w-full divide-y divide-gray-200">
+	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
 				<th
