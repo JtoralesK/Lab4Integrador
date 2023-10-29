@@ -1,5 +1,5 @@
 <nav class="w-full h-20 bg-white p-5 flex flex-row justify-between items-center border-b border-gray-300">
-	<img class="w-2/12 h-12"  src="https://www.dropbox.com/scl/fi/nj7vlakdkz19cw2mjsw3q/bankIcono.png?rlkey=qn17jiqmds3wlw36w0a0d5xcp&raw=1"></img>
+	<img class="h-15 w-20"  src="https://www.dropbox.com/scl/fi/nj7vlakdkz19cw2mjsw3q/bankIcono.png?rlkey=qn17jiqmds3wlw36w0a0d5xcp&raw=1"></img>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
 	<div class="flex flex-row gap-5">
 	<a href="/ProjectBeta1/views/home.jsp">Home</a>
