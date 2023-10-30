@@ -46,7 +46,6 @@
                     <td class="p-2 text-left">67890</td>
                     <td class="p-2 text-left">Caja de Ahorro</td>
                     <td class="p-2 text-right">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2">Modificar</button>
                         <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
                     </td>
                 </tr>
@@ -55,7 +54,6 @@
                     <td class="p-2 text-left">123123</td>
                     <td class="p-2 text-left">Cuenta corriente</td>
                     <td class="p-2 text-right">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2">Modificar</button>
                         <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
                     </td>
                 </tr>
