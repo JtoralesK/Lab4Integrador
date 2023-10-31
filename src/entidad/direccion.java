@@ -1,28 +1,19 @@
 package entidad;
 
 public class direccion {
-	private String nombreCalle;
-	private int altura;
+	private String direccion;
 	private localidad localidad;
 	
-	public direccion(String nombreCalle, int altura, localidad localidad) {
-		super();
-		this.nombreCalle = nombreCalle;
-		this.altura = altura;
+	public direccion(String direccion, localidad localidad) {
+		this.direccion = direccion;
 		this.localidad = localidad;
 	}
 	
-	public String getNombreCalle() {
-		return nombreCalle;
+	public String getDireccion() {
+		return direccion;
 	}
-	public void setNombreCalle(String nombreCalle) {
-		this.nombreCalle = nombreCalle;
-	}
-	public int getAltura() {
-		return altura;
-	}
-	public void setAltura(int altura) {
-		this.altura = altura;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 	public localidad getLocalidad() {
 		return localidad;

@@ -1,18 +1,16 @@
 package entidad;
 
-public class provincia {
+public class nacionalidad {
 	private int id;
 	private String nombre;
 	
-	public provincia(int id)
-	{
+	public nacionalidad(int id) {
 		this.id = id;
 	}
-	public provincia(int id, String nombre) {
+	public nacionalidad(int id, String nombre) {
 		this.id = id;
 		this.nombre = nombre;
 	}
-	
 	public int getId() {
 		return id;
 	}
@@ -25,4 +23,5 @@ public class provincia {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
 }

@@ -17,7 +17,7 @@
 			<div class="grid grid-cols-2 gap-4">
 				<div>
 					<label for="txtDni">DNI:</label> 
-					<input type="number" id="txtDni" name="txtDni" class="w-full p-2 rounded" required>
+					<input type="number" id="txtDni" name="txtDni" class="w-full p-2 rounded" maxlength="8" required>
 				</div>
 				<div>
 					<label for="txtCuil">CUIL:</label> 

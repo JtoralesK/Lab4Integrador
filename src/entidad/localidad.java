@@ -5,6 +5,10 @@ public class localidad {
 	private String nombre;
 	private provincia provincia;
 	
+	public localidad(int id, provincia provincia) {
+		this.id = id;
+		this.provincia = provincia;
+	}
 	public localidad(int id, String nombre, provincia provincia) {
 		this.id = id;
 		this.nombre = nombre;

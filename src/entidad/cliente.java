@@ -8,16 +8,17 @@ public class cliente {
 	private String nombre;
 	private String apellido;
 	private eSexo sexo;
-	private String nacionalidad;
+	private nacionalidad nacionalidad;
 	private LocalDate fechaNacimiento;
 	private String email;
 	private int telefono;
 	private String usuario;
 	private String password;
+	private eTipoUsuario tipoUsuario;
 	
 	public cliente(direccion direccion, int dni, int cuil, String nombre, String apellido, eSexo sexo,
-			String nacionalidad, LocalDate fechaNacimiento, String email, int telefono, String usuario,
-			String password) {
+			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, int telefono, String usuario,
+			String password, eTipoUsuario tipoUsuario) {
 		this.direccion = direccion;
 		this.dni = dni;
 		this.cuil = cuil;
@@ -30,8 +31,16 @@ public class cliente {
 		this.telefono = telefono;
 		this.usuario = usuario;
 		this.password = password;
+		this.tipoUsuario = tipoUsuario;
 	}
 	
+	public eTipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(eTipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}	
 	public direccion getDireccion() {
 		return direccion;
 	}
@@ -68,10 +77,10 @@ public class cliente {
 	public void setSexo(eSexo sexo) {
 		this.sexo = sexo;
 	}
-	public String getNacionalidad() {
+	public nacionalidad getNacionalidad() {
 		return nacionalidad;
 	}
-	public void setNacionalidad(String nacionalidad) {
+	public void setNacionalidad(nacionalidad nacionalidad) {
 		this.nacionalidad = nacionalidad;
 	}
 	public LocalDate getFechaNacimiento() {
