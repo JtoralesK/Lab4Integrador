@@ -1,5 +1,109 @@
 package entidad;
+import java.time.LocalDate;
 
 public class cliente {
-
+	private direccion direccion;
+	private int dni;
+	private int cuil;
+	private String nombre;
+	private String apellido;
+	private eSexo sexo;
+	private String nacionalidad;
+	private LocalDate fechaNacimiento;
+	private String email;
+	private int telefono;
+	private String usuario;
+	private String password;
+	
+	public cliente(direccion direccion, int dni, int cuil, String nombre, String apellido, eSexo sexo,
+			String nacionalidad, LocalDate fechaNacimiento, String email, int telefono, String usuario,
+			String password) {
+		this.direccion = direccion;
+		this.dni = dni;
+		this.cuil = cuil;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.sexo = sexo;
+		this.nacionalidad = nacionalidad;
+		this.fechaNacimiento = fechaNacimiento;
+		this.email = email;
+		this.telefono = telefono;
+		this.usuario = usuario;
+		this.password = password;
+	}
+	
+	public direccion getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(direccion direccion) {
+		this.direccion = direccion;
+	}
+	public int getDni() {
+		return dni;
+	}
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+	public int getCuil() {
+		return cuil;
+	}
+	public void setCuil(int cuil) {
+		this.cuil = cuil;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public eSexo getSexo() {
+		return sexo;
+	}
+	public void setSexo(eSexo sexo) {
+		this.sexo = sexo;
+	}
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
 }
