@@ -1,16 +1,17 @@
 package entidad;
 
 public class Usuario {
+
 	private int id = 0;
     private String usuario;
     private String contraseña;
     private eTipoUsuario tipoUsuario;
-    private boolean estado;
+    private int estado;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String usuario, String contraseña, eTipoUsuario tipoUsuario, boolean estado) {
+    public Usuario(int id, String usuario, String contraseña, eTipoUsuario tipoUsuario, int estado) {
     	this.id= id;
         this.usuario = usuario;
         this.contraseña = contraseña;
@@ -26,7 +27,8 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
+
+	public String getContraseña() {
         return contraseña;
     }
 
@@ -42,11 +44,11 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
     
-    public boolean getEstado() {
+    public int getEstado() {
     	return estado;
     }
     
-    public void setEstado(boolean estado) {
+    public void setEstado(int estado) {
     	this.estado = estado;
     }
     
@@ -57,4 +59,10 @@ public class Usuario {
     public int getId() {
     	return this.id;
     }
+    @Override
+	public String toString() {
+		return "Usuario [id=" + id + ", usuario=" + usuario + ", contraseña=" + contraseña + ", tipoUsuario="
+				+ tipoUsuario + ", estado=" + estado + "]";
+	}
+
 }

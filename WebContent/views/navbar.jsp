@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"></head>
+
 <nav class="w-full h-20 bg-white p-5 flex flex-row justify-between items-center border-b border-gray-300">
 	<img class="h-15 w-20"  src="Resources/bankLogo.png"></img>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
@@ -20,7 +22,8 @@
 	<a href="/ProjectBeta1/views/infousuario.jsp">Mi Perfil</a>
 	</div>
 	</div>
-	<div class="w-2/12">
+	<div class="w-2/12 flex flex-row justify-center items-center gap-3">
+	<span class="border rounded-full bg-gray-200 p-3"><i class="fa-regular fa-user"></i></span>
 	<a>Javier Torales</a>
 	</div>
 </nav>

@@ -2,8 +2,10 @@ package datos;
 
 import entidad.Usuario;
 import entidad.eTipoUsuario;
+import java.sql.Connection;
 
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class UsuarioDao {
         boolean estado = true;
         cn.Open();
 
-        String query = "INSERT INTO usuarios (usuario, contraseña, tipoUsuario, estado) " +
+        String query = "INSERT INTO usuarios (usuario, contraseña, id_tipo_usuario, estado) " +
                 "VALUES ('" + usuario.getUsuario() + "', '" + usuario.getContraseña() + "', " + usuario.getTipoUsuario() + ", true)";
 
         try {
@@ -36,7 +38,7 @@ public class UsuarioDao {
         boolean estado = true;
         cn.Open();
 
-        String query = "UPDATE usuarios SET contraseña = '" + usuario.getContraseña() + "', tipoUsuario = " + (usuario.getTipoUsuario()) +
+        String query = "UPDATE usuarios SET contraseña = '" + usuario.getContraseña() + "', id_tipo_usuario = " + (usuario.getTipoUsuario()) +
                 " WHERE usuario = '" + usuario.getUsuario() + "'";
 
         try {
@@ -66,24 +68,28 @@ public class UsuarioDao {
     }
 
     public Usuario obtenerPorNombre(String nombreUsuario) {
-        Usuario usuario = new Usuario();
-        cn.Open();
+    	Usuario usuario = null;
+        Connection connection = cn.Open(); 
 
-        String query = "SELECT * FROM usuarios WHERE usuario = '" + nombreUsuario + "'";
+        String query = "SELECT * FROM usuarios WHERE usuario = ?";
 
-        try {
-            ResultSet rs = cn.query(query);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, nombreUsuario);
+            ResultSet rs = preparedStatement.executeQuery();
+
             if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setId(Integer.valueOf(rs.getString("id")));
                 usuario.setUsuario(rs.getString("usuario"));
                 usuario.setContraseña(rs.getString("contraseña"));
-                int tipoUsuarioOrdinal = rs.getInt("tipoUsuario") - 1;
+                usuario.setEstado(Integer.valueOf(rs.getString("estado")));
+                int tipoUsuarioOrdinal = rs.getInt("id_tipo_usuario") - 1;
                 usuario.setTipoUsuario(eTipoUsuario.values()[tipoUsuarioOrdinal]);
-            }else return null;
-        } catch (Exception e) {
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         } finally {
-            cn.close();
+            cn.close(); 
         }
         return usuario;
     }
@@ -101,7 +107,7 @@ public class UsuarioDao {
                 Usuario usuario = new Usuario();
                 usuario.setUsuario(rs.getString("usuario"));
                 usuario.setContraseña(rs.getString("contraseña"));
-                int tipoUsuarioOrdinal = rs.getInt("tipoUsuario") - 1;
+                int tipoUsuarioOrdinal = rs.getInt("id_tipo_usuario") - 1;
                 usuario.setTipoUsuario(eTipoUsuario.values()[tipoUsuarioOrdinal]);
                 usuarios.add(usuario);
             }
