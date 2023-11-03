@@ -21,7 +21,7 @@
    </div>
   </div>
   <div class="w-4/12 h-screen bg-white">
- <form id="form1" method="post" action="servletUsuario" class="flex flex-item  justify-center">
+ <form  method="post" action="<%= request.getContextPath() %>/servletUsuario" class="flex flex-item  justify-center">
  <div class="w-4/6 mt-[12rem]">
   <div class="mb-6">
     <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Usuario</label>
