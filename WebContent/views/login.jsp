@@ -37,7 +37,7 @@
     </div>
     <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
   </div>
-  <input type="submit" name="btnLogin" value="login" class="w-full h-10 border rounded bg-black text-white"  ></input>
+  <button type="submit" name="btnLogin" value="login" class="w-full h-10 border rounded bg-black text-white">Iniciar Sesión</button>
  </div>
 </form>
   </div>
