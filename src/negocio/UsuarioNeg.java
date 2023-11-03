@@ -11,9 +11,7 @@ public class UsuarioNeg {
         usuarioDao = new UsuarioDao();
     }
 
-    public boolean GuardarUsuario(String usuario, String contraseña, eTipoUsuario tipoUsuario) {
-
-        Usuario nuevoUsuario = new Usuario(usuario, contraseña, tipoUsuario);
+    public boolean GuardarUsuario(Usuario nuevoUsuario) {
 
         return usuarioDao.insertar(nuevoUsuario);
     }

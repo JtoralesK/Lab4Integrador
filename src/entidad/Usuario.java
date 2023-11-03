@@ -1,6 +1,7 @@
 package entidad;
 
 public class Usuario {
+	private int id = 0;
     private String usuario;
     private String contraseña;
     private eTipoUsuario tipoUsuario;
@@ -46,5 +47,13 @@ public class Usuario {
     
     public void setEstado(boolean estado) {
     	this.estado = estado;
+    }
+    
+    public void setId(int id) {
+    	this.id = id;
+    }
+    
+    public int getId() {
+    	return this.id;
     }
 }

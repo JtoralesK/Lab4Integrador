@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidad.Usuario;
 import entidad.eTipoUsuario;
 import negocio.UsuarioNeg;
 
@@ -38,8 +39,10 @@ public class servletUsuario extends HttpServlet {
             }
 
             UsuarioNeg usuarioNeg = new UsuarioNeg();
+            Usuario nuevoUsuario = new Usuario(usuario,contraseña,tipoUsuario);
+            
 
-            boolean insertCorrecto = usuarioNeg.GuardarUsuario(usuario, contraseña, tipoUsuario);
+            boolean insertCorrecto = usuarioNeg.GuardarUsuario(nuevoUsuario);
 
             if (insertCorrecto) {
                 textoAMostrar = "Usuario registrado correctamente";
