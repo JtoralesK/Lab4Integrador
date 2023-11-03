@@ -46,12 +46,12 @@ public class servletUsuario extends HttpServlet {
             
             if (loginCorrect) {
             	request.getSession().setAttribute("loggedUser", foundUser);
-            	response.sendRedirect("home.jsp");
+            	response.sendRedirect(request.getContextPath() + "/views/home.jsp");
             } else {
                 textoAMostrar = "El usuario o la contraseña son incorrectos";
                 request.setAttribute("texto", textoAMostrar);
                 request.setAttribute("modal", true);
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/login.jsp").forward(request, response);
             }
 
         }

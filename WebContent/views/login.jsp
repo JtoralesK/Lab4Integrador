@@ -21,7 +21,7 @@
    </div>
   </div>
   <div class="w-4/12 h-screen bg-white">
- <form method="post" action="login.jsp" class="flex flex-item  justify-center">
+ <form id="form1" method="post" action="servletUsuario" class="flex flex-item  justify-center">
  <div class="w-4/6 mt-[12rem]">
   <div class="mb-6">
     <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Usuario</label>
@@ -37,30 +37,14 @@
     </div>
     <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
   </div>
-  <input type="submit" name="btnLogin" value="login" class="w-full h-10 border rounded bg-black text-white"></input>
+  <input type="submit" name="btnLogin" value="login" class="w-full h-10 border rounded bg-black text-white"  ></input>
  </div>
 </form>
-<%
-String nombreUsuario = "";
-String texto = "";
-if((request.getParameter("btnLogin"))!=null){
-	UsuarioDao user = new UsuarioDao(); 
-	nombreUsuario = request.getParameter("usuario");
-	try{
-		Usuario u = user.obtenerPorNombre(nombreUsuario);
-	}catch (Exception  e) {
-	  texto = "error + "+e;
-	} 
-}
-
-
-
-%>
-<%=texto %>
   </div>
  
   </div>
 </div>
+
 <jsp:include page="modal.jsp" />
 </body>
 </html>
