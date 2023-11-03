@@ -10,11 +10,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String usuario, String contraseña, eTipoUsuario tipoUsuario) {
+    public Usuario(int id, String usuario, String contraseña, eTipoUsuario tipoUsuario, boolean estado) {
+    	this.id= id;
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
-        this.estado = true;
+        this.estado = estado;
     }
 
     public String getUsuario() {

@@ -15,5 +15,9 @@ public class UsuarioNeg {
 
         return usuarioDao.insertar(nuevoUsuario);
     }
+    
+    public Usuario getUsuarioPorNombre(String nombreUsuario) {
+        return usuarioDao.obtenerPorNombre(nombreUsuario);
+    }
 
 }

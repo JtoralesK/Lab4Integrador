@@ -66,7 +66,7 @@ public class UsuarioDao {
     }
 
     public Usuario obtenerPorNombre(String nombreUsuario) {
-        Usuario usuario = null;
+        Usuario usuario = new Usuario();
         cn.Open();
 
         String query = "SELECT * FROM usuarios WHERE usuario = '" + nombreUsuario + "'";
@@ -78,9 +78,10 @@ public class UsuarioDao {
                 usuario.setContraseña(rs.getString("contraseña"));
                 int tipoUsuarioOrdinal = rs.getInt("tipoUsuario") - 1;
                 usuario.setTipoUsuario(eTipoUsuario.values()[tipoUsuarioOrdinal]);
-            }
+            }else return null;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         } finally {
             cn.close();
         }

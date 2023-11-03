@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.cj.Session;
+
 import entidad.Usuario;
 import entidad.eTipoUsuario;
 import negocio.UsuarioNeg;
@@ -20,38 +22,38 @@ public class servletUsuario extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+    	
     }
-
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("btnCrearUsuario") != null) {
-            String usuario = request.getParameter("txtUsuario");
-            String contraseña = request.getParameter("txtContraseña");
-            eTipoUsuario tipoUsuario = eTipoUsuario.valueOf(request.getParameter("cbTipoUsuario"));
+        if (request.getParameter("btnLogin") != null) {
+            String usuario = request.getParameter("usuario");
+            String contraseña = request.getParameter("password");
 
             String textoAMostrar = "";
 
             if (usuario.trim().length() < 1) {
-                textoAMostrar = "Complete el nombre de usuario correctamente";
+                textoAMostrar = "Ingrese un usuario";
             }
             if (contraseña.trim().length() < 1) {
-                textoAMostrar = "Complete la contraseña correctamente";
+                textoAMostrar = "Ingrese una contraseña";
             }
-
-            UsuarioNeg usuarioNeg = new UsuarioNeg();
-            Usuario nuevoUsuario = new Usuario(usuario,contraseña,tipoUsuario);
             
-
-            boolean insertCorrecto = usuarioNeg.GuardarUsuario(nuevoUsuario);
-
-            if (insertCorrecto) {
-                textoAMostrar = "Usuario registrado correctamente";
+            UsuarioNeg usuarioNeg = new UsuarioNeg();
+            Usuario foundUser = usuarioNeg.getUsuarioPorNombre(usuario);
+            
+            boolean loginCorrect = foundUser != null && foundUser.getContraseña().equals(contraseña);
+            
+            if (loginCorrect) {
+            	request.getSession().setAttribute("loggedUser", foundUser);
+            	response.sendRedirect("home.jsp");
             } else {
-                textoAMostrar = "El usuario no se pudo registrar";
+                textoAMostrar = "El usuario o la contraseña son incorrectos";
+                request.setAttribute("texto", textoAMostrar);
+                request.setAttribute("modal", true);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
 
-            request.setAttribute("texto", textoAMostrar);
-            request.setAttribute("modal", true);
         }
     }
 }
