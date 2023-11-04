@@ -4,7 +4,7 @@ import java.time.LocalDate;
 public class cliente {
 	private direccion direccion;
 	private int dni;
-	private int cuil;
+	private Long cuil;
 	private String nombre;
 	private String apellido;
 	private eSexo sexo;
@@ -16,7 +16,7 @@ public class cliente {
 	private String password;
 	private eTipoUsuario tipoUsuario;
 	
-	public cliente(direccion direccion, int dni, int cuil, String nombre, String apellido, eSexo sexo,
+	public cliente(direccion direccion, int dni, Long cuil, String nombre, String apellido, eSexo sexo,
 			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, int telefono, String usuario,
 			String password, eTipoUsuario tipoUsuario) {
 		this.direccion = direccion;
@@ -53,10 +53,10 @@ public class cliente {
 	public void setDni(int dni) {
 		this.dni = dni;
 	}
-	public int getCuil() {
+	public Long getCuil() {
 		return cuil;
 	}
-	public void setCuil(int cuil) {
+	public void setCuil(Long cuil) {
 		this.cuil = cuil;
 	}
 	public String getNombre() {

@@ -19,7 +19,7 @@ public class clienteNeg {
 	public boolean GuardarCliente(String dniStr, String cuilStr, String nombre, String apellido, String sexoId, String nacionalidadId, String fechaNacimientoStr, String direccionStr, String localidadId, String provinciaId, String email, String telefonoStr, String usuario, String password)
 	{	
 		int dni = Integer.parseInt(dniStr);
-		int cuil = Integer.parseInt(cuilStr.replace("-",""));
+		Long cuil = Long.parseLong(cuilStr.replace("-", ""));
 		eSexo sexo = eSexo.values()[Integer.parseInt(sexoId)];
 		provincia provincia = new provincia(Integer.parseInt(provinciaId));
 		localidad localidad = new localidad(Integer.parseInt(localidadId), provincia);

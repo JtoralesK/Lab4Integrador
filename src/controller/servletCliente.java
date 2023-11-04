@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +20,17 @@ public class servletCliente extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		RellenarSelect();
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/amCliente.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RellenarSelect();
+		
 	    if(request.getParameter("btnCrearCliente")!=null)
 	    {	    	
 	    	String dni = request.getParameter("txtDni");
@@ -70,27 +79,37 @@ public class servletCliente extends HttpServlet {
 	    		textoAMostrar = "Complete la password correctamente";
 	    	}
 	    	
-	    	clienteNeg clienteNeg = new clienteNeg();
-	    	
-	    	boolean insertCorrecto = clienteNeg.GuardarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
-	    			, direccion, localidad, provincia, email, telefono, usuario, password);
-	    
-	    	if (insertCorrecto)
-	    	{
-	    		textoAMostrar = "Usuario registrado correctamente";
-	    	}
-	    	else
-	    	{
-	    		textoAMostrar = "El usuario no se pudo registrar";
-	    	}
+	    	if (textoAMostrar.isEmpty())
+	    	{	    		
+	    		clienteNeg clienteNeg = new clienteNeg();
+	    		
+	    		boolean insertCorrecto = clienteNeg.GuardarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
+	    				, direccion, localidad, provincia, email, telefono, usuario, password);
+	    		
+	    		if (insertCorrecto)
+	    		{
+	    			textoAMostrar = "Usuario registrado correctamente";
+	    		}
+	    		else
+	    		{
+	    			textoAMostrar = "El usuario no se pudo registrar";
+	    		}
+	    	}	    
 	    	
     		request.setAttribute("texto", textoAMostrar);
 	    	request.setAttribute("modal", true);
-	    
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/amCliente.jsp");
+			dispatcher.forward(request, response);
 	    }
         
         
         
 	}
-
+	
+	public void RellenarSelect()
+	{
+		
+	}
+	
+	
 }
