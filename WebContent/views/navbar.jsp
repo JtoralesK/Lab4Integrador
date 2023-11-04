@@ -4,6 +4,12 @@
 
 <%
 	Usuario user = (Usuario) session.getAttribute("loggedUser");
+	String bgColor = "bg-gray-200"; 
+
+	if (user != null && user.getTipoUsuario() == eTipoUsuario.Administrador) {
+    bgColor = "bg-red-200"; 
+	}
+	//Logo rojo admin / gris usuario
 %>
 <nav class="w-full h-20 bg-white p-5 flex flex-row justify-between items-center border-b border-gray-300">
 	<img class="h-15 w-20"  src="Resources/bankLogo.png"></img>
@@ -32,7 +38,8 @@
 	</div>
 	<div class="w-2/12 flex flex-row justify-center items-center gap-3">
     <div class="relative group">
-        <span class="border rounded-full bg-gray-200 p-3 cursor-pointer"><i class="fa-regular fa-user"></i></span>
+  
+      <span class="border rounded-full <%= bgColor %> p-3 cursor-pointer"><i class="fa-regular fa-user"></i></span>
 		<span><%= user.getUsuario() %></span>
         <div class="hidden absolute bg-white group-hover:block w-40 text-center mt-2">
             <a href="/ProjectBeta1/views/userInfo.jsp" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Ver Perfil</a>
