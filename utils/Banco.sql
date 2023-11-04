@@ -34,7 +34,8 @@ CREATE TABLE tipo_usuarios
 
 CREATE TABLE usuarios
 (
-    usuario CHAR(30) NOT NULL PRIMARY KEY,
+	id bigint not null auto_increment primary KEY,
+    usuario CHAR(30) NOT NULL UNIQUE,
     contraseña CHAR(30) NOT NULL,
     id_tipo_usuario INT NOT NULL,
     estado BIT NOT NULL,

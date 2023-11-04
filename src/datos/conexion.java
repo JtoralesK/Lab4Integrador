@@ -7,26 +7,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class conexion {
-	private String host = "jdbc:mysql://localhost:3306/";
-	private String user = "root";
-	private String pass = "12345678";
-	private String dbName = "";
+	  private static final String DB_NAME = "Banco";
+	    private static final String DB_URL = "jdbc:mysql://api-films-azure.mysql.database.azure.com:3306/" + DB_NAME + "?useSSL=true";
+	    private static final String DB_USER = "JavierTorales";
+	    private static final String DB_PASSWORD = "-CASA1234";
+	    private Connection connection;
 
-	protected Connection connection;
-	
-	public Connection Open()
-	{
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = DriverManager.getConnection(host+dbName, user, pass);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return this.connection;
-	}
+	    public Connection Open() {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            this.connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return this.connection;
+	    }
 	
 	public ResultSet query(String query)
 	{
