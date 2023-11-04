@@ -19,7 +19,7 @@
 	<% if(user.getTipoUsuario() == eTipoUsuario.Administrador){ %>
 		<a href="/ProjectBeta1/views/amCliente.jsp">Clientes</a>
         <a href="/ProjectBeta1/views/adminPrestamos.jsp">Prestamos</a>
-        <a href="/ProjectBeta1/views/blCuentas.jsp">Cuentas</a>
+        <a href="<%= request.getContextPath() %>/sevletCuentasPagination">Cuentas</a>
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Informes</button>
 		    <div class="hidden absolute bg-white group-hover:block">
