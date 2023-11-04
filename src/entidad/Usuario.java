@@ -64,5 +64,4 @@ public class Usuario {
 		return "Usuario [id=" + id + ", usuario=" + usuario + ", contraseña=" + contraseña + ", tipoUsuario="
 				+ tipoUsuario + ", estado=" + estado + "]";
 	}
-
 }

@@ -54,6 +54,11 @@ public class servletUsuario extends HttpServlet {
                 request.getRequestDispatcher("/views/login.jsp").forward(request, response);
             }
 
+        } else if (request.getParameter("logout") != null) {
+            request.getSession().removeAttribute("loggedUser");
+            response.sendRedirect(request.getContextPath() + "/views/login.jsp");
         }
+        
+        
     }
 }

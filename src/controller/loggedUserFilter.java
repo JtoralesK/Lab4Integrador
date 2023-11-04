@@ -25,17 +25,15 @@ public class loggedUserFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
-        // Verificar si el usuario está en la sesión
         HttpSession session = httpRequest.getSession(false);
         boolean isLoggedIn = session != null && session.getAttribute("loggedUser") != null;
 
-        // Si el usuario no está en la sesión y no está intentando acceder al login, redirigir al login
         if (!isLoggedIn && !httpRequest.getRequestURI().endsWith("login.jsp") && !httpRequest.getRequestURI().endsWith("servletUsuario")) {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/views/login.jsp");
         } else {
             chain.doFilter(request, response);
         }
-        */
+		 */
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
