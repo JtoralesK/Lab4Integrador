@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,6 +10,7 @@
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 <br>
+ 
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
@@ -106,3 +108,4 @@
 	</table>
 </body>
 </html>
+

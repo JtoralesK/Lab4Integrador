@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="datos.cuentaDao" %>
+<%@ page import="entidad.cuenta" %>
+<%@page import="java.util.List"%>
+<%
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,8 +13,8 @@
 <title>Administrador de cuentas</title>
 </head>
 <body class="bg-gray-100">
-	<jsp:include page="navbar.jsp" />
-    <div class="container mx-auto py-4">
+
+       <div class="container mx-auto py-4">
         <h1 class="text-2xl font-semibold mb-4 text-center">Administración de Cuentas de Clientes</h1>
         <!-- Filtros de búsqueda y botón de agregar cuenta -->
         <div class="flex justify-center">
@@ -31,35 +36,33 @@
             </div>
         </form>
         <!-- Listado de cuentas -->
-        <table class="w-11/12 bg-white p-4 shadow-md rounded-md mb-8 mx-auto table-fixed">
-            <thead>
-                <tr>
-                    <th class="border-b-2 p-2 text-left">Nro Cuenta</th>
-                    <th class="border-b-2 p-2 text-left">Nro Cliente</th>
-                    <th class="border-b-2 p-2 text-left">Tipo de Cuenta</th>
-                    <th class="border-b-2 p-2 text-right">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="p-2 text-left">12345</td>
-                    <td class="p-2 text-left">67890</td>
-                    <td class="p-2 text-left">Caja de Ahorro</td>
-                    <td class="p-2 text-right">
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="p-2 text-left">002392</td>
-                    <td class="p-2 text-left">123123</td>
-                    <td class="p-2 text-left">Cuenta corriente</td>
-                    <td class="p-2 text-right">
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
-                    </td>
-                </tr>
-                <!-- Otras cuentas -->
-            </tbody>
-        </table>
+  <table class="w-11/12 bg-white p-4 shadow-md rounded-md mb-8 mx-auto table-fixed">
+    <thead>
+        <!-- Encabezados de la tabla -->
+    </thead>
+    <tbody>
+    <% 
+    List<cuenta> cuentas = (List<cuenta>) request.getAttribute("cuentas");
+	  System.out.println((int) request.getAttribute("cantReg"));
+
+    for (cuenta cuenta : cuentas) { 
+    %>
+  
+        <tr>
+            <td class="p-2 text-left"><%= cuenta.getId_cuenta() %></td>
+            <td class="p-2 text-left"><%= cuenta.getId_cliente() %></td>
+            <td class="p-2 text-left"><%= cuenta.getId_tipo_cuenta() %></td>
+            <td class="p-2 text-right">
+                <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
+            </td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
+ <div class="flex justify-center">
+    <a href="?page=<%= (int) request.getAttribute("page") > 5 ? (int) request.getAttribute("page") - 5 : 1 %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Anterior</a>
+    <a href="?page=<%= (int) request.getAttribute("page") + 5 < (int) request.getAttribute("cantReg") ? (int) request.getAttribute("page")+ 5 :(int) request.getAttribute("page") %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Siguiente</a>
+</div>       
     </div>
 </body>
 </html>
