@@ -11,13 +11,13 @@ public class cliente {
 	private nacionalidad nacionalidad;
 	private LocalDate fechaNacimiento;
 	private String email;
-	private int telefono;
+	private Long telefono;
 	private String usuario;
 	private String password;
 	private eTipoUsuario tipoUsuario;
 	
 	public cliente(direccion direccion, int dni, Long cuil, String nombre, String apellido, eSexo sexo,
-			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, int telefono, String usuario,
+			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, Long telefono, String usuario,
 			String password, eTipoUsuario tipoUsuario) {
 		this.direccion = direccion;
 		this.dni = dni;
@@ -95,10 +95,10 @@ public class cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getTelefono() {
+	public Long getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(int telefono) {
+	public void setTelefono(Long telefono) {
 		this.telefono = telefono;
 	}
 	public String getUsuario() {

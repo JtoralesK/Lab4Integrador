@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import datos.localidadDao;
+import datos.nacionalidadDao;
+import datos.provinciaDao;
+import entidad.eSexo;
+import entidad.localidad;
+import entidad.nacionalidad;
+import entidad.provincia;
 import negocio.clienteNeg;
 
 @WebServlet("/servletCliente")
@@ -21,15 +30,15 @@ public class servletCliente extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RellenarSelect();
+		RellenarSelect(request);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/amCliente.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RellenarSelect();
+		RellenarSelect(request);
 		
 	    if(request.getParameter("btnCrearCliente")!=null)
 	    {	    	
@@ -98,18 +107,26 @@ public class servletCliente extends HttpServlet {
 	    	
     		request.setAttribute("texto", textoAMostrar);
 	    	request.setAttribute("modal", true);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/amCliente.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
 			dispatcher.forward(request, response);
 	    }
         
         
-        
 	}
 	
-	public void RellenarSelect()
+	public void RellenarSelect(HttpServletRequest request)
 	{
+		List<eSexo> sexos = Arrays.asList(eSexo.values());
+		request.setAttribute("sexos", sexos);
 		
+		List<nacionalidad> nacionalidades = new nacionalidadDao().listarNacionalidades();
+		request.setAttribute("nacionalidades", nacionalidades);
+		
+		List<provincia> provincias = new provinciaDao().listarProvincias();
+		request.setAttribute("provincias", provincias);
+
+		List<localidad> localidades = new localidadDao().listarLocalidades();
+		request.setAttribute("localidades", localidades);
 	}
-	
 	
 }

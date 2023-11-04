@@ -27,7 +27,7 @@ public class clienteNeg {
 		nacionalidad nacionalidad = new nacionalidad(Integer.parseInt(nacionalidadId));
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate fechaNacimiento =  LocalDate.parse(fechaNacimientoStr, formatter);
-		int telefono = Integer.parseInt(telefonoStr);
+		Long telefono = Long.parseLong(telefonoStr);
 		
 		cliente cliente = new cliente(direccion, dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, email, telefono, usuario, password, eTipoUsuario.Cliente);
 				

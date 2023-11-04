@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="entidad.eSexo" %>
+<%@ page import="entidad.localidad" %>
+<%@ page import="entidad.nacionalidad" %>
+<%@ page import="entidad.provincia" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,7 +15,12 @@
 <jsp:include page="head.jsp" />
 </head>
 <body class="bg-gray-100">
-	<jsp:include page="navbar.jsp" />
+<%
+	List<eSexo> sexos = (List<eSexo>)request.getAttribute("sexos");
+	List<localidad> localidades = (List<localidad>)request.getAttribute("localidades");
+	List<nacionalidad> nacionalidades = (List<nacionalidad>)request.getAttribute("nacionalidades");
+	List<provincia> provincias = (List<provincia>)request.getAttribute("provincias");
+%>
 
 	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded mt-4">
 		<h1 class="text-2xl font-semibold mb-4 text-center">Registro de Cliente</h1>
@@ -34,14 +45,18 @@
 				<div>
 					<label for="cbSexo">Sexo:</label> 
 					<select id="cbSexo" name="cbSexo" class="w-full p-2 rounded" required>
-						<option value="1">Masculino</option>
-						<option value="2">Femenino</option>
-						<option value="3">Otro</option>
+					<%for (eSexo sexo : sexos) {%>
+						<option value="<%=sexo.ordinal()%>"><%=sexo.name()%></option>
+					<%} %>
 					</select>
 				</div>
 				<div>
 					<label for="cbNacionalidad">Nacionalidad:</label> 
-					<input type="text" id="cbNacionalidad" name="cbNacionalidad" class="w-full p-2 rounded" required>
+					<select id="cbNacionalidad" name="cbNacionalidad" class="w-full p-2 rounded" required>
+					<%for (nacionalidad nacionalidad : nacionalidades) {%>
+						<option value="<%=nacionalidad.getId()%>"><%=nacionalidad.getNombre()%></option>
+					<%} %>
+					</select>
 				</div>
 				<div>
 					<label for="txtFechaNacimiento">Fecha de Nacimiento:</label> 
@@ -52,12 +67,18 @@
 					<input type="text" id="txtDireccion" name="txtDireccion" class="w-full p-2 rounded" required>
 				</div>
 				<div>
-					<label for="cbLocalidad">Localidad:</label> 
-					<input type="text" id="cbLocalidad" name="cbLocalidad" class="w-full p-2 rounded" required>
+					<label for="cbProvincia">Provincia:</label> 
+					<select id="cbProvincia" name="cbProvincia" class="w-full p-2 rounded" required>
+					<%for (provincia provincia : provincias) {%>
+						<option value="<%=provincia.getId()%>"><%=provincia.getNombre()%></option>
+					<%} %>
+					</select>
 				</div>
 				<div>
-					<label for="cbProvincia">Provincia:</label> 
-					<input type="text" id="cbProvincia" name="cbProvincia" class="w-full p-2 rounded" required>
+					<label for="cbLocalidad">Localidad:</label> 
+					<select id="cbLocalidad" name="cbLocalidad" class="w-full p-2 rounded" required>
+						<option value="-1">Seleccione una provincia primero</option>
+					</select>					
 				</div>
 				<div>
 					<label for="txtEmail">Correo Electrónico:</label> 
@@ -97,36 +118,32 @@
             else{
                 input.value = cuil.slice(0, 12);
             }
-        }
+        }       
+	</script>
+	<script>
+     
+        var cbProvincia = document.getElementById('cbProvincia');
+        var cbLocalidad = document.getElementById('cbLocalidad');
         
-        var provinciaSelect = document.getElementById('cbProvincia');
-        var localidadSelect = document.getElementById('cbLocalidad');
+        cbProvincia.addEventListener('change', function() {
+			var selectedProvinciaId = cbProvincia.value;
+			cbLocalidad.innerHTML = '';
+			var localidades = [];
+			
+			<%for (localidad localidad : localidades){%>
+				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
+			<%}%>
+			
+	        localidades.forEach(function(localidad) {
+	        	if(localidad.id ==  selectedProvinciaId)
+        		{
+		            var option = document.createElement('option');
+		            option.value = localidad.id;
+		            option.textContent = localidad.nombre;
+		            cbLocalidad.appendChild(option);  		
+        		}
+	        });
 
-        provinciaSelect.addEventListener('change', function() {
-            var selectedProvincia = provinciaSelect.value;
-            var xhr = new XMLHttpRequest();
-
-            xhr.open('GET', '/ProjectBeta1/servletCliente?provincia=' + selectedProvincia, true);
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    // Parsear la respuesta JSON
-                    var response = JSON.parse(xhr.responseText);
-
-                    // Limpiar el select de localidades
-                    localidadSelect.innerHTML = '';
-
-                    // Llenar el select de localidades con las localidades recibidas
-                    for (var i = 0; i < response.length; i++) {
-                        var option = document.createElement('option');
-                        option.value = response[i];
-                        option.text = response[i];
-                        localidadSelect.appendChild(option);
-                    }
-                }
-            };
-
-            xhr.send();
         });
     </script>
 </body>
