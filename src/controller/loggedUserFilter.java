@@ -20,8 +20,7 @@ public class loggedUserFilter implements Filter {
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		chain.doFilter(request, response);
-		/* 
-		 * DESCOMENTAR ESTA SECCIÓN PARA ACTIVAR FILTRO DE LOGIN Y BORRAR FILA 22
+
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
@@ -33,11 +32,17 @@ public class loggedUserFilter implements Filter {
         } else {
             chain.doFilter(request, response);
         }
-		 */
+		 
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

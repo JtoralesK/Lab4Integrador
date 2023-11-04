@@ -22,8 +22,8 @@ public class UsuarioDao {
         cn.Open();
 
         String query = "INSERT INTO usuarios (usuario, contraseña, id_tipo_usuario, estado) " +
-                "VALUES ('" + usuario.getUsuario() + "', '" + usuario.getContraseña() + "', " + usuario.getTipoUsuario() + ", true)";
-
+                "VALUES ('" + usuario.getUsuario() + "', '" + usuario.getContraseña() + "', " + (usuario.getTipoUsuario().ordinal() + 1) + ", true)";
+        System.out.println(query);
         try {
             estado = cn.execute(query);
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class UsuarioDao {
 
             if (rs.next()) {
                 usuario = new Usuario();
-                usuario.setId(Integer.valueOf(rs.getString("id")));
+                usuario.setId(Integer.valueOf(rs.getString("ID_usuario")));
                 usuario.setUsuario(rs.getString("usuario"));
                 usuario.setContraseña(rs.getString("contraseña"));
                 usuario.setEstado(Integer.valueOf(rs.getString("estado")));
