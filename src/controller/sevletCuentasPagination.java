@@ -33,18 +33,23 @@ public class sevletCuentasPagination extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-				int page = 1; // Esta variable representa la página actual
-				int limit = 5; // Cantidad de registros por página
-
+				int page = 1; 
+				int offset = 5; 
+				int cantReg=0;
 				if (request.getParameter("page") != null) {
 				    page = Integer.parseInt(request.getParameter("page"));
 				}
-
+				if (request.getParameter("cantReg") != null) {
+					cantReg = Integer.parseInt(request.getParameter("cantReg"));
+				}
 				cuentaDao cta = new cuentaDao();
-				List<cuenta> cuentas = cta.listarCuentas(page, limit);
+				List<cuenta> cuentas = cta.listarCuentas();
+				List<cuenta> sublista = cuentas.subList(page, page+offset);
+				cantReg=cuentas.size();
+				request.setAttribute("cuentas", sublista);
+				request.setAttribute("page", page); 
+				request.setAttribute("cantReg", cantReg); 
 
-				request.setAttribute("cuentas", cuentas);
-				request.setAttribute("page", page); // Página actual
 				request.getRequestDispatcher("/views/blCuentas.jsp").forward(request, response);
 			
 	}

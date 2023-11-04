@@ -43,8 +43,9 @@
     <tbody>
     <% 
     List<cuenta> cuentas = (List<cuenta>) request.getAttribute("cuentas");
+	  System.out.println((int) request.getAttribute("cantReg"));
+
     for (cuenta cuenta : cuentas) { 
-    	  System.out.println(cuenta.toString());
     %>
   
         <tr>
@@ -59,8 +60,8 @@
     </tbody>
 </table>
  <div class="flex justify-center">
-    <a href="?page=<%= (int) request.getAttribute("page") - 5 %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Anterior</a>
-    <a href="?page=<%= (int) request.getAttribute("page") + 5 %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Siguiente</a>
+    <a href="?page=<%= (int) request.getAttribute("page") > 5 ? (int) request.getAttribute("page") - 5 : 1 %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Anterior</a>
+    <a href="?page=<%= (int) request.getAttribute("page") + 5 < (int) request.getAttribute("cantReg") ? (int) request.getAttribute("page")+ 5 :(int) request.getAttribute("page") %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Siguiente</a>
 </div>       
     </div>
 </body>
