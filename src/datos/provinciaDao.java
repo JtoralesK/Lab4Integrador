@@ -31,4 +31,21 @@ public class provinciaDao {
         }
         return provincias;
     }
+    public provincia obtenerUno(int idProvincia) {
+        cn.Open();
+
+        String query = "SELECT id_provincia, provincia FROM provincias WHERE id_provincia = " + idProvincia;
+
+        try {
+            ResultSet rs = cn.query(query);
+            while (rs.next()) {
+            	return new provincia(rs.getInt("id_provincia"), rs.getString("provincia"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cn.close();
+        }
+        return null;
+    }
 }

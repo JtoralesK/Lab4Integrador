@@ -32,4 +32,22 @@ public class nacionalidadDao {
         }
         return nacionalidades;
     }
+    
+    public nacionalidad obtenerUno(int idNacionalidad) {
+        cn.Open();
+
+        String query = "SELECT id_nacionalidad, nacionalidad FROM nacionalidades WHERE id_nacionalidad="+idNacionalidad;
+
+        try {
+            ResultSet rs = cn.query(query);
+            while (rs.next()) {
+            	return new nacionalidad(rs.getInt("id_nacionalidad"), rs.getString("nacionalidad"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cn.close();
+        }
+        return null;
+    }
 }

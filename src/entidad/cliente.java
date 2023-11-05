@@ -2,6 +2,7 @@ package entidad;
 import java.time.LocalDate;
 
 public class cliente {
+	private int id;
 	private direccion direccion;
 	private int dni;
 	private Long cuil;
@@ -33,7 +34,26 @@ public class cliente {
 		this.password = password;
 		this.tipoUsuario = tipoUsuario;
 	}
-	
+	public cliente(direccion direccion, int dni, Long cuil, String nombre, String apellido, eSexo sexo,
+			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, Long telefono) {
+		this.direccion = direccion;
+		this.dni = dni;
+		this.cuil = cuil;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.sexo = sexo;
+		this.nacionalidad = nacionalidad;
+		this.fechaNacimiento = fechaNacimiento;
+		this.email = email;
+		this.telefono = telefono;
+	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	public eTipoUsuario getTipoUsuario() {
 		return tipoUsuario;
 	}

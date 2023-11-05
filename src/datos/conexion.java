@@ -7,10 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class conexion {
-	  private static final String DB_NAME = "Banco";
-	    private static final String DB_URL = "jdbc:mysql://api-films-azure.mysql.database.azure.com:3306/" + DB_NAME + "?useSSL=true";
-	    private static final String DB_USER = "JavierTorales";
-	    private static final String DB_PASSWORD = "-CASA1234";
+	  private static final String DB_NAME = "banco";
+	    private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DB_NAME + "?profileSQL=true&useSSL=false";
+	    private static final String DB_USER = "root";
+	    private static final String DB_PASSWORD = "12345678";
+
 	    private Connection connection;
 
 	    public Connection Open() {

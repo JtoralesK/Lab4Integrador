@@ -69,6 +69,7 @@
 				<div>
 					<label for="cbProvincia">Provincia:</label> 
 					<select id="cbProvincia" name="cbProvincia" class="w-full p-2 rounded" required>
+						<option value="-1">Seleccione una provincia</option>		
 					<%for (provincia provincia : provincias) {%>
 						<option value="<%=provincia.getId()%>"><%=provincia.getNombre()%></option>
 					<%} %>

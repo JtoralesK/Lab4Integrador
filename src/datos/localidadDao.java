@@ -32,4 +32,22 @@ public class localidadDao {
         }
         return localidades;
     }
+    
+    public localidad obtenerUno(int idLocalidad) {
+        cn.Open();
+
+        String query = "SELECT id_localidad, id_provincia, localidad FROM localidades WHERE id_localidad = " + idLocalidad;
+
+        try {
+            ResultSet rs = cn.query(query);
+            while (rs.next()) {
+            	return new localidad(rs.getInt("id_provincia"), rs.getString("localidad"), new provinciaDao().obtenerUno(rs.getInt("id_provincia")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cn.close();
+        }
+        return null;
+    }
 }
