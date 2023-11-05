@@ -12,13 +12,15 @@ import entidad.Usuario;
 import entidad.cuenta;
 import entidad.eTipoCuenta;
 import entidad.eTipoUsuario;
-public class cuentaDao {
+public class cuentaDao implements DaoEstructura<cuenta> {
 	private conexion cn;
 
 	public cuentaDao() {
 		cn = new conexion();
 	}
-	public List<cuenta> listarCuentas(){
+	@Override
+	public List<cuenta> selectAll() {
+		// TODO Auto-generated method stub
 		List<cuenta> cuentas = new ArrayList<>();
 	    Connection connection = cn.Open();
 	    String query = "SELECT * FROM cuentas";
@@ -43,5 +45,15 @@ public class cuentaDao {
             cn.close(); 
         }
         return cuentas;
+	}
+	@Override
+	public Boolean insert() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Boolean logicalDelete() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

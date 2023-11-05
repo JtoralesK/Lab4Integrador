@@ -43,7 +43,7 @@ public class sevletCuentasPagination extends HttpServlet {
 					cantReg = Integer.parseInt(request.getParameter("cantReg"));
 				}
 				cuentaDao cta = new cuentaDao();
-				List<cuenta> cuentas = cta.listarCuentas();
+				List<cuenta> cuentas = cta.selectAll();
 				List<cuenta> sublista = cuentas.subList(page, page+offset);
 				cantReg=cuentas.size();
 				request.setAttribute("cuentas", sublista);
