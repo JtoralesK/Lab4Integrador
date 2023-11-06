@@ -150,6 +150,7 @@ public class clienteDao {
     
     public List<cliente> listarClientes() {
         List<cliente> clientes = new ArrayList<>();
+        cn = new conexion();
         Connection connection = cn.Open();
 
         String query = "SELECT C.id_cliente, C.dni, C.cuil, C.nombre, C.apellido, C.id_sexo, C.id_nacionalidad, C.fecha_nacimiento, C.direccion, C.id_localidad, L.id_provincia, C.mail, C.usuario, C.telefono, U.estado " +
