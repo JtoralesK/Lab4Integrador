@@ -20,4 +20,7 @@ public class UsuarioNeg {
         return usuarioDao.obtenerPorNombre(nombreUsuario);
     }
 
+    public boolean bajaUsuario(Usuario usuario) {
+    	return usuarioDao.baja(usuario);
+    }
 }
