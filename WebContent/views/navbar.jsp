@@ -17,7 +17,17 @@
 	<div class="flex flex-row gap-5">
 	<a href="/ProjectBeta1/views/home.jsp">Home</a>
 	<% if(user.getTipoUsuario() == eTipoUsuario.Administrador){ %>
-		<a href="/ProjectBeta1/views/amCliente.jsp">Clientes</a>
+		<div class="relative group">
+		    <button class="group-hover:bg-gray-200 focus:outline-none">Clientes</button>
+		    <div class="hidden absolute bg-white group-hover:block">
+		        <form method="post" action="<%= request.getContextPath() %>/servletCliente">
+		            <input type="hidden" name="accion" value="listarClientes">
+		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Listar Clientes</button>
+		            <input type="hidden" name="accion" value="altaCliente">
+		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Alta de Cliente</button>
+		        </form>
+		    </div>
+		</div>
         <a href="/ProjectBeta1/views/adminPrestamos.jsp">Prestamos</a>
         <a href="<%= request.getContextPath() %>/sevletCuentasPagination">Cuentas</a>
 		<div class="relative group">

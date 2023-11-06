@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import datos.localidadDao;
 import datos.nacionalidadDao;
@@ -19,6 +21,7 @@ import entidad.eTipoUsuario;
 import entidad.localidad;
 import entidad.nacionalidad;
 import entidad.provincia;
+import negocio.UsuarioNeg;
 
 public class clienteDao {
 	private conexion cn;
@@ -95,18 +98,13 @@ public class clienteDao {
         
 		cn = new conexion();
         cn.Open();
-
-        String query = "DELETE FROM clientes WHERE id_cliente = " + idCliente +";";
-
-        try {
-            estado = cn.execute(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            cn.close();
-        }
-        return estado;
+        UsuarioNeg usuarioNeg = new UsuarioNeg();
+        cliente cl = this.obtenerPorId(idCliente);
+        Usuario usuario = usuarioNeg.getUsuarioPorNombre(cl.getUsuario());
+        estado = usuarioNeg.bajaUsuario(usuario);
+        return estado;   
     }
+    
     public cliente obtenerPorId(int idCliente) {
     	cliente cliente = null;
     	
@@ -149,4 +147,46 @@ public class clienteDao {
         }
         return cliente;
     }
+    
+    public List<cliente> listarClientes() {
+        List<cliente> clientes = new ArrayList<>();
+        Connection connection = cn.Open();
+
+        String query = "SELECT C.id_cliente, C.dni, C.cuil, C.nombre, C.apellido, C.id_Sexo, C.id_nacionalidad, C.fecha_nacimiento, C.direccion, C.id_localidad, L.id_provincia, C.mail, C.usuario, C.telefono, U.estado " +
+                "FROM Clientes C " +
+                "INNER JOIN Localidades L ON C.id_localidad = L.id_localidad " +
+                "INNER JOIN Usuarios U ON C.usuario = U.usuario";
+        
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet rs = preparedStatement.executeQuery();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            while (rs.next()) {
+            	boolean estado = rs.getBoolean("estado");
+                if (estado) {
+                    cliente cliente = new cliente(
+                        new direccion(rs.getString("direccion"), new localidadDao().obtenerUno(rs.getInt("id_localidad"))),
+                        rs.getInt("dni"),
+                        rs.getLong("cuil"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        eSexo.values()[rs.getInt("ID_Sexo") - 1],
+                        new nacionalidadDao().obtenerUno(rs.getInt("id_nacionalidad")),
+                        LocalDate.parse(rs.getString("fecha_nacimiento"), formatter),
+                        rs.getString("email"),
+                        rs.getLong("telefono")
+                    );
+                    cliente.setId(rs.getInt("id_cliente"));
+                    clientes.add(cliente);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cn.close();
+        }
+        return clientes;
+    }
+
 }

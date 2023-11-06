@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="entidad.cliente"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -5,13 +7,13 @@
 <head>
 <%
 	request.setAttribute("titulo", "Cuenta");
+	List<cliente> listadoClientes = (List<cliente>) request.getAttribute("listadoClientes");
 %>
 <jsp:include page="head.jsp"/>
 </head>
 <body class="bg-gray-100">
 	<h1 class="table-auto">Usuario</h1>
 	<br>
-	<form action="/ProjectBeta1/servletCliente" method="post">
 	<table class="table-auto border-collapse border border-gray-300">
 		<thead>
 			<tr>
@@ -25,7 +27,6 @@
 				<th class="px-4 py-2">Nacionalidad</th>
 				<th class="px-4 py-2">Fecha de nacimiento</th>
 				<th class="px-4 py-2">Direccion</th>
-				<th class="px-4 py-2">Loclidad</th>
 				<th class="px-4 py-2">Mail</th>
 				<th class="px-4 py-2">Telefono</th>
 				<th class="px-4 py-2">Usuario</th>
@@ -33,55 +34,44 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="border px-4 py-2">1</td>
-				<td class="border px-4 py-2">1</td>
-				<td class="border px-4 py-2">987900</td>
-				<td class="border px-4 py-2">1323</td>
-				<td class="border px-4 py-2">Javier</td>
-				<td class="border px-4 py-2">Torales</td>
-				<td class="border px-4 py-2">Masculino</td>
-				<td class="border px-4 py-2">Peruana</td>
-				<td class="border px-4 py-2">09-01-2002</td>
-				<td class="border px-4 py-2">urquiza 122</td>
-				<td class="border px-4 py-2">Tigre</td>
-				<td class="border px-4 py-2">jewn@gmail.com</td>
-				<td class="border px-4 py-2">111313</td>
-				<td class="border px-4 py-2">jean5011</td>
-				<td class="border px-4 py-2">1234</td>
-				<td class="border px-4 py-2"><button
-						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						type="button" id="Eliminar" value="1" name="btnEliminar">Eliminar</button></td>
-				<td class="border px-4 py-2"><button
-						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						type="button" id="Modificar" value="1" name="btnModificar">Modificar</button></td>
-			</tr>
-			<tr>
-				<td class="border px-4 py-2">1</td>
-				<td class="border px-4 py-2">1</td>
-				<td class="border px-4 py-2">987900</td>
-				<td class="border px-4 py-2">1323</td>
-				<td class="border px-4 py-2">jean</td>
-				<td class="border px-4 py-2">esquen</td>
-				<td class="border px-4 py-2">Masculino</td>
-				<td class="border px-4 py-2">Peruana</td>
-				<td class="border px-4 py-2">09-01-2002</td>
-				<td class="border px-4 py-2">urquiza 122</td>
-				<td class="border px-4 py-2">Tigre</td>
-				<td class="border px-4 py-2">jewn@gmail.com</td>
-				<td class="border px-4 py-2">111313</td>
-				<td class="border px-4 py-2">jean5011</td>
-				<td class="border px-4 py-2">1234</td>
-				<td class="border px-4 py-2"><button
-						class="bg-blue-500 bg-opacity-75 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						type="submit" id="Eliminar" value ="-1" name="btnEliminar">Eliminar</button></td>
-				<td class="border px-4 py-2"><button
-						class="bg-blue-500 bg-opacity-75 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						type="submit" id="Modificar" value ="1" name="btnModificar">Modificar</button></td>
-			</tr>
+			<%
+		    if (listadoClientes != null) {
+		        for (cliente cliente : listadoClientes) {
+		    %>
+		    <tr>
+		        <td class="border px-4 py-2"><%= cliente.getId() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getTipoUsuario() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getDni() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getCuil() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getNombre() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getApellido() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getSexo() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getNacionalidad() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getFechaNacimiento() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getDireccion() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getEmail() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getTelefono() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getUsuario() %></td>
+		        <td class="border px-4 py-2"><%= cliente.getPassword() %></td>
+		        <td class="border px-4 py-2">
+		            <form action="/ProjectBeta1/servletCliente" method="post">
+		                <input type="hidden" name="modificar" value="<%= cliente.getId() %>">
+		                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnModificar">Modificar</button>
+		            </form>
+		        </td>
+		        <td class="border px-4 py-2">
+		            <form action="/ProjectBeta1/servletCliente" method="post">
+		                <input type="hidden" name="btnEliminar" value="<%= cliente.getId() %>">
+		                <button class="bg-red-500 hover-bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnEliminar">Eliminar</button>
+		            </form>
+		        </td>
+		    </tr>
+		    <%
+		        }
+		    }
+		    %>
 		</tbody>
 	</table>
-		</form>
 		<jsp:include page="modal.jsp" />
 	
 </body>

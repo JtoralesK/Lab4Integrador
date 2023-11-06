@@ -2,6 +2,7 @@ package negocio;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import datos.clienteDao;
 import entidad.cliente;
@@ -61,4 +62,9 @@ public class clienteNeg {
 	{						
 		return clienteDao.obtenerPorId(idCliente);
 	}
+
+	public List<cliente> listarClientes() {
+	    return clienteDao.listarClientes();
+	}
+
 }

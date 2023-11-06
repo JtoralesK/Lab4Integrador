@@ -47,6 +47,16 @@ public class servletCliente extends HttpServlet {
 		
 		RellenarSelect(request);
 		clienteNeg clienteNeg = new clienteNeg();
+		if(request.getParameter("accion") != null) {
+			String accion = request.getParameter("accion");
+			if("blCliente".equals(accion)) {
+				request.setAttribute("listadoClientes", clienteNeg.listarClientes());
+				request.getRequestDispatcher("/views/blCliente.jsp").forward(request, response);
+			}else {
+				request.getRequestDispatcher("/views/amCliente.jsp").forward(request, response);
+			}
+		}
+		
 	    if(request.getParameter("btnCrearCliente")!=null)
 	    {	    	
 	    	String dni = request.getParameter("txtDni");
@@ -130,6 +140,14 @@ public class servletCliente extends HttpServlet {
 	    	
 	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectBeta1/blCliente.jsp");
 			dispatcher.forward(request, response);		
+		}
+		
+		if (request.getParameter("modificar") != null) {
+			int clientId = Integer.parseInt(request.getParameter("modificar"));
+			cliente clienteModificar = clienteNeg.obtenerCliente(clientId);
+			request.setAttribute("clienteModificar", clienteModificar);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
+		    dispatcher.forward(request, response);
 		}
 		
 		if (request.getParameter("btnElminar") != null)
