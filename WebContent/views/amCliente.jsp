@@ -22,6 +22,7 @@
 	List<nacionalidad> nacionalidades = (List<nacionalidad>)request.getAttribute("nacionalidades");
 	List<provincia> provincias = (List<provincia>)request.getAttribute("provincias");
 	boolean hayClienteModificar = request.getAttribute("clienteModificar") != null;
+	boolean flagLocalidad = true;
 	cliente  clienteModificar = (cliente)request.getAttribute("clienteModificar");
 %>
 
@@ -49,7 +50,7 @@
 					<label for="cbSexo">Sexo:</label> 
 					<select id="cbSexo" name="cbSexo" class="w-full p-2 rounded" selectedIndex="1" required>
 					<%for (eSexo sexo : sexos) {
-						if (hayClienteModificar && sexo == clienteModificar.getSexo()) { %>
+						if (hayClienteModificar && sexo.ordinal() == clienteModificar.getSexo().ordinal()) { %>
 							<option value="<%=sexo.ordinal()%>" selected><%=sexo.name()%></option>
 						<%} else {%>
 							<option value="<%=sexo.ordinal()%>"><%=sexo.name()%></option>
@@ -61,7 +62,7 @@
 					<label for="cbNacionalidad">Nacionalidad:</label> 
 					<select id="cbNacionalidad" name="cbNacionalidad" class="w-full p-2 rounded" required>
 					<%for (nacionalidad nacionalidad : nacionalidades) {
-						if (hayClienteModificar && nacionalidad == clienteModificar.getNacionalidad()) { %>
+						if (hayClienteModificar && nacionalidad.getId() == clienteModificar.getNacionalidad().getId()) { %>
 							<option value="<%=nacionalidad.getId()%>" selected><%=nacionalidad.getNombre()%></option>
 						<%} else {%>
 							<option value="<%=nacionalidad.getId()%>"><%=nacionalidad.getNombre()%></option>
@@ -81,9 +82,14 @@
 					<label for="cbProvincia">Provincia:</label> 
 					<select id="cbProvincia" name="cbProvincia" class="w-full p-2 rounded" required>
 						<option value="-1">Seleccione una provincia</option>		
-					<%for (provincia provincia : provincias) {%>
-						<option value="<%=provincia.getId()%>"><%=provincia.getNombre()%></option>
+					<%for (provincia provincia : provincias) {
+						if (hayClienteModificar && provincia.getId() == clienteModificar.getDireccion().getLocalidad().getProvincia().getId()) { %>
+							<option value="<%=provincia.getId()%>" selected><%=provincia.getNombre()%></option>
+						<%} else {%>
+							<option value="<%=provincia.getId()%>"><%=provincia.getNombre()%></option>
+						<%} %>
 					<%} %>
+
 					</select>
 				</div>
 				<div>
@@ -143,7 +149,7 @@
 	<script>
      
         var cbProvincia = document.getElementById('cbProvincia');
-        var cbLocalidad = document.getElementById('cbLocalidad');
+        var cbLocalidad = document.getElementById('cbLocalidad');         
         
         cbProvincia.addEventListener('change', function() {
 			var selectedProvinciaId = cbProvincia.value;
@@ -165,6 +171,13 @@
 	        });
 
         });
+        
+        <% if (hayClienteModificar && flagLocalidad) {%>
+			var cbProvincia = document.getElementById('cbProvincia');
+			var eventoCambio = new Event('change');
+			cbProvincia.dispatchEvent(eventoCambio);
+		<%flagLocalidad = false;
+		}%>
     </script>
 </body>
 </html>
