@@ -21,8 +21,10 @@
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Clientes</button>
 		    <div class="hidden absolute bg-white group-hover:block">
 		        <form method="post" action="<%= request.getContextPath() %>/servletCliente">
-		            <input type="hidden" name="accion" value="listarClientes">
+		            <input type="hidden" name="accion" value="blCliente">
 		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Listar Clientes</button>
+		        </form>
+		        <form method="post" action="<%= request.getContextPath() %>/servletCliente">
 		            <input type="hidden" name="accion" value="altaCliente">
 		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Alta de Cliente</button>
 		        </form>

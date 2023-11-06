@@ -42,7 +42,7 @@ public class clienteDao {
 		
 		int idUsuario = usuarioDao.obtenerPorNombre(cliente.getUsuario()).getId();
 		
-		String query = "INSERT INTO clientes (dni, cuil, nombre, apellido, ID_Sexo, ID_Nacionalidad, fecha_Nacimiento, direccion, id_localidad, mail, telefono, ID_usuario) "
+		String query = "INSERT INTO clientes (dni, cuil, nombre, apellido, id_sexo, id_nacionalidad, fecha_Nacimiento, direccion, id_localidad, mail, telefono, id_usuario) "
 				+"VALUES ("+cliente.getDni()+","+cliente.getCuil()+",'"+cliente.getNombre()+"','"+cliente.getApellido()+"',"+(cliente.getSexo().ordinal() + 1) +","+cliente.getNacionalidad().getId()
 				+",'"+cliente.getFechaNacimiento().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+cliente.getDireccion().getDireccion()+"',"+cliente.getDireccion().getLocalidad().getId()
 				+",'"+cliente.getEmail()+"',"+cliente.getTelefono()+","+idUsuario+")";
@@ -74,7 +74,7 @@ public class clienteDao {
         		"cuil = "+cliente.getCuil()+" ," + 
         		"nombre = '"+cliente.getNombre()+"' ," + 
         		"apellido = '"+cliente.getApellido()+"' ," + 
-        		"ID_Sexo = "+(cliente.getSexo().ordinal() - 1)+" ," + 
+        		"id_sexo = "+(cliente.getSexo().ordinal() - 1)+" ," + 
         		"id_nacionalidad = "+cliente.getNacionalidad()+" ," + 
         		"fecha_nacimiento = '"+cliente.getFechaNacimiento()+"' ," + 
         		"direccion = '"+cliente.getDireccion()+"' ," + 
@@ -111,7 +111,7 @@ public class clienteDao {
 		cn = new conexion();
         Connection connection = cn.Open(); 
 
-        String query = "SELECT id_cliente, dni, cuil, nombre, apellido, ID_Sexo, id_nacionalidad, fecha_nacimiento, direccion, C.id_localidad, L.id_provincia, mail, ID_usuario, telefono FROM clientes C INNER JOIN localidades L ON C.id_localidad = L.id_localidad WHERE id_cliente = ?";
+        String query = "SELECT id_cliente, dni, cuil, nombre, apellido, id_sexo, id_nacionalidad, fecha_nacimiento, direccion, C.id_localidad, L.id_provincia, mail, id_usuario, telefono FROM clientes C INNER JOIN localidades L ON C.id_localidad = L.id_localidad WHERE id_cliente = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, idCliente);
@@ -126,7 +126,7 @@ public class clienteDao {
                 			rs.getLong("cuil"),
                 			rs.getString("nombre"),
                 			rs.getString("apellido"),
-                			eSexo.values()[rs.getInt("ID_Sexo") - 1],
+                			eSexo.values()[rs.getInt("id_sexo") - 1],
                 			new nacionalidadDao().obtenerUno(rs.getInt("id_nacionalidad")),
                 			LocalDate.parse(rs.getString("fecha_nacimiento"), formatter),
                 			rs.getString("mail"),
@@ -152,10 +152,10 @@ public class clienteDao {
         List<cliente> clientes = new ArrayList<>();
         Connection connection = cn.Open();
 
-        String query = "SELECT C.id_cliente, C.dni, C.cuil, C.nombre, C.apellido, C.id_Sexo, C.id_nacionalidad, C.fecha_nacimiento, C.direccion, C.id_localidad, L.id_provincia, C.mail, C.usuario, C.telefono, U.estado " +
-                "FROM Clientes C " +
-                "INNER JOIN Localidades L ON C.id_localidad = L.id_localidad " +
-                "INNER JOIN Usuarios U ON C.usuario = U.usuario";
+        String query = "SELECT C.id_cliente, C.dni, C.cuil, C.nombre, C.apellido, C.id_sexo, C.id_nacionalidad, C.fecha_nacimiento, C.direccion, C.id_localidad, L.id_provincia, C.mail, C.usuario, C.telefono, U.estado " +
+                "FROM clientes C " +
+                "INNER JOIN localidades L ON C.id_localidad = L.id_localidad " +
+                "INNER JOIN usuarios U ON C.usuario = U.usuario";
         
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -170,7 +170,7 @@ public class clienteDao {
                         rs.getLong("cuil"),
                         rs.getString("nombre"),
                         rs.getString("apellido"),
-                        eSexo.values()[rs.getInt("ID_Sexo") - 1],
+                        eSexo.values()[rs.getInt("id_sexo") - 1],
                         new nacionalidadDao().obtenerUno(rs.getInt("id_nacionalidad")),
                         LocalDate.parse(rs.getString("fecha_nacimiento"), formatter),
                         rs.getString("email"),

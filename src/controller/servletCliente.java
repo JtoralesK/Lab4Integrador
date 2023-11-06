@@ -50,7 +50,7 @@ public class servletCliente extends HttpServlet {
 		if(request.getParameter("accion") != null) {
 			String accion = request.getParameter("accion");
 			if("blCliente".equals(accion)) {
-				request.setAttribute("listadoClientes", clienteNeg.listarClientes());
+				request.setAttribute("listaClientes", clienteNeg.listarClientes());
 				request.getRequestDispatcher("/views/blCliente.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/views/amCliente.jsp").forward(request, response);
