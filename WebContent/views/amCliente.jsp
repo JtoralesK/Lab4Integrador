@@ -25,6 +25,7 @@
 	boolean flagLocalidad = true;
 	cliente  clienteModificar = (cliente)request.getAttribute("clienteModificar");
 %>
+	<jsp:include page="navbar.jsp" />
 
 	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded mt-4">
 		<h1 class="text-2xl font-semibold mb-4 text-center"><%=hayClienteModificar ? "Modificar cliente" : "Registro de Cliente"%></h1>

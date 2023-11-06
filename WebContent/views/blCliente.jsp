@@ -12,6 +12,8 @@
 <jsp:include page="head.jsp"/>
 </head>
 <body class="bg-gray-100">
+	<jsp:include page="navbar.jsp" />
+
 	<h1 class="table-auto">Usuario</h1>
 	<br>
 	<table class="table-auto border-collapse border border-gray-300">
