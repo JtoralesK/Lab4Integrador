@@ -62,6 +62,8 @@ public class clienteDao {
 	
     public boolean actualizar(cliente cliente) {
         boolean estado = true;
+        
+		cn = new conexion();
         cn.Open();
 
         String query = "UPDATE clientes SET " + 
@@ -90,6 +92,8 @@ public class clienteDao {
 
     public boolean eliminar(int idCliente) {
         boolean estado = true;
+        
+		cn = new conexion();
         cn.Open();
 
         String query = "DELETE FROM clientes WHERE id_cliente = " + idCliente +";";
@@ -105,6 +109,8 @@ public class clienteDao {
     }
     public cliente obtenerPorId(int idCliente) {
     	cliente cliente = null;
+    	
+		cn = new conexion();
         Connection connection = cn.Open(); 
 
         String query = "SELECT id_cliente, dni, cuil, nombre, apellido, ID_Sexo, id_nacionalidad, fecha_nacimiento, direccion, C.id_localidad, L.id_provincia, mail, ID_usuario, telefono FROM clientes C INNER JOIN localidades L ON C.id_localidad = L.id_localidad WHERE id_cliente = ?";
@@ -125,7 +131,7 @@ public class clienteDao {
                 			eSexo.values()[rs.getInt("ID_Sexo") - 1],
                 			new nacionalidadDao().obtenerUno(rs.getInt("id_nacionalidad")),
                 			LocalDate.parse(rs.getString("fecha_nacimiento"), formatter),
-                			rs.getString("email"),
+                			rs.getString("mail"),
                 			rs.getLong("telefono")
                 			);
                 cliente.setId(rs.getInt("id_cliente"));

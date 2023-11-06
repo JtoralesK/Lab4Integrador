@@ -75,7 +75,7 @@
 				</div>
 				<div>
 					<label for="txtDireccion">Dirección:</label> 
-					<input type="text" id="txtDireccion" name="txtDireccion" value="<%=hayClienteModificar ? clienteModificar.getDireccion() : ""%>" class="w-full p-2 rounded" required>
+					<input type="text" id="txtDireccion" name="txtDireccion" value="<%=hayClienteModificar ? clienteModificar.getDireccion().getDireccion() : ""%>" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="cbProvincia">Provincia:</label> 
