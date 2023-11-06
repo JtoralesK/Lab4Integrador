@@ -56,4 +56,9 @@ public class clienteNeg {
 				
 		return clienteDao.actualizar(cliente);
 	}
+	
+	public cliente obtenerCliente(int idCliente)
+	{						
+		return clienteDao.obtenerPorId(idCliente);
+	}
 }

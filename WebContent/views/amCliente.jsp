@@ -6,6 +6,7 @@
 <%@ page import="entidad.localidad" %>
 <%@ page import="entidad.nacionalidad" %>
 <%@ page import="entidad.provincia" %>
+<%@ page import="entidad.cliente" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,51 +21,61 @@
 	List<localidad> localidades = (List<localidad>)request.getAttribute("localidades");
 	List<nacionalidad> nacionalidades = (List<nacionalidad>)request.getAttribute("nacionalidades");
 	List<provincia> provincias = (List<provincia>)request.getAttribute("provincias");
+	boolean hayClienteModificar = request.getAttribute("clienteModificar") != null;
+	cliente  clienteModificar = (cliente)request.getAttribute("clienteModificar");
 %>
 
 	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded mt-4">
-		<h1 class="text-2xl font-semibold mb-4 text-center">Registro de Cliente</h1>
+		<h1 class="text-2xl font-semibold mb-4 text-center"><%=hayClienteModificar ? "Modificar cliente" : "Registro de Cliente"%></h1>
 		<form action="/ProjectBeta1/servletCliente" method="post">
 			<div class="grid grid-cols-2 gap-4">
 				<div>
 					<label for="txtDni">DNI:</label> 
-					<input type="number" id="txtDni" name="txtDni" class="w-full p-2 rounded" max="99999999" required>
+					<input type="number" id="txtDni" value="<%=hayClienteModificar ? clienteModificar.getDni() : ""%>" name="txtDni" class="w-full p-2 rounded" max="99999999" required>
 				</div>
 				<div>
 					<label for="txtCuil">CUIL:</label> 
-					<input type="text" id="txtCuil" name="txtCuil" class="w-full p-2 rounded" maxlength="12" oninput="formatCuil(this)" required>
+					<input type="text" id="txtCuil" name="txtCuil" value="<%=hayClienteModificar ? clienteModificar.getCuil() : ""%>" class="w-full p-2 rounded" maxlength="12" oninput="formatCuil(this)" required>
 				</div>
 				<div>
 					<label for="txtNombre">Nombre:</label> 
-					<input type="text" id="txtNombre" name="txtNombre" class="w-full p-2 rounded" required>
+					<input type="text" id="txtNombre" name="txtNombre" value="<%=hayClienteModificar ? clienteModificar.getNombre() : ""%>" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="txtApellido">Apellido:</label> 
-					<input type="text" id="txtApellido" name="txtApellido" class="w-full p-2 rounded" required>
+					<input type="text" id="txtApellido" name="txtApellido" value="<%=hayClienteModificar ? clienteModificar.getApellido() : ""%>" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="cbSexo">Sexo:</label> 
-					<select id="cbSexo" name="cbSexo" class="w-full p-2 rounded" required>
-					<%for (eSexo sexo : sexos) {%>
-						<option value="<%=sexo.ordinal()%>"><%=sexo.name()%></option>
-					<%} %>
+					<select id="cbSexo" name="cbSexo" class="w-full p-2 rounded" selectedIndex="1" required>
+					<%for (eSexo sexo : sexos) {
+						if (hayClienteModificar && sexo == clienteModificar.getSexo()) { %>
+							<option value="<%=sexo.ordinal()%>" selected><%=sexo.name()%></option>
+						<%} else {%>
+							<option value="<%=sexo.ordinal()%>"><%=sexo.name()%></option>
+						<%} %>
+						<%} %>
 					</select>
 				</div>
 				<div>
 					<label for="cbNacionalidad">Nacionalidad:</label> 
 					<select id="cbNacionalidad" name="cbNacionalidad" class="w-full p-2 rounded" required>
-					<%for (nacionalidad nacionalidad : nacionalidades) {%>
-						<option value="<%=nacionalidad.getId()%>"><%=nacionalidad.getNombre()%></option>
-					<%} %>
+					<%for (nacionalidad nacionalidad : nacionalidades) {
+						if (hayClienteModificar && nacionalidad == clienteModificar.getNacionalidad()) { %>
+							<option value="<%=nacionalidad.getId()%>" selected><%=nacionalidad.getNombre()%></option>
+						<%} else {%>
+							<option value="<%=nacionalidad.getId()%>"><%=nacionalidad.getNombre()%></option>
+						<%} %>
+						<%} %>
 					</select>
 				</div>
 				<div>
 					<label for="txtFechaNacimiento">Fecha de Nacimiento:</label> 
-					<input type="date" id="txtFechaNacimiento" name="txtFechaNacimiento" class="w-full p-2 rounded" required>
+					<input type="date" id="txtFechaNacimiento" value="<%=hayClienteModificar ? clienteModificar.getFechaNacimiento() : ""%>"name="txtFechaNacimiento" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="txtDireccion">Dirección:</label> 
-					<input type="text" id="txtDireccion" name="txtDireccion" class="w-full p-2 rounded" required>
+					<input type="text" id="txtDireccion" name="txtDireccion" value="<%=hayClienteModificar ? clienteModificar.getDireccion() : ""%>" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="cbProvincia">Provincia:</label> 
@@ -83,23 +94,31 @@
 				</div>
 				<div>
 					<label for="txtEmail">Correo Electrónico:</label> 
-					<input type="email" id="txtEmail" name="txtEmail" class="w-full p-2 rounded" required>
+					<input type="email" id="txtEmail" name="txtEmail" value="<%=hayClienteModificar ? clienteModificar.getEmail() : ""%>" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="txtTelefono">Teléfono:</label> 
-					<input type="number" id="txtTelefono" name="txtTelefono" class="w-full p-2 rounded" required>
+					<input type="number" id="txtTelefono" name="txtTelefono" value="<%=hayClienteModificar ? clienteModificar.getTelefono() : ""%>" class="w-full p-2 rounded" required>
 				</div>
 				<div>
 					<label for="txtUsuario">Usuario:</label> 
-					<input type="text" id="txtUsuario" name="txtUsuario" class="w-full p-2 rounded" required>
+					<% if (hayClienteModificar) {%>
+						<input type="text" id="txtUsuario" name="txtUsuario" value="<%=clienteModificar.getUsuario() %>" disabled class="w-full p-2 rounded" required>			
+					<%} else { %>
+						<input type="text" id="txtUsuario" name="txtUsuario" class="w-full p-2 rounded" required>
+					<%} %>
 				</div>
 				<div>
 					<label for="txtPassword">Contraseña:</label> 
-					<input type="password" id="txtPassword" name="txtPassword" class="w-full p-2 rounded" required>
+					<% if (hayClienteModificar) {%>
+						<input type="password" id="txtPassword" name="txtPassword" disabled class="w-full p-2 rounded" required>					
+					<%} else { %>
+						<input type="password" id="txtPassword" name="txtPassword" class="w-full p-2 rounded" required>
+					<%} %>					
 				</div>
 			</div>
 			<div class="flex">
-				<button id="btnCrearCliente" name="btnCrearCliente" type="submit" class="bg-blue-500 text-white p-3 mt-5 rounded hover:bg-blue-700 ml-auto">Crear Cliente</button>
+				<button id="<%=hayClienteModificar ? "btnModificarCliente" : "btnCrearCliente"%>" name="<%=hayClienteModificar ? "btnModificarCliente" : "btnCrearCliente"%>" type="submit" class="bg-blue-500 text-white p-3 mt-5 rounded hover:bg-blue-700 ml-auto"><%=hayClienteModificar ? "Actualizar Cliente" : "Crear Cliente"%></button>
 			</div>
 		</form>
 	</div>

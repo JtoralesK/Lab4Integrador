@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import datos.localidadDao;
 import datos.nacionalidadDao;
 import datos.provinciaDao;
+import entidad.cliente;
 import entidad.eSexo;
 import entidad.localidad;
 import entidad.nacionalidad;
@@ -32,7 +33,12 @@ public class servletCliente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RellenarSelect(request);
-		
+	    if(request.getParameter("btnModificarCliente")!=null)
+	    {
+	    	int idCliente = Integer.parseInt(request.getParameter("btnModificarCliente"));
+	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
+    		request.setAttribute("clienteModificar", clienteModificar);
+	    }
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
 		dispatcher.forward(request, response);
 	}

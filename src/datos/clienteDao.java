@@ -128,6 +128,12 @@ public class clienteDao {
                 			rs.getString("email"),
                 			rs.getLong("telefono")
                 			);
+                cliente.setId(rs.getInt("id_cliente"));
+                
+                Usuario usuario = new UsuarioDao().obtenerPorId(rs.getInt("ID_usuario"));
+                cliente.setUsuario(usuario.getUsuario());
+                cliente.setPassword(usuario.getContraseña());
+                cliente.setTipoUsuario(usuario.getTipoUsuario());
             }
             
         } catch (SQLException e) {

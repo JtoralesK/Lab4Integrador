@@ -119,4 +119,30 @@ public class UsuarioDao {
         return usuarios;
     }
 
+    public Usuario obtenerPorId(int idUsuario) {
+    	Usuario usuario = null;
+        Connection connection = cn.Open(); 
+
+        String query = "SELECT * FROM usuarios WHERE ID_usuario = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idUsuario);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setId(Integer.valueOf(rs.getString("ID_usuario")));
+                usuario.setUsuario(rs.getString("usuario"));
+                usuario.setContraseña(rs.getString("contraseña"));
+                usuario.setEstado(Integer.valueOf(rs.getString("estado")));
+                int tipoUsuarioOrdinal = rs.getInt("id_tipo_usuario") - 1;
+                usuario.setTipoUsuario(eTipoUsuario.values()[tipoUsuarioOrdinal]);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cn.close(); 
+        }
+        return usuario;
+    }
 }
