@@ -13,9 +13,7 @@
 </head>
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
-
-	<h1 class="table-auto">Usuario</h1>
-	<br>
+	<div class="flex justify-center">
 	<table class="table-auto border-collapse border border-gray-300">
 		<thead>
 			<tr>
@@ -74,6 +72,7 @@
 		    %>
 		</tbody>
 	</table>
+	</div>
 		<jsp:include page="modal.jsp" />
 	
 </body>

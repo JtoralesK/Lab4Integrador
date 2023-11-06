@@ -153,10 +153,10 @@ public class clienteDao {
         cn = new conexion();
         Connection connection = cn.Open();
 
-        String query = "SELECT C.id_cliente, C.dni, C.cuil, C.nombre, C.apellido, C.id_sexo, C.id_nacionalidad, C.fecha_nacimiento, C.direccion, C.id_localidad, L.id_provincia, C.mail, C.usuario, C.telefono, U.estado " +
+        String query = "SELECT C.id_cliente, C.dni, C.cuil, C.nombre, C.apellido, C.id_sexo, C.id_nacionalidad, C.fecha_nacimiento, C.direccion, C.id_localidad, L.id_provincia, C.mail, C.telefono, U.usuario, U.estado " +
                 "FROM clientes C " +
                 "INNER JOIN localidades L ON C.id_localidad = L.id_localidad " +
-                "INNER JOIN usuarios U ON C.usuario = U.usuario";
+                "INNER JOIN usuarios U ON C.id_usuario = U.id_usuario";
         
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -164,6 +164,7 @@ public class clienteDao {
 
             while (rs.next()) {
             	boolean estado = rs.getBoolean("estado");
+            	System.out.println(rs.getInt("id_sexo"));
                 if (estado) {
                     cliente cliente = new cliente(
                         new direccion(rs.getString("direccion"), new localidadDao().obtenerUno(rs.getInt("id_localidad"))),
@@ -174,7 +175,7 @@ public class clienteDao {
                         eSexo.values()[rs.getInt("id_sexo") - 1],
                         new nacionalidadDao().obtenerUno(rs.getInt("id_nacionalidad")),
                         LocalDate.parse(rs.getString("fecha_nacimiento"), formatter),
-                        rs.getString("email"),
+                        rs.getString("mail"),
                         rs.getLong("telefono")
                     );
                     cliente.setId(rs.getInt("id_cliente"));
