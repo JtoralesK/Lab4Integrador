@@ -12,7 +12,7 @@
 	//Logo rojo admin / gris usuario
 %>
 <nav class="w-full h-20 bg-white p-5 flex flex-row justify-between items-center border-b border-gray-300">
-	<img class="h-15 w-20"  src="Resources/bankLogo.png"></img>
+	<img class="h-15 w-20"  src="/ProjectBeta1/views/Resources/bankLogo.png"></img>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
 	<div class="flex flex-row gap-5">
 	<a href="/ProjectBeta1/views/home.jsp">Home</a>

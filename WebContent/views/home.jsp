@@ -3,9 +3,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script src="https://cdn.tailwindcss.com"></script>
-<title>Home</title>
+<%
+	request.setAttribute("titulo", "Home");
+%>
+<jsp:include page="head.jsp" />
 </head>
 <body class="h-screen  ">
 	<jsp:include page="navbar.jsp" />

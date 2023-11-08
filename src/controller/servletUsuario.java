@@ -28,37 +28,44 @@ public class servletUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("btnLogin") != null) {
             String usuario = request.getParameter("usuario");
-            String contraseña = request.getParameter("password");
+            String password = request.getParameter("password");
 
             String textoAMostrar = "";
 
             if (usuario.trim().length() < 1) {
-                textoAMostrar = "Ingrese un usuario";
+                textoAMostrar = "Ingrese un usuario válido";
+                ErrorLogin(request, response, textoAMostrar);
+                return;
             }
-            if (contraseña.trim().length() < 1) {
-                textoAMostrar = "Ingrese una contraseña";
+            if (password.trim().length() < 1) {
+                textoAMostrar = "Ingrese una contraseña válida";
+                ErrorLogin(request, response, textoAMostrar);
+                return;
             }
             
             UsuarioNeg usuarioNeg = new UsuarioNeg();
             Usuario foundUser = usuarioNeg.getUsuarioPorNombre(usuario);
             
-            boolean loginCorrect = foundUser != null && foundUser.getContraseña().equals(contraseña);
+            boolean loginCorrect = foundUser != null && foundUser.getContraseña().equals(password);
             
             if (loginCorrect) {
             	request.getSession().setAttribute("loggedUser", foundUser);
             	response.sendRedirect(request.getContextPath() + "/views/home.jsp");
             } else {
                 textoAMostrar = "El usuario o la contraseña son incorrectos";
-                request.setAttribute("texto", textoAMostrar);
-                request.setAttribute("modal", true);
-                request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+                ErrorLogin(request, response, textoAMostrar);
             }
 
         } else if (request.getParameter("logout") != null) {
             request.getSession().removeAttribute("loggedUser");
             response.sendRedirect(request.getContextPath() + "/views/login.jsp");
-        }
-        
-        
+        }             
+    }
+    
+    private void ErrorLogin(HttpServletRequest request, HttpServletResponse response, String mensaje) throws ServletException, IOException
+    {
+        request.setAttribute("texto", mensaje);
+        request.setAttribute("modal", true);
+        request.getRequestDispatcher("/views/login.jsp").forward(request, response);
     }
 }
