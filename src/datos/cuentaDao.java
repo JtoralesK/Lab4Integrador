@@ -29,7 +29,7 @@ public class cuentaDao implements DaoEstructura<cuenta> {
 	        ResultSet rs = preparedStatement.executeQuery();
 	        while (rs.next()) {
 	            cuenta cta = new cuenta();
-	            cta.setId_cuenta(Integer.parseInt(rs.getString("id_cuenta")));
+	            cta.setId_cuenta(Integer.parseInt(rs.getString("n_cuenta")));
 	            cta.setId_cliente(Integer.parseInt(rs.getString("id_cliente")));
 	            int tipoCuentaOrdinal = rs.getInt("id_tipo_cuenta") - 1;
 	            cta.setId_tipo_cuenta(eTipoCuenta.values()[tipoCuentaOrdinal]);
@@ -38,6 +38,7 @@ public class cuentaDao implements DaoEstructura<cuenta> {
 	            cta.setFecha_creacion(fechaRegistro);
 	            cta.setCbu(rs.getString("cbu"));
 	            cuentas.add(cta);
+	            cta.setEstado(rs.getBoolean("estado"));
 	        }
 	    }catch (SQLException e) {
             e.printStackTrace();

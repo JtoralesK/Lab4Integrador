@@ -14,6 +14,7 @@
 <jsp:include page="head.jsp" />
 </head>
 <body class="bg-gray-100">
+    <jsp:include page="navbar.jsp" />
 
        <div class="container mx-auto py-4">
         <h1 class="text-2xl font-semibold mb-4 text-center">Administración de Cuentas de Clientes</h1>
@@ -39,7 +40,17 @@
         <!-- Listado de cuentas -->
   <table class="w-11/12 bg-white p-4 shadow-md rounded-md mb-8 mx-auto table-fixed">
     <thead>
-        <!-- Encabezados de la tabla -->
+        <thead>
+                <tr>
+                    <th class="border-b-2 p-2">Numero de cuenta</th>
+                    <th class="border-b-2 p-2">Cliente</th>
+                    <th class="border-b-2 p-2">Tipo de cuenta</th>
+                    <th class="border-b-2 p-2">Saldo</th>
+               		<th class="border-b-2 p-2">Fecha creacion</th>
+                    <th class="border-b-2 p-2">Cbu</th>
+                   	<th class="border-b-2 p-2"></th> 
+                </tr>
+            </thead>
     </thead>
     <tbody>
     <% 
@@ -50,10 +61,13 @@
     %>
   
         <tr>
-            <td class="p-2 text-left"><%= cuenta.getId_cuenta() %></td>
-            <td class="p-2 text-left"><%= cuenta.getId_cliente() %></td>
-            <td class="p-2 text-left"><%= cuenta.getId_tipo_cuenta() %></td>
-            <td class="p-2 text-right">
+            <td class="p-2 text-center"><%= cuenta.getId_cuenta() %></td>
+            <td class="p-2 text-center"><%= cuenta.getId_cliente() %></td>
+            <td class="p-2 text-center"><%= cuenta.getId_tipo_cuenta() %></td>
+            <td class="p-2 text-center"><%= cuenta.getSaldo() %></td>
+            <td class="p-2 text-center"><%= cuenta.getFecha_creacion() %></td>
+            <td class="p-2 text-center text-gray-400"><%= cuenta.getCbu() %></td>
+            <td class="p-2 text-center">
                 <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
             </td>
         </tr>
@@ -61,8 +75,8 @@
     </tbody>
 </table>
  <div class="flex justify-center">
-    <a href="?page=<%= (int) request.getAttribute("page") > 5 ? (int) request.getAttribute("page") - 5 : 1 %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Anterior</a>
-    <a href="?page=<%= (int) request.getAttribute("page") + 5 < (int) request.getAttribute("cantReg") ? (int) request.getAttribute("page")+ 5 :(int) request.getAttribute("page") %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Siguiente</a>
+    <a href="?page=<%= (int) request.getAttribute("page") - 5  %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Anterior</a>
+    <a href="?page=<%=  (int) request.getAttribute("page")+ 5  %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Siguiente</a>
 </div>       
     </div>
 </body>

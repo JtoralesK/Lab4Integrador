@@ -160,9 +160,12 @@
 			cbLocalidad.innerHTML = '';
 			var localidades = [];
 			
-			<%for (localidad localidad : localidades){%>
+			<%for (localidad localidad : localidades){
+				if (localidad.getId() == clienteModificar.getDireccion().getLocalidad().getId()){%>
+				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%>, selected: true });
+				<%}else{%>
 				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
-			<%}%>
+			<%}}%>
 			
 	        localidades.forEach(function(localidad) {
 	        	if(localidad.id ==  selectedProvinciaId)
@@ -170,6 +173,10 @@
 		            var option = document.createElement('option');
 		            option.value = localidad.id;
 		            option.textContent = localidad.nombre;
+		            if(localidad.selected)
+	            	{
+		            	option.selected = true;
+	            	}
 		            cbLocalidad.appendChild(option);  		
         		}
 	        });
@@ -179,6 +186,8 @@
         <% if (hayClienteModificar && flagLocalidad) {%>
 			var cbProvincia = document.getElementById('cbProvincia');
 			var eventoCambio = new Event('change');
+			var txtCuil = document.getElementById('txtCuil');
+			formatCuil(txtCuil);
 			cbProvincia.dispatchEvent(eventoCambio);
 		<%flagLocalidad = false;
 		}%>
