@@ -62,7 +62,6 @@ public class servletCliente extends HttpServlet {
 					
 					session.setAttribute("lista", listaFiltrada);
 				}else {
-					System.out.println("subiendo lista a session");
 					session.setAttribute("lista", listaCompleta);
 				}
 				request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);

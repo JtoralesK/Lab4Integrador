@@ -21,7 +21,9 @@ public class servletPaginacion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
 		 * CARGAR EN SESSION LA LISTA A PAGINAR BAJO EL ATRIBUTO "lista"
-		 * 
+		 * DEVUELVE LA LISTA PAGINADA EN EL ATRIBUTO "listaPaginada"
+		 * EN LOS BOTONES PARA CAMBIAR DE PÁGINA LLAMAR AL SERVLET CON EL URLPARAM "page"
+		 * Y "redirectUrl" PARA A DONDE TIENE QUE REDIRIGIR
 		 */
 		
 		
