@@ -74,11 +74,11 @@ public class clienteDao {
         		"cuil = "+cliente.getCuil()+" ," + 
         		"nombre = '"+cliente.getNombre()+"' ," + 
         		"apellido = '"+cliente.getApellido()+"' ," + 
-        		"id_sexo = "+(cliente.getSexo().ordinal() - 1)+" ," + 
-        		"id_nacionalidad = "+cliente.getNacionalidad()+" ," + 
+        		"id_sexo = "+(cliente.getSexo().ordinal() + 1)+" ," + 
+        		"id_nacionalidad = "+cliente.getNacionalidad().getId() +" ," + 
         		"fecha_nacimiento = '"+cliente.getFechaNacimiento()+"' ," + 
-        		"direccion = '"+cliente.getDireccion()+"' ," + 
-        		"id_localidad = "+cliente.getDireccion().getLocalidad()+" ," + 
+        		"direccion = '"+cliente.getDireccion().getDireccion()+"' ," + 
+        		"id_localidad = "+cliente.getDireccion().getLocalidad().getId()+" ," + 
         		"mail = '"+cliente.getEmail()+"' ," + 
         		"telefono = "+cliente.getTelefono()+" " + 
         		"WHERE id_cliente = " + cliente.getId();

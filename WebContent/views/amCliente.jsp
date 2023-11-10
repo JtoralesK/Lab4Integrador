@@ -127,6 +127,9 @@
 			<div class="flex">
 				<button id="<%=hayClienteModificar ? "btnModificarCliente" : "btnCrearCliente"%>" name="<%=hayClienteModificar ? "btnModificarCliente" : "btnCrearCliente"%>" type="submit" class="bg-blue-500 text-white p-3 mt-5 rounded hover:bg-blue-700 ml-auto"><%=hayClienteModificar ? "Actualizar Cliente" : "Crear Cliente"%></button>
 			</div>
+			<% if (hayClienteModificar) {%>
+			<input type="hidden" id="idCliente" name="idCliente" value="<%=clienteModificar.getId()%>">
+			<%} %>	
 		</form>
 	</div>
 

@@ -55,7 +55,7 @@ CREATE TABLE clientes
 (
     id_cliente BIGINT AUTO_INCREMENT NOT NULL,
     dni int NOT NULL,
-    cuil int NOT NULL,
+    cuil BIGINT NOT NULL,
     nombre CHAR(50) NOT NULL,
     apellido CHAR(50) NOT NULL,
     id_sexo INT NOT NULL,

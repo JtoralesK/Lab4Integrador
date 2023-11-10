@@ -40,7 +40,7 @@ public class clienteNeg {
 		return clienteDao.eliminar(idCliente);
 	}
 	
-	public boolean actualizarCliente(String dniStr, String cuilStr, String nombre, String apellido, String sexoId, String nacionalidadId, String fechaNacimientoStr, String direccionStr, String localidadId, String provinciaId, String email, String telefonoStr)
+	public boolean actualizarCliente(String dniStr, String cuilStr, String nombre, String apellido, String sexoId, String nacionalidadId, String fechaNacimientoStr, String direccionStr, String localidadId, String provinciaId, String email, String telefonoStr, int idCliente)
 	{	
 		int dni = Integer.parseInt(dniStr);
 		Long cuil = Long.parseLong(cuilStr.replace("-", ""));
@@ -54,7 +54,7 @@ public class clienteNeg {
 		Long telefono = Long.parseLong(telefonoStr);
 		
 		cliente cliente = new cliente(direccion, dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, email, telefono);
-				
+		cliente.setId(idCliente);		
 		return clienteDao.actualizar(cliente);
 	}
 	

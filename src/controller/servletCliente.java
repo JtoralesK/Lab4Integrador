@@ -47,14 +47,15 @@ public class servletCliente extends HttpServlet {
 		
 		RellenarSelect(request);
 		clienteNeg clienteNeg = new clienteNeg();
-		if(request.getParameter("accion") != null) {
-			String accion = request.getParameter("accion");
+		if(request.getParameter("accion") != null || request.getAttribute("accion") != null) {
+			String accion = request.getParameter("accion") != null ? request.getParameter("accion") : request.getAttribute("accion").toString();
 			if("blCliente".equals(accion)) {
 				request.setAttribute("listadoClientes", clienteNeg.listarClientes());
 				request.getRequestDispatcher("/views/blCliente.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/views/amCliente.jsp").forward(request, response);
 			}
+			return;
 		}
 		
 	    if(request.getParameter("btnCrearCliente")!=null)
@@ -104,11 +105,12 @@ public class servletCliente extends HttpServlet {
 		    	request.setAttribute("modal", true);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
 				dispatcher.forward(request, response);
-	    	}	    	
+	    	}	  
+	    	return;
 
 	    }
         
-		if (request.getParameter("btnModificar") != null)
+		if (request.getParameter("btnModificarCliente") != null)
 		{
 	    	String dni = request.getParameter("txtDni");
 	    	String cuil = request.getParameter("txtCuil");
@@ -122,24 +124,39 @@ public class servletCliente extends HttpServlet {
 	    	String provincia = request.getParameter("cbProvincia");
 	    	String email = request.getParameter("txtEmail");
 	    	String telefono = request.getParameter("txtTelefono");
-	    	
-	    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia);		    	
+	    	int idCliente = Integer.parseInt(request.getParameter("idCliente"));
 
-			boolean updateCorrecto = clienteNeg.actualizarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
-    									, direccion, localidad, provincia, email, telefono);
-			if(updateCorrecto)
-			{
-	    		request.setAttribute("texto", "Cliente Modificado con exito");
-			}
-			else
-			{
-	    		request.setAttribute("texto", "No se pudo modificar el Cliente");
-			}
-			
-	    	request.setAttribute("modal", true);
-	    	
-	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/ProjectBeta1/blCliente.jsp");
-			dispatcher.forward(request, response);		
+	    	String textoAMostrar = "";
+	    	try
+	    	{
+		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia);		    	
+
+				boolean updateCorrecto = clienteNeg.actualizarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
+	    									, direccion, localidad, provincia, email, telefono, idCliente);
+				if(updateCorrecto)
+				{
+					textoAMostrar = "Cliente Modificado con exito";
+				}
+				else
+				{
+					textoAMostrar = "No se pudo modificar el Cliente";
+				}
+	    		request.setAttribute("accion", "amCliente");
+	    	}
+	    	catch (ArgumentoInvalidoException e)
+	    	{
+	    		textoAMostrar = e.getMessage();
+	    		e.printStackTrace();
+	    		request.setAttribute("accion", "blCliente");
+	    	}
+	    	finally
+	    	{
+	    		request.setAttribute("texto", textoAMostrar);
+		    	request.setAttribute("modal", true);
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("/servletCliente");
+				dispatcher.forward(request, response);
+	    	}
+	    	return;
 		}
 		
 		if (request.getParameter("modificar") != null) {
@@ -167,6 +184,7 @@ public class servletCliente extends HttpServlet {
 	    	
 	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/views/blCliente.jsp");
 			dispatcher.forward(request, response);	
+			return;
 		}
         
 	}
