@@ -20,6 +20,9 @@ import entidad.localidad;
 import entidad.nacionalidad;
 import entidad.provincia;
 import negocio.clienteNeg;
+import negocio.localidadNeg;
+import negocio.nacionalidadNeg;
+import negocio.provinciaNeg;
 import excepciones.ArgumentoInvalidoException;
 
 @WebServlet("/servletCliente")
@@ -242,13 +245,13 @@ public class servletCliente extends HttpServlet {
 		List<eSexo> sexos = Arrays.asList(eSexo.values());
 		request.setAttribute("sexos", sexos);
 		
-		List<nacionalidad> nacionalidades = new nacionalidadDao().listarNacionalidades();
+		List<nacionalidad> nacionalidades = new nacionalidadNeg().listarNacionalidades();
 		request.setAttribute("nacionalidades", nacionalidades);
 		
-		List<provincia> provincias = new provinciaDao().listarProvincias();
+		List<provincia> provincias = new provinciaNeg().listarProvincias();
 		request.setAttribute("provincias", provincias);
 
-		List<localidad> localidades = new localidadDao().listarLocalidades();
+		List<localidad> localidades = new localidadNeg().listarLocalidades();
 		request.setAttribute("localidades", localidades);
 	}
 	
