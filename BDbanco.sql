@@ -103,6 +103,7 @@ CREATE TABLE estado_prestamo
     CONSTRAINT PK_Estado_Prestamo PRIMARY KEY (id_estado)
 );
 ALTER TABLE estado_prestamo AUTO_INCREMENT = 0;
+
 CREATE TABLE tipo_movimientos
 (
     id_tipo_movimiento INT AUTO_INCREMENT NOT NULL,
@@ -141,23 +142,18 @@ CREATE TABLE prestamos
 );
 ALTER TABLE prestamos AUTO_INCREMENT = 1;
 
-CREATE TABLE prestamos_movimientos
+CREATE TABLE pagos_prestamos
 (
     id_prestamo BIGINT  NOT NULL,
     id_movimiento BIGINT NOT NULL,
+    fecha DATE NOT NULL,
+    cuota INT NOT NULL,
     CONSTRAINT PK_Prestamos_Movimientos PRIMARY KEY (id_prestamo, id_movimiento),
     CONSTRAINT FK_Prestamos_MovimientosXMovimientos FOREIGN KEY (id_movimiento) REFERENCES movimientos (id_movimiento),
     CONSTRAINT FK_Prestamos_MovimientosXPrestamos FOREIGN KEY (id_prestamo) REFERENCES prestamos (id_prestamo)
 );
 
-CREATE TABLE transferencias
-(
-    id_movimiento_origen BIGINT NOT NULL,
-    id_movimiento_destino BIGINT NOT NULL,
-    CONSTRAINT PK_Transferencias PRIMARY KEY (id_movimiento_origen, id_movimiento_destino),
-    CONSTRAINT FK_TransferenciasXMovimientoCuentaOrigen FOREIGN KEY (id_movimiento_origen) REFERENCES movimientos (id_movimiento),
-    CONSTRAINT FK_TransferenciasXMovimientoCuentaDestino FOREIGN KEY (id_movimiento_destino) REFERENCES movimientos (id_movimiento)
-);
+
 /*************************************************************************************************************************************************************************
 DATOS
 *************************************************************************************************************************************************************************/
@@ -187,8 +183,7 @@ SELECT "Santa Fe" union
 SELECT "Santiago del Estero" union
 SELECT "Tierra del Fuego" union
 SELECT "Tucumán";
-select * from provincias;
-/*
+
 /*****************************************************************************/
 INSERT INTO  localidades(id_provincia,localidad)
 select 1,"Bs.As" union
@@ -206,7 +201,6 @@ select 16,"Salta" union
 select 17,"San Juan" union
 select 20,"Santa Fe" union
 select 22,"Ushuaia";
- select * from localidades;
  
 /**************************************************************************/
 INSERT INTO  nacionalidades(nacionalidad)
@@ -225,12 +219,12 @@ select "Boliviano" union
 select "Ucraniano" union
 select "Italiano" union
 select "Español";
-select * from nacionalidades;
+
 /********************************************************************************************/
 INSERT INTO  tipo_usuarios(rol)
 select "Administrador" union
 select "cliente";
-select * from tipo_usuarios;
+
 /*********************************************************************************************/
 INSERT INTO  usuarios(usuario,contraseña,id_tipo_usuario,estado)
 select "Jean5011","50111",1,1 union
@@ -257,15 +251,15 @@ select "Walter1987","5645546",2,1 union
 select "Gabiii","786538",2,1 union
 select "Martu505","5435487",2,1 union
 select "Jefe","12345",1,1;
-select * from usuarios;
+
 /****************************************************************/
-INSERT INTO  Sexos(descripcion)
+INSERT INTO  sexos(descripcion)
 select "Masculino" Union
 select "Femenino " Union
 select "Trans M" Union
 select "Trans F" Union
 select "Indefinido";
-select * from  Sexos;
+
 /*****************************************************************/
 INSERT INTO  clientes(dni,cuil,nombre,apellido,id_sexo,id_nacionalidad,fecha_nacimiento,direccion,id_localidad,mail,telefono,id_usuario)
 select 7898,2078981,"Jean","Esquen",1,2,"2002-09-01","Urquiza 1126",1,"jeanesuqen@gmail.com",1153535,5 union
@@ -283,12 +277,12 @@ select 54654,20546541,"Carla","Fonseca",5,5,"1985-05-05","Congreso 2455",3,"Carl
 select 6456,2064561,"Mariano","Ramirez",5,4,"2000-10-19","Palermo 3545",5,"Mramirez@gmail.com",1155665,17 union
 select 54645,20546451,"Rut","Nah",2,15,"2000-11-03","Peru 2455",7,"Rut1234@gmail.com",1123205,18 union
 select 64564,20645641,"Flor","Arispe",2,14,"2001-09-07","Mexico 3545",6,"Farispe@hotmail.com",1189654,15;
-select * from clientes;
+
 /*******************************************************************************************************************************/
 INSERT INTO  tipo_cuentas(nombre)
 select "Caja de Ahorros" union
 select "Cuenta Corriente";
-select * from tipo_cuentas;
+
 /************************************************************************************************************************************/
 INSERT INTO  cuentas(n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado)
 select 1,101,1,110000,"2020-01-01","456546",1 union
@@ -314,20 +308,20 @@ select 2,110,2,5615565,"2021-08-01","565665",1 union
 select 1,113,1,55456,"2022-03-03","125555",1 union
 select 1,111,1,125555,"2022-05-02","154553",1 union
 select 3,114,2,2555333,"2021-01-08","552258",1;
-select * from cuentas;
+
 /***************************************************************/
 INSERT INTO  estado_prestamo(descripcion)
 select "Rechazado" union
 select "Aceptado" union
 select "Pendiente";
-select * from estado_prestamo;
+
 /****************************************************************/
 INSERT INTO tipo_movimientos(descripcion)
 SELECT "Transferencia" UNION
 SELECT "Alta de un préstamo" UNION
 SELECT "Alta de cuenta" UNION
 SELECT "Pago de préstamo";
-select * from tipo_movimientos;
+
 /***********************************************************************************/
 INSERT INTO movimientos(n_cuenta,id_cliente,id_tipo_movimiento,fecha,hora,importe)
 select 1,101,2,"2023-02-08","11:00:00",1256 union
@@ -380,7 +374,7 @@ select 1,102,1,"2023-02-27","15:12:00",5552 union
 select 1,113,3,"2023-02-28","22:30:00",5000 union
 select 3,114,3,"2023-03-01","23:30:00",1000 union
 select 2,106,1,"2023-03-02","10:20:00",3211;	
-select * from movimientos;
+
 /********************************************************/
 INSERT INTO prestamos(n_cuenta,id_cliente,importe,fecha_solicitud,Plazo,fecha_aprobacion,id_estado)
 select 1,101,1256,"2023-01-12",1,"2023-02-08",2 union
@@ -398,40 +392,21 @@ select 3,115,9945,"2023-11-02",1,"2023-11-02",1 union
 select 3,101,3225,"2023-06-10",1,"2023-06-19",2 union
 select 3,102,1698,"2023-10-22",10,"2023-10-22",1 union
 select 3,101,1596,"2023-05-17",4,"2023-05-17",1;
-select * from prestamos;
+
 /************************************************************************************/
-INSERT INTO prestamos_movimientos(id_prestamo,id_movimiento)
-select 1,1 union
-select 2,2 union
-select 3,3 union
-select 4,4 union
-select 5,5 union
-select 6,6 union
-select 7,7 union
-select 8,8 union
-select 9,9 union
-select 10,10 union
-select 11,11 union
-select 12,12 union
-select 13,13 union
-select 14,14 union
-select 15,15;
-select * from prestamos_movimientos;
-/************************************************************************************/
-INSERT INTO transferencias(id_movimiento_origen,id_movimiento_destino)
-select 16,31 Union
-select 17,32 Union
-select 18,33 Union
-select 19,34 Union
-select 20,35 Union
-select 21,36 Union
-select 22,37 Union
-select 23,38 Union
-select 24,39 Union
-select 25,40 Union
-select 26,41 Union
-select 27,42 Union
-select 28,43 Union
-select 29,44 Union
-select 30,45; 
-select * from transferencias;
+INSERT INTO pagos_prestamos(id_prestamo,id_movimiento,fecha,cuota)
+select 1,1,"2023-11-09",1 union
+select 2,2,"2023-04-09",2 union
+select 3,3,"2023-05-14",3 union
+select 4,4,"2023-08-08",4 union
+select 5,5,"2023-02-20",5 union
+select 6,6,"2023-11-09",6 union
+select 7,7,"2023-11-09",6 union
+select 8,8,"2023-11-09",5 union
+select 9,9,"2023-11-09",4 union
+select 10,10,"2023-08-08",3 union
+select 11,11,"2023-10-30",2 union
+select 12,12,"2023-12-23",1 union
+select 13,13,"2023-11-09",2 union
+select 14,14,"2023-02-20",3 union
+select 15,15,"2023-11-09",4;
