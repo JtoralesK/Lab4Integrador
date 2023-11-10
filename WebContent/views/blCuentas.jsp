@@ -14,6 +14,7 @@
 <jsp:include page="head.jsp" />
 </head>
 <body class="bg-gray-100">
+    <jsp:include page="navbar.jsp" />
 
        <div class="container mx-auto py-4">
         <h1 class="text-2xl font-semibold mb-4 text-center">Administración de Cuentas de Clientes</h1>
