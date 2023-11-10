@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import datos.localidadDao;
 import datos.nacionalidadDao;
@@ -53,8 +54,18 @@ public class servletCliente extends HttpServlet {
 		if(request.getParameter("accion") != null || request.getAttribute("accion") != null) {
 			String accion = request.getParameter("accion") != null ? request.getParameter("accion") : request.getAttribute("accion").toString();
 			if("blCliente".equals(accion)) {
-				request.setAttribute("listadoClientes", clienteNeg.listarClientes());
-				request.getRequestDispatcher("/views/blCliente.jsp").forward(request, response);
+				HttpSession session = request.getSession();
+				List<cliente> listaCompleta = clienteNeg.listarClientes();
+				if(request.getParameter("filter") != null) {
+					//filtrar lista
+					List<cliente> listaFiltrada = listaCompleta;
+					
+					session.setAttribute("lista", listaFiltrada);
+				}else {
+					System.out.println("subiendo lista a session");
+					session.setAttribute("lista", listaCompleta);
+				}
+				request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/views/amCliente.jsp").forward(request, response);
 			}
