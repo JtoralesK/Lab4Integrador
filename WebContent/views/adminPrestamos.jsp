@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="entidad.prestamo" %>
+<%@ page import="entidad.eEstadoPrestamo" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Arrays" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <%
 	request.setAttribute("titulo", "Administrar Prestamos");
+	List<prestamo> prestamos = (List<prestamo>)request.getAttribute("prestamos");
 %>
 <jsp:include page="head.jsp" />
 </head>
@@ -16,7 +22,6 @@
             <thead>
                 <tr>
                     <th class="border-b-2 p-2">Cliente</th>
-                    <th class="border-b-2 p-2">Scoring</th>
                     <th class="border-b-2 p-2">Fecha de Solicitud</th>
                     <th class="border-b-2 p-2">Importe Total</th>
                     <th class="border-b-2 p-2">Importe por Cuota</th>
@@ -26,52 +31,25 @@
                 </tr>
             </thead>
             <tbody>
+            <%for (prestamo prestamo : prestamos) {%>
                 <tr>
-                    <td class="p-2 text-center">887410233</td>
-                    <td class="p-2 text-center">903</td>
-                    <td class="p-2 text-center">10/11/23</td>
-                    <td class="p-2 text-center">$250</td>
-                    <td class="p-2 text-center">$100</td>
-                    <td class="p-2 text-center">3</td>
-                    <td class="p-2 text-center text-yellow-600">Pendiente</td>
+                    <td class="p-2 text-center"><%=prestamo.getIdCliente()%></td>
+                    <td class="p-2 text-center"><%=prestamo.getFechaSolicitud()%></td>
+                    <td class="p-2 text-center">$<%=prestamo.getImporte()%></td>
+                    <td class="p-2 text-center">$<%=(prestamo.getImporte() * prestamo.getInteres()) / prestamo.getPlazo()%></td>
+                    <td class="p-2 text-center"><%=prestamo.getPlazo()%></td>
+                    <td class="p-2 text-center <%=prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aceptado ? "text-green-600" 
+                    		: prestamo.getEstadoPrestamo() == eEstadoPrestamo.Rechazado ? "text-red-600"
+                    		: "text-yellow-600"%>"><%=prestamo.getEstadoPrestamo()%></td>
                     <td class="p-2 text-center">
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Aprobar</button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Rechazar</button>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : ""%> ">Aprobar</button>
+                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : ""%>">Rechazar</button>
                     </td>
-                </tr>
-                <tr>
-                    <td class="p-2 text-center">9848394</td>
-                    <td class="p-2 text-center">700</td>
-                    <td class="p-2 text-center">10/11/23</td>
-                    <td class="p-2 text-center">$250</td>
-                    <td class="p-2 text-center">$100</td>
-                    <td class="p-2 text-center">3</td>
-                    <td class="p-2 text-center text-green-600">Aprobado</td>
-                    <td class="p-2 text-center">
-						<button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed" disabled>Aprobar</button>
-						<button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed" disabled>Rechazar</button>
-					</td>
-                </tr>
-                <tr>
-                    <td class="p-2 text-center">8874155564</td>
-                    <td class="p-2 text-center">1500</td>
-                    <td class="p-2 text-center">10/11/23</td>
-                    <td class="p-2 text-center">$250</td>
-                    <td class="p-2 text-center">$100</td>
-                    <td class="p-2 text-center">3</td>
-                    <td class="p-2 text-center text-yellow-600">Preaprobado</td>
-                    <td class="p-2 text-center">
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" disabled>Aprobar</button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" disabled>Rechazar</button>
-                    </td>
-                </tr>
-                
-                <%request.setAttribute("texto", "¡Prestamo aprobado!");%>
-				<%request.setAttribute("modal", true);%>
-				
-				<jsp:include page="modal.jsp" />
+                </tr>    
+             <%} %>            				
             </tbody>
         </table>
     </div>
+	<jsp:include page="modal.jsp" />
 </body>
 </html>

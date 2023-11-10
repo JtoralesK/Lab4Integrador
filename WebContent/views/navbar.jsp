@@ -43,7 +43,7 @@
 	
 	<a href="/ProjectBeta1/views/cuenta.jsp">Cuentas</a>
 	<a href="/ProjectBeta1/views/transferencia.jsp">Transferencia</a>
-	<a href="/ProjectBeta1/views/prestamo.jsp">Prestamos</a>
+	<a href="<%= request.getContextPath() %>/servletPrestamos">Prestamos</a>
 	<%}%>
 
 	</div>

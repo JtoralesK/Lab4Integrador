@@ -135,7 +135,8 @@ CREATE TABLE prestamos
     fecha_solicitud DATE NOT NULL,
     id_estado INT NOT NULL,
     plazo INT NOT NULL,
-    fecha_aprobacion DATE,
+    fecha_revision DATE,
+    interes DECIMAL(3,2) DEFAULT 1.15 NOT NULL,
     CONSTRAINT PK_Prestamos PRIMARY KEY (id_prestamo),
     CONSTRAINT FK_prestamosXCuentas FOREIGN KEY (n_cuenta,id_cliente) REFERENCES cuentas (n_cuenta,id_cliente),
     CONSTRAINT FK_PrestamosXestado_prestamo FOREIGN KEY (id_estado) REFERENCES estado_prestamo(id_estado)
@@ -376,7 +377,7 @@ select 3,114,3,"2023-03-01","23:30:00",1000 union
 select 2,106,1,"2023-03-02","10:20:00",3211;	
 
 /********************************************************/
-INSERT INTO prestamos(n_cuenta,id_cliente,importe,fecha_solicitud,Plazo,fecha_aprobacion,id_estado)
+INSERT INTO prestamos(n_cuenta,id_cliente,importe,fecha_solicitud,Plazo,fecha_revision,id_estado)
 select 1,101,1256,"2023-01-12",1,"2023-02-08",2 union
 select 1,103,1589,"2023-08-19",3,"2023-08-19",2 union
 select 1,107,1662,"2023-09-23",6,"2023-09-23",2 union
