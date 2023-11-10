@@ -9,7 +9,8 @@ public class cuenta {
 	private double saldo;
 	private LocalDate fecha_creacion;
 	private String cbu;
-	
+	private boolean estado;
+
 	public cuenta () {
 		
 	}
@@ -71,10 +72,18 @@ public class cuenta {
 	public void setCbu(String cbu) {
 		this.cbu = cbu;
 	}
+	public boolean isEstado() {
+		return estado;
+	}
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
 	@Override
 	public String toString() {
 		return "cuenta [id_cuenta=" + id_cuenta + ", id_cliente=" + id_cliente + ", id_tipo_cuenta=" + id_tipo_cuenta
-				+ ", saldo=" + saldo + ", fecha_creacion=" + fecha_creacion + ", cbu=" + cbu + "]";
+				+ ", saldo=" + saldo + ", fecha_creacion=" + fecha_creacion + ", cbu=" + cbu + ", estado=" + estado
+				+ "]";
 	}
+
 	
 }
