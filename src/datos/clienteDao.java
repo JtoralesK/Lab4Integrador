@@ -11,16 +11,11 @@ import java.util.List;
 
 import datos.localidadDao;
 import datos.nacionalidadDao;
-import datos.provinciaDao;
 
 import entidad.Usuario;
 import entidad.cliente;
 import entidad.direccion;
 import entidad.eSexo;
-import entidad.eTipoUsuario;
-import entidad.localidad;
-import entidad.nacionalidad;
-import entidad.provincia;
 import negocio.UsuarioNeg;
 
 public class clienteDao {
