@@ -19,13 +19,7 @@
 
        <div class="container mx-auto py-4">
         <h1 class="text-2xl font-semibold mb-4 text-center">Administración de Cuentas de Clientes</h1>
-        <!-- Filtros de búsqueda y botón de agregar cuenta -->
-        <div class="flex justify-center">
-		<div class="w-11/12 flex justify-between">
-            <h2 class="text-lg font-semibold">Filtros</h2>
-            <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Agregar Cuenta</button>
-        </div>
-        </div>
+      
         <!-- Filtros de búsqueda dentro de un formulario -->
        <form method="get" action="<%= request.getContextPath() %>/servletCuenta" class="flex justify-center mb-4">
     <div class="w-11/12">
@@ -50,7 +44,8 @@
                     <th class="border-b-2 p-2">Saldo</th>
                		<th class="border-b-2 p-2">Fecha creacion</th>
                     <th class="border-b-2 p-2">Cbu</th>
-                   	<th class="border-b-2 p-2"></th> 
+                   	<th class="border-b-2 p-4"></th> 
+                   	<th class="border-b-2 p-4"></th> 
                 </tr>
             </thead>
     </thead>
@@ -72,7 +67,14 @@
             <td class="p-2 text-center"><%= cuenta.getFecha_creacion() %></td>
             <td class="p-2 text-center text-green-600"><%= cuenta.getCbu() %></td>
             <td class="p-2 text-center">
+                <form>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnModificar">Ver/Editar</button>
+                </form>
+            </td>  
+             <td class="p-2 text-center">
+                <form>
                 <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
+                </form>
             </td>
         </tr>
     <% } %>

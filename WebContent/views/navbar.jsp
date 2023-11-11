@@ -31,10 +31,20 @@
 		    </div>
 		</div>
         <a href="/ProjectBeta1/views/adminPrestamos.jsp">Prestamos</a>
-        <form method="get" action="<%= request.getContextPath() %>/servletCuenta">
-         <input type="hidden" name="accion" value="blCuentas">
-		 <button >Cuentas</button>
-        </form>
+        <div class="relative group">
+		    <button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
+		    <div class="hidden absolute bg-white group-hover:block">
+		        <form method="get" action="<%= request.getContextPath() %>/servletCuenta">
+		            <input type="hidden" name="accion" value="blCuentas">
+		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Listar Cuentas</button>
+		        </form>
+		        <form method="post" action="<%= request.getContextPath() %>/servletCuenta">
+		            <input type="hidden" name="accion" value="altaCliente">
+		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Alta de Cuenta</button>
+		        </form>
+		    </div>
+		</div>
+       
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Informes</button>
 		    <div class="hidden absolute bg-white group-hover:block">
