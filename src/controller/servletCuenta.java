@@ -40,11 +40,23 @@ public class servletCuenta extends HttpServlet {
 			if("blCuentas".equals(accion)) {
 				HttpSession session = request.getSession();
 				List<cuenta> listaCompleta = ctaDao.selectAll();
-				if(request.getParameter("filter") != null) {
+				if(request.getParameter("filter") != null || (request.getParameter("filterCbu") != null )) {
 					//filtrar lista
-					String valorAccion = request.getParameter("filter");
-					List<cuenta> listaFiltrada = ctaDao.selectAllByTypeOf(Integer.parseInt(valorAccion)==1?eTipoCuenta.CajaDeAhorro:eTipoCuenta.CuentaCorriente);
+					String cbu = "";
+					if(!request.getParameter("filterCbu").isEmpty()) {
+						cbu = request.getParameter("filterCbu");
+					}
+					eTipoCuenta tipoCuenta = null;
+					if(request.getParameter("filter") != null) {
+						tipoCuenta = Integer.parseInt(request.getParameter("filter"))==1?eTipoCuenta.CajaDeAhorro:eTipoCuenta.CuentaCorriente;
+					}
+					// si algunos de los 2 es verdadero, se filtra
+					List<cuenta> listaFiltrada = ctaDao.selectAllByTypeOf(tipoCuenta,cbu);
 					
+					//si se ingreso el cbu pero esta vacio y el tipo de cuenta es null, se devuelve la lista completa
+					if(request.getParameter("filterCbu").isEmpty() && request.getParameter("filter") == null) {
+						listaFiltrada = ctaDao.selectAll();// => lista completa
+					}
 					session.setAttribute("lista", listaFiltrada);
 				}else {
 					session.setAttribute("lista", listaCompleta);

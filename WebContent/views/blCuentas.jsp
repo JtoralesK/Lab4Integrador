@@ -30,7 +30,7 @@
        <form method="get" action="<%= request.getContextPath() %>/servletCuenta" class="flex justify-center mb-4">
     <div class="w-11/12">
      <input type="hidden" name="accion" value="blCuentas">
-        <input type="text" placeholder="cbu" name="cbu" class="w-64 border border-gray-300 rounded-md p-2">
+        <input type="text" placeholder="cbu" name="filterCbu" class="w-64 border border-gray-300 rounded-md p-2">
         <select id="cuenta" name="filter" class="w-64 border border-gray-300 rounded-md p-2">
             <option value="blCuentas" disabled selected>Tipo de cuenta</option>
             <option value="1">Caja de ahorro</option>
@@ -70,7 +70,7 @@
             <td class="p-2 text-center"><%= cuenta.getId_tipo_cuenta() %></td>
             <td class="p-2 text-center"><%= cuenta.getSaldo() %></td>
             <td class="p-2 text-center"><%= cuenta.getFecha_creacion() %></td>
-            <td class="p-2 text-center text-gray-400"><%= cuenta.getCbu() %></td>
+            <td class="p-2 text-center text-green-600"><%= cuenta.getCbu() %></td>
             <td class="p-2 text-center">
                 <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
             </td>
