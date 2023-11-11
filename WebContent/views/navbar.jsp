@@ -31,7 +31,10 @@
 		    </div>
 		</div>
         <a href="/ProjectBeta1/views/adminPrestamos.jsp">Prestamos</a>
-        <a href="<%= request.getContextPath() %>/sevletCuentasPagination">Cuentas</a>
+        <form method="get" action="<%= request.getContextPath() %>/servletCuenta">
+         <input type="hidden" name="accion" value="blCuentas">
+		 <button >Cuentas</button>
+        </form>
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Informes</button>
 		    <div class="hidden absolute bg-white group-hover:block">
