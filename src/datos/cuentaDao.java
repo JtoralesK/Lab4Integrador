@@ -78,6 +78,28 @@ public class cuentaDao {
 		return cuentas;
 	}
 
+	public List<cuenta> selectAllByOneClient(int id_Cliente) {
+		List<cuenta> cuentas = new ArrayList<>();
+		Connection connection = cn.Open();
+		String query = "select n_cuenta,cuentas.id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,cuentas.estado from usuarios\r\n"
+				+ "inner join clientes on usuarios.id_usuario = clientes.id_usuario \r\n"
+				+ "inner join cuentas on clientes.id_cliente = cuentas.id_cliente where usuarios.id_usuario = ?";
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, id_Cliente);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				cuenta cta = mapResultSetToCuenta(rs);
+				cuentas.add(cta);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
+		return cuentas;
+	}
+
 	public boolean insert(cuenta cta) {
 		boolean estado = true;
 		Connection connection = cn.Open();
