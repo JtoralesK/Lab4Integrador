@@ -66,5 +66,12 @@ public class clienteNeg {
 	public List<cliente> listarClientes() {
 	    return clienteDao.listarClientes();
 	}
-
+	public String obtenerPassword(int idCliente)
+	{						
+		return clienteDao.obtenerPassword(idCliente);
+	}
+	public Boolean actualizarPassword(int idCliente, String nuevaPassword)
+	{						
+		return clienteDao.actualizarPassword(idCliente, nuevaPassword);
+	}
 }

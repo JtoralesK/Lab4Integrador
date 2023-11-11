@@ -199,7 +199,52 @@ public class servletCliente extends HttpServlet {
 			dispatcher.forward(request, response);	
 			return;
 		}
-        
+		
+		if(request.getParameter("btnCambiarContraseña")!=null)
+		{
+	    	int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+	    	String clientePassword = clienteNeg.obtenerPassword(idCliente);
+	    	String passwordActual = request.getParameter("txtContraseñaActual");
+	    	String nuevaPassword = request.getParameter("txtNuevaContraseña");
+	    	String repetirPassword = request.getParameter("txtContraseñaRepetida");
+	    	String textoAMostrar = "";
+	    	try
+	    	{
+		    	if (!clientePassword.equals(passwordActual))
+		    	{
+		    		throw new ArgumentoInvalidoException("Error al ingresar la contraseña actual");
+		    	}
+		    	if (!nuevaPassword.equals(repetirPassword))
+		    	{
+		    		throw new ArgumentoInvalidoException("La nueva contraseña ingresada no coincide con la repetida");
+		    	}
+		    	if (!clientePassword.equals(nuevaPassword))
+		    	{
+		    		throw new ArgumentoInvalidoException("La nueva contraseña no puede ser igual a la contraseña actual");
+		    	}
+		    	if (clienteNeg.actualizarPassword(idCliente, nuevaPassword))
+		    	{
+		    		textoAMostrar = "La contraseña se ha modificado con exito";
+		    	}
+		    	else
+		    	{
+		    		textoAMostrar = "La contraseña no pudo ser modificada";
+		    	}
+	    	}
+	    	catch (ArgumentoInvalidoException e)
+	    	{
+	    		textoAMostrar = e.getMessage();
+	    		e.printStackTrace();
+    		}
+	    	finally
+	    	{
+	    		request.setAttribute("texto", textoAMostrar);
+		    	request.setAttribute("modal", true);
+	    		request.setAttribute("accion", "amCliente");
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("/servletCliente");
+				dispatcher.forward(request, response);
+	    	}	    	
+		}       
 	}
 	
 	public boolean ValidarDatosCliente(String dni, String cuil, String nombre, String apellido, String email, String localidad, String provincia) throws ArgumentoInvalidoException 
