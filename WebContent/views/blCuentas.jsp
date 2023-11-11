@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="datos.cuentaDao" %>
 <%@ page import="entidad.cuenta" %>
+<%@ page import="entidad.eTipoCuenta" %>
 <%@page import="java.util.List"%>
 <%
 %>
@@ -26,17 +27,18 @@
         </div>
         </div>
         <!-- Filtros de búsqueda dentro de un formulario -->
-        <form method="post" class="flex justify-center mb-4">
-            <div class="w-11/12 ">
-                <input type="text" id="filtroNombre" name="filtroNombre" placeholder="Filtrar" class="w-64 border border-gray-300 rounded-md p-2">
-                <select id="cuenta" name="cuenta" class="w-64 border border-gray-300 rounded-md p-2">
-                	<option value="" disabled selected>Tipo de cuenta</option>
-                    <option value="ca">Caja de ahorro</option>
-                    <option value="cc">Cuenta corriente</option>
-                </select>
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Buscar</button>
-            </div>
-        </form>
+       <form method="get" action="<%= request.getContextPath() %>/servletCuenta" class="flex justify-center mb-4">
+    <div class="w-11/12">
+     <input type="hidden" name="accion" value="blCuentas">
+        <input type="text" placeholder="cbu" name="cbu" class="w-64 border border-gray-300 rounded-md p-2">
+        <select id="cuenta" name="filter" class="w-64 border border-gray-300 rounded-md p-2">
+            <option value="blCuentas" disabled selected>Tipo de cuenta</option>
+            <option value="1">Caja de ahorro</option>
+            <option value="2">Cuenta corriente</option>
+        </select>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Buscar</button>
+    </div>
+</form>
         <!-- Listado de cuentas -->
   <table class="w-11/12 bg-white p-4 shadow-md rounded-md mb-8 mx-auto table-fixed">
     <thead>
@@ -54,10 +56,12 @@
     </thead>
     <tbody>
     <% 
-    List<cuenta> cuentas = (List<cuenta>) request.getAttribute("cuentas");
-	  System.out.println((int) request.getAttribute("cantReg"));
+    request.setAttribute("titulo", "Cuenta");
+	int paginaActual = (Integer) request.getAttribute("paginaActual");
+	int totalPaginas = (Integer) request.getAttribute("totalPaginas");
+	List<cuenta> listadoCuentas = (List<cuenta>) request.getAttribute("listaPaginada");
 
-    for (cuenta cuenta : cuentas) { 
+    for (cuenta cuenta : listadoCuentas) { 
     %>
   
         <tr>
@@ -74,10 +78,7 @@
     <% } %>
     </tbody>
 </table>
- <div class="flex justify-center">
-    <a href="?page=<%= (int) request.getAttribute("page") - 5  %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Anterior</a>
-    <a href="?page=<%=  (int) request.getAttribute("page")+ 5  %>" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Siguiente</a>
-</div>       
+     
     </div>
 </body>
 </html>
