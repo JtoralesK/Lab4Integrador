@@ -42,8 +42,11 @@
                     		: prestamo.getEstadoPrestamo() == eEstadoPrestamo.Rechazado ? "text-red-600"
                     		: "text-yellow-600"%>"><%=prestamo.getEstadoPrestamo()%></td>
                     <td class="p-2 text-center">
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : ""%> ">Aprobar</button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : ""%>">Rechazar</button>
+                    <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
+                    	<input type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>">
+                        <button <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : "" %> id="btnAprobar" name="btnAprobar" class="text-white px-4 py-2 rounded-md  <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"%> ">Aprobar</button>       
+                        <button <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : "" %> id="btnRechazar" name="btnRechazar" class="text-white px-4 py-2 rounded-md  <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "bg-gray-400" : "bg-red-500 hover:bg-red-600"%>">Rechazar</button>
+                    </form>
                     </td>
                 </tr>    
              <%} %>            				

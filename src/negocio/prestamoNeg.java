@@ -11,4 +11,7 @@ public class prestamoNeg {
 	public List<prestamo> listar(){
 		return prestamoDao.listar();
 	}
+	public boolean actualizar(prestamo prestamo){
+		return prestamoDao.actualizar(prestamo);
+	}
 }

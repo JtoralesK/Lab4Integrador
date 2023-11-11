@@ -30,7 +30,10 @@
 		        </form>
 		    </div>
 		</div>
-        <a href="/ProjectBeta1/views/adminPrestamos.jsp">Prestamos</a>
+       <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
+           <input type="hidden" name="accion" value="adminPrestamo">
+           <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</button>
+       </form>
         <div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
 		    <div class="hidden absolute bg-white group-hover:block">
@@ -56,8 +59,10 @@
 	
 	<a href="/ProjectBeta1/views/cuenta.jsp">Cuentas</a>
 	<a href="/ProjectBeta1/views/transferencia.jsp">Transferencia</a>
-	<a href="<%= request.getContextPath() %>/servletPrestamos">Prestamos</a>
-	<%}%>
+       <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
+           <input type="hidden" name="accion" value="clientePrestamo">
+           <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</button>
+       </form>	<%}%>
 
 	</div>
 	</div>

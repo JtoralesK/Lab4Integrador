@@ -70,9 +70,9 @@ public class PrestamoDao {
             			rs.getLong("n_cuenta"),
             			rs.getFloat("importe"),
             			LocalDate.parse(rs.getString("fecha_solicitud"), formatter),
-            			eEstadoPrestamo.values()[rs.getInt("id_sexo") - 1],
+            			eEstadoPrestamo.values()[rs.getInt("id_estado") - 1],
             			rs.getInt("plazo"),
-            			LocalDate.parse(rs.getString("fechaRevision"), formatter)
+            			LocalDate.parse(rs.getString("fecha_Revision"), formatter)
         			);
             	prestamo.setId(rs.getLong("id_prestamo"));
             	prestamo.setCuotasPagas(rs.getInt("cuotasPagas"));
@@ -99,14 +99,11 @@ public class PrestamoDao {
 		boolean estado=true;
 
 		cn = new conexion();
-		Connection connection  = cn.Open();	
-		String query = "UPDATE prestamos SET id_estado = ? WHERE id_prestamo = ?";
+		cn.Open();	
+		String query = "UPDATE prestamos SET id_estado = "+ (prestamo.getEstadoPrestamo().ordinal() + 1) + " WHERE id_prestamo = " + prestamo.getId();
 		
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
+        try  
         {		
-            preparedStatement.setInt(1, prestamo.getEstadoPrestamo().ordinal() + 1);
-            preparedStatement.setLong(2, prestamo.getId());
-
 			estado=cn.execute(query);
 		}
 		catch(Exception e)
