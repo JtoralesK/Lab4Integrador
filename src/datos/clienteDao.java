@@ -93,10 +93,16 @@ public class clienteDao {
         
 		cn = new conexion();
         cn.Open();
-        UsuarioNeg usuarioNeg = new UsuarioNeg();
-        cliente cl = this.obtenerPorId(idCliente);
-        Usuario usuario = usuarioNeg.getUsuarioPorNombre(cl.getUsuario());
-        estado = usuarioNeg.bajaUsuario(usuario);
+        try {
+			UsuarioNeg usuarioNeg = new UsuarioNeg();
+			cliente cl = this.obtenerPorId(idCliente);
+			Usuario usuario = usuarioNeg.getUsuarioPorNombre(cl.getUsuario());
+			estado = usuarioNeg.bajaUsuario(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
         return estado;   
     }
     
@@ -143,7 +149,7 @@ public class clienteDao {
         return cliente;
     }
     
-    public List<cliente> listarClientes() {
+    public List<cliente> listarClientes(boolean activo) {
         List<cliente> clientes = new ArrayList<>();
         cn = new conexion();
         Connection connection = cn.Open();
@@ -159,8 +165,7 @@ public class clienteDao {
 
             while (rs.next()) {
             	boolean estado = rs.getBoolean("estado");
-            	System.out.println(rs.getInt("id_sexo"));
-                if (estado) {
+                if (activo == estado) {
                     cliente cliente = new cliente(
                         new direccion(rs.getString("direccion"), new localidadDao().obtenerUno(rs.getInt("id_localidad"))),
                         rs.getInt("dni"),
@@ -174,6 +179,8 @@ public class clienteDao {
                         rs.getLong("telefono")
                     );
                     cliente.setId(rs.getInt("id_cliente"));
+                    cliente.setEstado(rs.getBoolean("estado"));
+                    cliente.setUsuario(rs.getString("usuario"));
                     clientes.add(cliente);
                 }
             }
@@ -184,6 +191,9 @@ public class clienteDao {
             cn.close();
         }
         return clientes;
+    }
+    public List<cliente> listarClientes() {
+    	return listarClientes(true);
     }
 
     public String obtenerPassword(int idCliente) {

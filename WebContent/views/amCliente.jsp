@@ -27,7 +27,7 @@
 %>
 	<jsp:include page="navbar.jsp" />
 
-	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded mt-4">
+	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded m-4">
 		<h1 class="text-2xl font-semibold mb-4 text-center"><%=hayClienteModificar ? "Modificar cliente" : "Registro de Cliente"%></h1>
 		<form action="/ProjectBeta1/servletCliente" method="post">
 			<div class="grid grid-cols-2 gap-4">
@@ -192,6 +192,7 @@
 			cbLocalidad.innerHTML = '';
 			var localidades = [];
 			
+
 			<%
 			int idLocalidadCliente = hayClienteModificar ? clienteModificar.getDireccion().getLocalidad().getId() : -1;
 			for (localidad localidad : localidades){
