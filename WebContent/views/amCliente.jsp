@@ -90,7 +90,7 @@
 							<option value="<%=provincia.getId()%>"><%=provincia.getNombre()%></option>
 						<%} %>
 					<%} %>
-
+	
 					</select>
 				</div>
 				<div>
@@ -158,7 +158,7 @@
         </div>
 
         <div class="flex justify-between">
-          <input type="hidden" id="idCliente" name="idCliente" value="<%=clienteModificar.getId()%>">
+          <input type="hidden" id="idClientePassword" name="idClientePassword" value="<%=hayClienteModificar ? clienteModificar.getId() : -1%>">
           <button onclick="closeModalPassword()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
           <button id="btnCambiarContraseña" name="btnCambiarContraseña" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cambiar Contraseña</button>
         </div>
@@ -194,8 +194,8 @@
 			
 
 			<%
-			int idLocalidadCliente = hayClienteModificar ? clienteModificar.getDireccion().getLocalidad().getId() : -1;
-			for (localidad localidad : localidades){
+            int idLocalidadCliente = hayClienteModificar ? clienteModificar.getDireccion().getLocalidad().getId() : -1;
+            for (localidad localidad : localidades){
 				if (localidad.getId() == idLocalidadCliente){%>
 				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%>, selected: true });
 				<%}else{%>

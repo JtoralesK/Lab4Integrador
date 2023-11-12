@@ -211,7 +211,7 @@ public class servletCliente extends HttpServlet {
 		
 		if(request.getParameter("btnCambiarContraseña")!=null)
 		{
-	    	int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+	    	int idCliente = Integer.parseInt(request.getParameter("idClientePassword"));
 	    	String clientePassword = clienteNeg.obtenerPassword(idCliente);
 	    	String passwordActual = request.getParameter("txtContraseñaActual");
 	    	String nuevaPassword = request.getParameter("txtNuevaContraseña");
