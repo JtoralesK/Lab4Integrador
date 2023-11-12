@@ -37,7 +37,6 @@ public class servletPaginacion extends HttpServlet {
         	lista = (List<Object>)session.getAttribute("lista");
         }
         int totalElementos = lista.size();
-        System.out.println(totalElementos);
         int totalPaginas = (int) Math.ceil((double) totalElementos / elementosPorPagina);
         int indiceInicial = (paginaActual - 1) * elementosPorPagina;
         int indiceFinal = Math.min(indiceInicial + elementosPorPagina, totalElementos);

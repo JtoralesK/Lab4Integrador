@@ -16,6 +16,7 @@ public class cliente {
 	private String usuario;
 	private String password;
 	private eTipoUsuario tipoUsuario;
+	private boolean estado;
 	
 	public cliente(direccion direccion, int dni, Long cuil, String nombre, String apellido, eSexo sexo,
 			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, Long telefono, String usuario,
@@ -132,6 +133,12 @@ public class cliente {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public boolean getEstado() {
+		return estado;
+	}
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 	
 	

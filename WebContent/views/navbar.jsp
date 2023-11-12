@@ -32,7 +32,7 @@
 		</div>
        <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
            <input type="hidden" name="accion" value="adminPrestamo">
-           <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</button>
+           <button class="group-hover:bg-gray-200 focus:outline-none">Prestamos</button>
        </form>
         <div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>

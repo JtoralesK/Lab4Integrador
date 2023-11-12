@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,6 +44,20 @@ public class servletCliente extends HttpServlet {
 	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
     		request.setAttribute("clienteModificar", clienteModificar);
 	    }
+
+	    if(request.getParameter("busqueda") != null) {
+	    	String filtro = request.getParameter("busqueda");
+	    	clienteNeg clienteNeg = new clienteNeg();
+	    	List<cliente> listaCompleta = clienteNeg.listarClientes();
+	    	if(!filtro.trim().isEmpty()) {
+	    		List<cliente> listaFiltrada = filtrarListadoClientes(listaCompleta, filtro);
+	    		request.getSession().setAttribute("lista",listaFiltrada);
+	    	}else {;
+	    		request.getSession().setAttribute("lista",listaCompleta);
+	    	}
+	    	request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
+	    	return;
+	    }
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -55,15 +70,8 @@ public class servletCliente extends HttpServlet {
 			String accion = request.getParameter("accion") != null ? request.getParameter("accion") : request.getAttribute("accion").toString();
 			if("blCliente".equals(accion)) {
 				HttpSession session = request.getSession();
-				List<cliente> listaCompleta = clienteNeg.listarClientes();
-				if(request.getParameter("filter") != null) {
-					//filtrar lista
-					List<cliente> listaFiltrada = listaCompleta;
-					
-					session.setAttribute("lista", listaFiltrada);
-				}else {
-					session.setAttribute("lista", listaCompleta);
-				}
+				List<cliente> listaCompleta = clienteNeg.listarClientes();				
+				session.setAttribute("lista", listaCompleta);
 				request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/views/amCliente.jsp").forward(request, response);
@@ -180,9 +188,10 @@ public class servletCliente extends HttpServlet {
 		    dispatcher.forward(request, response);
 		}
 		
-		if (request.getParameter("btnElminar") != null)
+		if (request.getParameter("btnEliminar") != null)
 		{
-			boolean deleteCorrecto = clienteNeg.eliminarCliente(1);
+			int clientId = Integer.parseInt(request.getParameter("btnEliminar"));
+			boolean deleteCorrecto = clienteNeg.eliminarCliente(clientId);
 			
 			if(deleteCorrecto)
 			{
@@ -194,8 +203,8 @@ public class servletCliente extends HttpServlet {
 			}
 			
 	    	request.setAttribute("modal", true);
-	    	
-	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/views/blCliente.jsp");
+	    	request.getSession().setAttribute("lista", clienteNeg.listarClientes());
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp");
 			dispatcher.forward(request, response);	
 			return;
 		}
@@ -265,4 +274,26 @@ public class servletCliente extends HttpServlet {
 		request.setAttribute("localidades", localidades);
 	}
 	
+	public List<cliente> filtrarListadoClientes(List<cliente> listado,String filtro){
+		List<cliente> listadoFiltrado = new ArrayList<cliente>();
+		for (cliente cliente : listado) {
+	        if (
+	        	String.valueOf(cliente.getDni()).contains(filtro.toLowerCase()) ||
+	            String.valueOf(cliente.getCuil()).contains(filtro.toLowerCase()) ||
+	            cliente.getNombre().toLowerCase().contains(filtro.toLowerCase()) ||
+	            cliente.getApellido().toLowerCase().contains(filtro.toLowerCase()) ||
+	            cliente.getFechaNacimiento().toString().contains(filtro) ||
+	            cliente.getEmail().toLowerCase().contains(filtro.toLowerCase()) ||
+	            String.valueOf(cliente.getTelefono()).contains(filtro.toLowerCase()) ||
+	            String.valueOf(cliente.getId()).contains(filtro) ||
+	           // cliente.getUsuario().toLowerCase().contains(filtro) ||
+	            cliente.getNacionalidad().getNombre().toLowerCase().equals(filtro) ||
+	            cliente.getDireccion().getLocalidad().getNombre().toLowerCase().equals(filtro.toLowerCase()) ||
+	            cliente.getDireccion().getLocalidad().getProvincia().getNombre().toLowerCase().equals(filtro.toLowerCase())
+	            ) {
+	        	listadoFiltrado.add(cliente);
+	        }
+	    }
+		return listadoFiltrado;
+	}
 }

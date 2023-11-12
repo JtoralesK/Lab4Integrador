@@ -27,7 +27,7 @@
 %>
 	<jsp:include page="navbar.jsp" />
 
-	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded mt-4">
+	<div class="bg-blue-200 border-b container mx-auto p-4 w-8/12 rounded m-4">
 		<h1 class="text-2xl font-semibold mb-4 text-center"><%=hayClienteModificar ? "Modificar cliente" : "Registro de Cliente"%></h1>
 		<form action="/ProjectBeta1/servletCliente" method="post">
 			<div class="grid grid-cols-2 gap-4">
@@ -160,12 +160,19 @@
 			cbLocalidad.innerHTML = '';
 			var localidades = [];
 			
-			<%for (localidad localidad : localidades){
-				if (localidad.getId() == clienteModificar.getDireccion().getLocalidad().getId()){%>
-				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%>, selected: true });
-				<%}else{%>
-				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
-			<%}}%>
+			<% if (clienteModificar != null) { %>
+			    <% for (localidad localidad : localidades) { %>
+			        <% if (localidad.getId() == clienteModificar.getDireccion().getLocalidad().getId()) { %>
+			            localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%>, selected: true });
+			        <% } else { %>
+			            localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
+			        <% } %>
+			    <% } %>
+			<% } else { %>
+			    <% for (localidad localidad : localidades) { %>
+			        localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
+			    <% } %>
+			<% } %>
 			
 	        localidades.forEach(function(localidad) {
 	        	if(localidad.id ==  selectedProvinciaId)
