@@ -196,4 +196,63 @@ public class clienteDao {
     	return listarClientes(true);
     }
 
+    public String obtenerPassword(int idCliente) {
+    	String password = "";
+    	
+		cn = new conexion();
+        Connection connection = cn.Open(); 
+
+        String query = "SELECT contraseña " + 
+		        		"FROM usuarios U " + 
+		        		"INNER JOIN clientes C ON U.id_usuario = C.id_usuario " + 
+		        		"WHERE id_cliente = ? ";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idCliente);
+            ResultSet rs = preparedStatement.executeQuery();
+    		
+            if (rs.next()) {
+            	password = rs.getString("apellido");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cn.close(); 
+        }
+        
+        return password;
+    }
+    public Boolean actualizarPassword(int idCliente, String nuevaPassword) {
+    	Boolean estado = true;
+    	
+		cn = new conexion();
+        Connection connection = cn.Open(); 
+
+        String query = "UPDATE usuarios " + 
+        		"SET contraseña = ? " + 
+        		"WHERE id_usuario = (" + 
+        		"    SELECT id_usuario " + 
+        		"    FROM (" + 
+        		"        SELECT U.id_usuario " + 
+        		"        FROM usuarios U " + 
+        		"        INNER JOIN clientes C ON U.id_usuario = C.id_usuario " + 
+        		"        WHERE id_cliente = ? " + 
+        		"    ) AS subquery "
+        		+ ");";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, nuevaPassword);
+            preparedStatement.setInt(2, idCliente);
+
+            estado = preparedStatement.execute(query);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cn.close(); 
+        }
+        
+        return estado;
+    }
 }

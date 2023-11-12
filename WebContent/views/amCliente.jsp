@@ -116,12 +116,16 @@
 					<%} %>
 				</div>
 				<div>
+				<div class="flex flex-col">
 					<label for="txtPassword">Contraseña:</label> 
 					<% if (hayClienteModificar) {%>
-						<input type="password" id="txtPassword" name="txtPassword" disabled class="w-full p-2 rounded" required>					
+					  <label onclick="openModalPassword()" class="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded m-4">
+					    Cambiar Contraseña
+					  </label>				
 					<%} else { %>
 						<input type="password" id="txtPassword" name="txtPassword" class="w-full p-2 rounded" required>
 					<%} %>					
+				</div>
 				</div>
 			</div>
 			<div class="flex">
@@ -132,7 +136,35 @@
 			<%} %>	
 		</form>
 	</div>
+  <div id="passwordModal" class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 p-6">
+    <div class="bg-white p-6 rounded shadow-md max-w-md mx-auto">
+      <div class="mb-4">
+        <h1 class="text-2xl font-bold">Cambiar Contraseña</h1>
+      </div>
+      <form action="/ProjectBeta1/servletCliente" method="post">
+        <div class="mb-4">
+          <label for="currentPassword" class="block text-gray-700 text-sm font-bold mb-2">Contraseña actual:</label>
+          <input required type="password" id="txtContraseñaActual" name="currentPassword" class="w-full p-2 border border-gray-300 rounded">
+        </div>
 
+        <div class="mb-4">
+          <label for="newPassword" class="block text-gray-700 text-sm font-bold mb-2">Nueva contraseña:</label>
+          <input required type="password" id="txtNuevaContraseña" name="newPassword" class="w-full p-2 border border-gray-300 rounded">
+        </div>
+
+        <div class="mb-4">
+          <label for="repeatPassword" class="block text-gray-700 text-sm font-bold mb-2">Repita su contraseña:</label>
+          <input required type="password" id="txtContraseñaRepetida" name="repeatPassword" class="w-full p-2 border border-gray-300 rounded">
+        </div>
+
+        <div class="flex justify-between">
+          <input type="hidden" id="idCliente" name="idCliente" value="<%=clienteModificar.getId()%>">
+          <button onclick="closeModalPassword()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+          <button id="btnCambiarContraseña" name="btnCambiarContraseña" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cambiar Contraseña</button>
+        </div>
+      </form>
+    </div>
+  </div>
 	<jsp:include page="modal.jsp" />
     <script>
         function formatCuil(input) {
@@ -160,19 +192,15 @@
 			cbLocalidad.innerHTML = '';
 			var localidades = [];
 			
-			<% if (clienteModificar != null) { %>
-			    <% for (localidad localidad : localidades) { %>
-			        <% if (localidad.getId() == clienteModificar.getDireccion().getLocalidad().getId()) { %>
-			            localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%>, selected: true });
-			        <% } else { %>
-			            localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
-			        <% } %>
-			    <% } %>
-			<% } else { %>
-			    <% for (localidad localidad : localidades) { %>
-			        localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
-			    <% } %>
-			<% } %>
+
+			<%
+			int idLocalidadCliente = hayClienteModificar ? clienteModificar.getDireccion().getLocalidad().getId() : -1;
+			for (localidad localidad : localidades){
+				if (localidad.getId() == idLocalidadCliente){%>
+				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%>, selected: true });
+				<%}else{%>
+				localidades.push({ id: <%=localidad.getId()%>, nombre: '<%=localidad.getNombre()%>', idProvincia: <%=localidad.getProvincia().getId()%> });
+			<%}}%>
 			
 	        localidades.forEach(function(localidad) {
 	        	if(localidad.id ==  selectedProvinciaId)
@@ -199,5 +227,14 @@
 		<%flagLocalidad = false;
 		}%>
     </script>
+    <script>
+	    function openModalPassword() {
+	      document.getElementById('passwordModal').classList.remove('hidden');
+	    }
+	
+	    function closeModalPassword() {
+	      document.getElementById('passwordModal').classList.add('hidden');
+	    }
+  </script>
 </body>
 </html>
