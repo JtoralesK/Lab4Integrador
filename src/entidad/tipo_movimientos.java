@@ -1,11 +1,16 @@
 package entidad;
 
+import datos.tipo_movimientosDao;
+
 public class tipo_movimientos {
 private int id_tipo_movimiento;
 private String descripcion;
 
+public tipo_movimientos() {}
 public tipo_movimientos(int id_tipo_movimiento) {
+	///tipo_movimientosDao tm=new tipo_movimientosDao();
 	this.id_tipo_movimiento=id_tipo_movimiento;
+	this.descripcion=new tipo_movimientosDao().obtenerxId(id_tipo_movimiento);
 }
 public tipo_movimientos(int id_tipo_movimiento,String descripcion) 
 {
