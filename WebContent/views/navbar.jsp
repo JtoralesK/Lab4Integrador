@@ -25,7 +25,7 @@
 	<img class="h-15 w-20"  src="/ProjectBeta1/views/Resources/bankLogo.png"></img>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
 	<div class="flex flex-row gap-5">
-	<a href="/ProjectBeta1/views/home.jsp">Home</a>
+	<a href="/ProjectBeta1/views/home.jsp" class="group-hover:bg-gray-200 focus:outline-none"">Home</a>
 	<% if(user.getTipoUsuario() == eTipoUsuario.Administrador){ %>
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Clientes</button>
@@ -67,11 +67,11 @@
 		</div>
 	<%} else {%>
 	
-	<a href="/ProjectBeta1/views/cuenta.jsp">Cuentas</a>
-	<a href="/ProjectBeta1/views/transferencia.jsp">Transferencia</a>
+	<a href="/ProjectBeta1/views/cuenta.jsp" class="group-hover:bg-gray-200 focus:outline-none">Cuentas</a>
+	<a href="/ProjectBeta1/views/transferencia.jsp" class="group-hover:bg-gray-200 focus:outline-none">Transferencia</a>
        <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
            <input type="hidden" name="accion" value="clientePrestamo">
-           <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</button>
+           <button class="group-hover:bg-gray-200 focus:outline-none">Prestamos</button>
        </form>	<%}%>
 
 	</div>
