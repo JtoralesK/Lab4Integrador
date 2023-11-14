@@ -51,8 +51,8 @@
 		            <input type="hidden" name="accion" value="blCuentas">
 		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Listar Cuentas</button>
 		        </form>
-		        <form method="post" action="<%= request.getContextPath() %>/servletCuenta">
-		            <input type="hidden" name="accion" value="altaCliente">
+		        <form method="get" action="<%= request.getContextPath() %>/servletCuenta">
+		            <input type="hidden" name="accion" value="altaCuentas">
 		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Alta de Cuenta</button>
 		        </form>
 		    </div>

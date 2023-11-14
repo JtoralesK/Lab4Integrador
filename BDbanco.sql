@@ -91,7 +91,7 @@ CREATE TABLE cuentas
     fecha_creacion DATE NOT NULL,
     cbu CHAR(30) NOT NULL,
     estado BIT NOT NULL,
-    CONSTRAINT Cuentas PRIMARY KEY (N_cuenta,id_cliente),
+    CONSTRAINT Cuentas PRIMARY KEY (n_cuenta,id_cliente),
     CONSTRAINT FK_CuentasXClientes FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente),
     CONSTRAINT FK_CuentasXTipoDeCuentas FOREIGN KEY (id_tipo_cuenta) REFERENCES tipo_cuentas (id_tipo_cuenta)
 );

@@ -100,7 +100,7 @@ public class cuentaDao {
 		return cuentas;
 	}
 
-	public boolean insert(cuenta cta) {
+	public boolean altaCuenta(cuenta cta) {
 		boolean estado = true;
 		Connection connection = cn.Open();
 
@@ -160,4 +160,5 @@ public class cuentaDao {
 		cta.setEstado(rs.getBoolean("estado"));
 		return cta;
 	}
+	
 }
