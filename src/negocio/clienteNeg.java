@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import datos.UsuarioDao;
 import datos.clienteDao;
 import entidad.cliente;
 import entidad.direccion;
@@ -12,6 +13,7 @@ import entidad.eTipoUsuario;
 import entidad.localidad;
 import entidad.nacionalidad;
 import entidad.provincia;
+import excepciones.ArgumentoInvalidoException;
 
 public class clienteNeg {
 
@@ -29,6 +31,16 @@ public class clienteNeg {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate fechaNacimiento =  LocalDate.parse(fechaNacimientoStr, formatter);
 		Long telefono = Long.parseLong(telefonoStr);
+		
+		if (clienteDao.validarDniCuil(dni, cuil))
+		{
+			throw new ArgumentoInvalidoException("El Dni o el Cuil ingresado ya se encuentra registrado");
+		}
+		
+		if (new UsuarioDao().obtenerPorNombre(usuario) != null)
+		{
+			throw new ArgumentoInvalidoException("El usuario ingresado ya se encuentra registrado");
+		}
 		
 		cliente cliente = new cliente(direccion, dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, email, telefono, usuario, password, eTipoUsuario.Cliente);
 				
@@ -80,11 +92,11 @@ public class clienteNeg {
 	public List<cliente> listarClientes() {
 	    return clienteDao.listarClientes();
 	}
-	public String obtenerPassword(int idCliente)
+	public String obtenerPassword(Long idCliente)
 	{						
 		return clienteDao.obtenerPassword(idCliente);
 	}
-	public Boolean actualizarPassword(int idCliente, String nuevaPassword)
+	public Boolean actualizarPassword(Long idCliente, String nuevaPassword)
 	{						
 		return clienteDao.actualizarPassword(idCliente, nuevaPassword);
 	}

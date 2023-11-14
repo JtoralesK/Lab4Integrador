@@ -144,23 +144,23 @@
       <form action="/ProjectBeta1/servletCliente" method="post">
         <div class="mb-4">
           <label for="currentPassword" class="block text-gray-700 text-sm font-bold mb-2">Contraseña actual:</label>
-          <input required type="password" id="txtContraseñaActual" name="currentPassword" class="w-full p-2 border border-gray-300 rounded">
+          <input required type="password" id="txtPasswordActual" name="txtPasswordActual" class="w-full p-2 border border-gray-300 rounded">
         </div>
 
         <div class="mb-4">
           <label for="newPassword" class="block text-gray-700 text-sm font-bold mb-2">Nueva contraseña:</label>
-          <input required type="password" id="txtNuevaContraseña" name="newPassword" class="w-full p-2 border border-gray-300 rounded">
+          <input required type="password" id="txtNuevaPassword" name="txtNuevaPassword" class="w-full p-2 border border-gray-300 rounded">
         </div>
 
         <div class="mb-4">
           <label for="repeatPassword" class="block text-gray-700 text-sm font-bold mb-2">Repita su contraseña:</label>
-          <input required type="password" id="txtContraseñaRepetida" name="repeatPassword" class="w-full p-2 border border-gray-300 rounded">
+          <input required type="password" id="txtPasswordRepetida" name="txtPasswordRepetida" class="w-full p-2 border border-gray-300 rounded">
         </div>
 
         <div class="flex justify-between">
           <input type="hidden" id="idClientePassword" name="idClientePassword" value="<%=hayClienteModificar ? clienteModificar.getId() : -1%>">
           <button onclick="closeModalPassword()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
-          <button id="btnCambiarContraseña" name="btnCambiarContraseña" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cambiar Contraseña</button>
+          <button id="btnCambiarPassword" name="btnCambiarPassword" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cambiar Contraseña</button>
         </div>
       </form>
     </div>
@@ -203,7 +203,7 @@
 			<%}}%>
 			
 	        localidades.forEach(function(localidad) {
-	        	if(localidad.id ==  selectedProvinciaId)
+	        	if(localidad.idProvincia ==  selectedProvinciaId)
         		{
 		            var option = document.createElement('option');
 		            option.value = localidad.id;

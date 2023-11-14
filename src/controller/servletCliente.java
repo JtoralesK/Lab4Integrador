@@ -46,7 +46,12 @@ public class servletCliente extends HttpServlet {
 	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
     		request.setAttribute("clienteModificar", clienteModificar);
 	    }
-	    
+	    if(request.getParameter("idCliente")!=null)
+	    {
+	    	int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
+    		request.setAttribute("clienteModificar", clienteModificar);
+	    }
 	    if (request.getParameter("busqueda") != null || request.getParameter("filtroEstado") != null) {
 	        String filtroBusqueda = request.getParameter("busqueda");
 	        String filtroEstado = request.getParameter("filtroEstado");
@@ -82,6 +87,12 @@ public class servletCliente extends HttpServlet {
 				session.setAttribute("lista", listaCompleta);
 				request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
 			}else {
+				if (request.getParameter("idCliente") != null)
+				{
+					int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+					cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
+					request.setAttribute("clienteModificar", clienteModificar);				
+				}
 				request.getRequestDispatcher("/views/amCliente.jsp").forward(request, response);
 			}
 			return;
@@ -210,25 +221,25 @@ public class servletCliente extends HttpServlet {
 			return;
 		}
 		
-		if(request.getParameter("btnCambiarContraseña")!=null)
+		if(request.getParameter("btnCambiarPassword")!=null)
 		{
-	    	int idCliente = Integer.parseInt(request.getParameter("idClientePassword"));
+	    	Long idCliente = Long.parseLong(request.getParameter("idClientePassword"));
 	    	String clientePassword = clienteNeg.obtenerPassword(idCliente);
-	    	String passwordActual = request.getParameter("txtContraseñaActual");
-	    	String nuevaPassword = request.getParameter("txtNuevaContraseña");
-	    	String repetirPassword = request.getParameter("txtContraseñaRepetida");
+	    	String passwordActual = request.getParameter("txtPasswordActual");
+	    	String nuevaPassword = request.getParameter("txtNuevaPassword");
+	    	String repetirPassword = request.getParameter("txtPasswordRepetida");
 	    	String textoAMostrar = "";
 	    	try
 	    	{
 		    	if (!clientePassword.equals(passwordActual))
 		    	{
-		    		throw new ArgumentoInvalidoException("Error al ingresar la contraseña actual");
+		    		throw new ArgumentoInvalidoException("Error al ingresar la contraseña actual no es igual a la registrada");
 		    	}
 		    	if (!nuevaPassword.equals(repetirPassword))
 		    	{
 		    		throw new ArgumentoInvalidoException("La nueva contraseña ingresada no coincide con la repetida");
 		    	}
-		    	if (!clientePassword.equals(nuevaPassword))
+		    	if (clientePassword.equals(nuevaPassword))
 		    	{
 		    		throw new ArgumentoInvalidoException("La nueva contraseña no puede ser igual a la contraseña actual");
 		    	}
@@ -250,7 +261,7 @@ public class servletCliente extends HttpServlet {
 	    	{
 	    		request.setAttribute("texto", textoAMostrar);
 		    	request.setAttribute("modal", true);
-	    		request.setAttribute("accion", "amCliente");
+	    		request.setAttribute("idCliente", idCliente);
 		    	RequestDispatcher dispatcher = request.getRequestDispatcher("/servletCliente");
 				dispatcher.forward(request, response);
 	    	}	    	

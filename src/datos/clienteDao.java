@@ -217,7 +217,7 @@ public class clienteDao {
     	return listarClientes(true, false);
     }
 
-    public String obtenerPassword(int idCliente) {
+    public String obtenerPassword(Long idCliente) {
     	String password = "";
     	
 		cn = new conexion();
@@ -229,11 +229,11 @@ public class clienteDao {
 		        		"WHERE id_cliente = ? ";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, idCliente);
+            preparedStatement.setLong(1, idCliente);
             ResultSet rs = preparedStatement.executeQuery();
     		
             if (rs.next()) {
-            	password = rs.getString("apellido");
+            	password = rs.getString("contraseña");
             }
             
         } catch (SQLException e) {
@@ -244,36 +244,60 @@ public class clienteDao {
         
         return password;
     }
-    public Boolean actualizarPassword(int idCliente, String nuevaPassword) {
+    public Boolean actualizarPassword(Long idCliente, String nuevaPassword) {
     	Boolean estado = true;
     	
 		cn = new conexion();
-        Connection connection = cn.Open(); 
+        cn.Open(); 
 
         String query = "UPDATE usuarios " + 
-        		"SET contraseña = ? " + 
+        		"SET contraseña = '" + nuevaPassword + "' " +
         		"WHERE id_usuario = (" + 
         		"    SELECT id_usuario " + 
         		"    FROM (" + 
         		"        SELECT U.id_usuario " + 
         		"        FROM usuarios U " + 
         		"        INNER JOIN clientes C ON U.id_usuario = C.id_usuario " + 
-        		"        WHERE id_cliente = ? " + 
+        		"        WHERE id_cliente = " + idCliente +
         		"    ) AS subquery "
         		+ ");";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, nuevaPassword);
-            preparedStatement.setInt(2, idCliente);
+        try
+        {
+            estado = cn.execute(query);
+            
+        } catch (Exception e) {
+        	estado = false;
+            e.printStackTrace();
+        } finally {
+            cn.close(); 
+        }
+        
+        return estado;
+    }
+    
+    public boolean validarDniCuil(int dniCliente, Long cuilCliente) {
+    	boolean estado = true;
+    	
+		cn = new conexion();
+        Connection connection = cn.Open(); 
 
-            estado = preparedStatement.execute(query);
+        String query = "SELECT 1 FROM clientes WHERE dni = ? OR cuil = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, dniCliente);
+            preparedStatement.setLong(1, cuilCliente);
+            ResultSet rs = preparedStatement.executeQuery();
+    		
+            if (rs.next()) {
+            	estado = false;
+            }
             
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             cn.close(); 
         }
-        
         return estado;
     }
 }
