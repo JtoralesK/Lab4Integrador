@@ -155,4 +155,22 @@ public class movimientosDao {
 	        return dinero;
 	    }
 	    
+	    public Double DineroxTipoMovimiento(int id_tipo_movimiento) {
+	        cn.Open();
+	    	Double dinero = 0.0;
+	        String query = "select sum(importe) FROM movimientos where id_tipo_movimiento="+id_tipo_movimiento;
+
+	        try {
+	            ResultSet rs = cn.query(query);
+	            while (rs.next()) {
+	            	return dinero = rs.getDouble("importe");
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            cn.close();
+	        }
+	        return dinero;
+	    }
+	    
 }
