@@ -63,7 +63,7 @@ public class servletCuenta extends HttpServlet {
 				}
 				request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCuentas.jsp").forward(request, response);
 			}else {
-				request.getRequestDispatcher("/views/blCuentas.jsp").forward(request, response);
+				request.getRequestDispatcher("/views/altaCuentas.jsp").forward(request, response);
 			}
 			return;
 		}

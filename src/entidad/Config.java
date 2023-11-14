@@ -1,7 +1,7 @@
 package entidad;		
 
 public final class Config {
-	private static boolean devMode = false;
+	private static boolean devMode = true;
 	private boolean admin = true;
 	private static Usuario activeUser;
 	
