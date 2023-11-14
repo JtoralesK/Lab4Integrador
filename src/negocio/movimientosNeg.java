@@ -4,9 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import datos.movimientosDao;
-import datos.tipo_movimientosDao;
 import entidad.movimientos;
-import entidad.tipo_movimientos;
 
 public class movimientosNeg {
 
@@ -42,17 +40,16 @@ public List<movimientos> listado_movimientos_tipovimientos_fecha(int id_cliente,
 	return new movimientosDao().listarmovimientosxtipovimientosxfecha(id_cliente,id_tipo_movimiento,fecha);
 
 }
-
-public List<tipo_movimientos> listado_TipoMovimientos()
-{
-	return new tipo_movimientosDao().listarTipo_movimientos();
-}
-
 /****Saca el importe segun el tipo de movimiento  ****/
 
-public Double Dinero_Segun_tipomovimiento(int id_cliente,int id_tipo_movimiento)
+public Double Dinero_Segun_tipomovimiento_Cliente(int id_cliente,int id_tipo_movimiento)
 {
 	return new movimientosDao().Dinero(id_cliente, id_tipo_movimiento);
+}
+
+public Double Dinero_Segun_tipoMovimiento(int id_tipo_movimiento)
+{
+	return new movimientosDao().DineroxTipoMovimiento(id_tipo_movimiento);
 }
 }
 
