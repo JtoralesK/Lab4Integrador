@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.xml.internal.ws.db.glassfish.BridgeWrapper;
+
 import datos.localidadDao;
 import datos.nacionalidadDao;
 import datos.provinciaDao;
@@ -44,20 +46,26 @@ public class servletCliente extends HttpServlet {
 	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
     		request.setAttribute("clienteModificar", clienteModificar);
 	    }
+	    
+	    if (request.getParameter("busqueda") != null || request.getParameter("filtroEstado") != null) {
+	        String filtroBusqueda = request.getParameter("busqueda");
+	        String filtroEstado = request.getParameter("filtroEstado");
+	        clienteNeg clienteNeg = new clienteNeg();
+	        boolean getAll = false;
+	        if(filtroEstado.equals("all")) getAll= true;
+	        List<cliente> lista = clienteNeg.listarClientes(Boolean.parseBoolean(filtroEstado),getAll);
+	        
+	        if(!filtroBusqueda.trim().isEmpty()) {
+	        	List<cliente> listaFiltrada = filtrarListadoClientes(lista, filtroBusqueda);
+	        	request.getSession().setAttribute("lista", listaFiltrada);
+	        }else {
+	        	request.getSession().setAttribute("lista", lista);
+	        }
 
-	    if(request.getParameter("busqueda") != null) {
-	    	String filtro = request.getParameter("busqueda");
-	    	clienteNeg clienteNeg = new clienteNeg();
-	    	List<cliente> listaCompleta = clienteNeg.listarClientes();
-	    	if(!filtro.trim().isEmpty()) {
-	    		List<cliente> listaFiltrada = filtrarListadoClientes(listaCompleta, filtro);
-	    		request.getSession().setAttribute("lista",listaFiltrada);
-	    	}else {;
-	    		request.getSession().setAttribute("lista",listaCompleta);
-	    	}
-	    	request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
-	    	return;
+	        request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
+	        return;
 	    }
+	    
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -180,26 +188,19 @@ public class servletCliente extends HttpServlet {
 	    	return;
 		}
 		
-		if (request.getParameter("modificar") != null) {
-			int clientId = Integer.parseInt(request.getParameter("modificar"));
-			cliente clienteModificar = clienteNeg.obtenerCliente(clientId);
-			request.setAttribute("clienteModificar", clienteModificar);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/views/amCliente.jsp");
-		    dispatcher.forward(request, response);
-		}
 		
-		if (request.getParameter("btnEliminar") != null)
+		if (request.getParameter("btnToggleEstado") != null)
 		{
-			int clientId = Integer.parseInt(request.getParameter("btnEliminar"));
-			boolean deleteCorrecto = clienteNeg.eliminarCliente(clientId);
+			int clientId = Integer.parseInt(request.getParameter("btnToggleEstado"));
 			
-			if(deleteCorrecto)
+			boolean modificado= clienteNeg.toggleEstado(clientId);
+			if(modificado)
 			{
-	    		request.setAttribute("texto", "Cliente Eliminado con exito");
+	    		request.setAttribute("texto", "Estado de cliente modificado con exito");
 			}
 			else
 			{
-	    		request.setAttribute("texto", "No se pudo eliminar el Cliente");
+	    		request.setAttribute("texto", "No se pudo modificar el estado del Cliente");
 			}
 			
 	    	request.setAttribute("modal", true);

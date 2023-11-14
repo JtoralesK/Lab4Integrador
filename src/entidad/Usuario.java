@@ -6,12 +6,12 @@ public class Usuario {
     private String usuario;
     private String contraseña;
     private eTipoUsuario tipoUsuario;
-    private int estado;
+    private boolean estado;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String usuario, String contraseña, eTipoUsuario tipoUsuario, int estado) {
+    public Usuario(int id, String usuario, String contraseña, eTipoUsuario tipoUsuario, boolean estado) {
     	this.id= id;
         this.usuario = usuario;
         this.contraseña = contraseña;
@@ -44,11 +44,11 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
     
-    public int getEstado() {
+    public boolean getEstado() {
     	return estado;
     }
     
-    public void setEstado(int estado) {
+    public void setEstado(boolean estado) {
     	this.estado = estado;
     }
     

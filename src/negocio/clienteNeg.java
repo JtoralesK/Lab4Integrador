@@ -40,6 +40,18 @@ public class clienteNeg {
 		return clienteDao.eliminar(idCliente);
 	}
 	
+	public boolean activarCliente(int idCliente)
+	{						
+		return clienteDao.altaLogica(idCliente);
+	}
+	
+	public boolean toggleEstado(int idCliente) {
+		boolean toggled = false;
+		if(obtenerCliente(idCliente).getEstado()) toggled = eliminarCliente(idCliente);
+		else toggled = activarCliente(idCliente);
+		return toggled;
+	}
+	
 	public boolean actualizarCliente(String dniStr, String cuilStr, String nombre, String apellido, String sexoId, String nacionalidadId, String fechaNacimientoStr, String direccionStr, String localidadId, String provinciaId, String email, String telefonoStr, int idCliente)
 	{	
 		int dni = Integer.parseInt(dniStr);
@@ -62,7 +74,9 @@ public class clienteNeg {
 	{						
 		return clienteDao.obtenerPorId(idCliente);
 	}
-
+	public List<cliente> listarClientes(boolean activo, boolean todos) {
+	    return clienteDao.listarClientes(activo,todos);
+	}
 	public List<cliente> listarClientes() {
 	    return clienteDao.listarClientes();
 	}

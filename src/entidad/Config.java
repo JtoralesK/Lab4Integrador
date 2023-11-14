@@ -8,8 +8,8 @@ public final class Config {
 	private static final Config INSTANCE = new Config();
 	 
 	public Config() {
-		if (admin)activeUser = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,1);
-		else activeUser = new Usuario(1,"devCliente","",eTipoUsuario.Cliente,1);
+		if (admin)activeUser = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,true);
+		else activeUser = new Usuario(1,"devCliente","",eTipoUsuario.Cliente,true);
 	}
 
 	public static boolean isDevMode() {
@@ -18,9 +18,9 @@ public final class Config {
 	
 	public static Usuario switchUser() {
 		if(activeUser.getTipoUsuario() == eTipoUsuario.Administrador) {
-			activeUser = new Usuario(1,"devCliente","",eTipoUsuario.Cliente,1);
+			activeUser = new Usuario(1,"devCliente","",eTipoUsuario.Cliente,true);
 		}else {
-			activeUser = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,1);
+			activeUser = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,true);
 		}
 		return activeUser;
 	}

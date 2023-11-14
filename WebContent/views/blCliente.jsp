@@ -20,6 +20,12 @@
 		    <form action="/ProjectBeta1/servletCliente" method="get">
 		        <label for="busqueda" class="sr-only">Búsqueda:</label>
 		        <input type="text" id="busqueda" name="busqueda" placeholder="Buscar..." class="w-64 border border-gray-300 rounded-md p-2">
+		        
+		        <select id="estado" name="filtroEstado" class="w-64 border border-gray-300 rounded-md p-2">
+				    <option value="true" <%= request.getParameter("filtroEstado") != null && request.getParameter("filtroEstado").equals("true") ? "selected" : "" %>>Activo</option>
+				    <option value="false" <%= request.getParameter("filtroEstado") != null && request.getParameter("filtroEstado").equals("false") ? "selected" : "" %>>Inactivo</option>
+				    <option value="all" <%= request.getParameter("filtroEstado") != null && request.getParameter("filtroEstado").equals("all") ? "selected" : "" %>>Todos</option>
+				</select>
 		        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">Buscar</button>
 		    </form>
 		</div>
@@ -62,11 +68,17 @@
 		            </form>
 		        </td>
 		        <td class="border px-4 py-2">
-		            <form action="/ProjectBeta1/servletCliente" method="post">
-		                <input type="hidden" name="btnEliminar" value="<%= cliente.getId() %>">
-		                <button class="bg-red-500 hover-bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnEliminar">Eliminar</button>
-		            </form>
-		        </td>
+				    <form action="/ProjectBeta1/servletCliente" method="post">
+				        <input type="hidden" name="btnToggleEstado" value="<%= cliente.getId() %>">
+				        
+				        <% if (cliente.getEstado()) { %>
+				            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnEliminar">Eliminar</button>
+				        <% } else { %>
+				            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnActivar">Activar</button>
+				        <% } %>
+				    </form>
+				</td>
+
 		    </tr>
 		    <%
 		        }

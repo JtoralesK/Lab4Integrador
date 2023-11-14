@@ -105,6 +105,24 @@ public class clienteDao {
         return estado;   
     }
     
+    public boolean altaLogica(int idCliente) {
+        boolean estado = true;
+        
+		cn = new conexion();
+        cn.Open();
+        try {
+			UsuarioNeg usuarioNeg = new UsuarioNeg();
+			cliente cl = this.obtenerPorId(idCliente);
+			Usuario usuario = usuarioNeg.getUsuarioPorNombre(cl.getUsuario());
+			estado = usuarioNeg.altaUsuario(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
+        return estado;   
+    }
+    
     public cliente obtenerPorId(int idCliente) {
     	cliente cliente = null;
     	
@@ -134,10 +152,11 @@ public class clienteDao {
                 			);
                 cliente.setId(rs.getInt("id_cliente"));
                 
-                Usuario usuario = new UsuarioDao().obtenerPorId(rs.getInt("ID_usuario"));
+                Usuario usuario = new UsuarioDao().obtenerPorId(rs.getInt("id_usuario"));
                 cliente.setUsuario(usuario.getUsuario());
                 cliente.setPassword(usuario.getContraseña());
                 cliente.setTipoUsuario(usuario.getTipoUsuario());
+                cliente.setEstado(usuario.getEstado());
             }
             
         } catch (SQLException e) {
@@ -148,7 +167,7 @@ public class clienteDao {
         return cliente;
     }
     
-    public List<cliente> listarClientes(boolean activo) {
+    public List<cliente> listarClientes(boolean activo, boolean todos) {
         List<cliente> clientes = new ArrayList<>();
         cn = new conexion();
         Connection connection = cn.Open();
@@ -164,6 +183,9 @@ public class clienteDao {
 
             while (rs.next()) {
             	boolean estado = rs.getBoolean("estado");
+            	if(todos) {
+            		activo = estado = todos;
+            	}
                 if (activo == estado) {
                     cliente cliente = new cliente(
                         new direccion(rs.getString("direccion"), new localidadDao().obtenerUno(rs.getInt("id_localidad"))),
@@ -192,7 +214,7 @@ public class clienteDao {
         return clientes;
     }
     public List<cliente> listarClientes() {
-    	return listarClientes(true);
+    	return listarClientes(true, false);
     }
 
     public String obtenerPassword(int idCliente) {

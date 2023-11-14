@@ -66,6 +66,22 @@ public class UsuarioDao {
         }
         return estado;
     }
+    
+    public boolean alta(Usuario usuario) {
+        boolean estado = true;
+        cn.Open();
+
+        String query = "UPDATE usuarios SET estado = true WHERE usuario = '" + usuario.getUsuario() +"'";
+
+        try {
+            estado = cn.execute(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cn.close();
+        }
+        return estado;
+    }
 
     public Usuario obtenerPorNombre(String nombreUsuario) {
     	Usuario usuario = null;
@@ -82,7 +98,7 @@ public class UsuarioDao {
                 usuario.setId(Integer.valueOf(rs.getString("ID_usuario")));
                 usuario.setUsuario(rs.getString("usuario"));
                 usuario.setContraseña(rs.getString("contraseña"));
-                usuario.setEstado(Integer.valueOf(rs.getString("estado")));
+                usuario.setEstado(rs.getBoolean("estado"));
                 int tipoUsuarioOrdinal = rs.getInt("id_tipo_usuario") - 1;
                 usuario.setTipoUsuario(eTipoUsuario.values()[tipoUsuarioOrdinal]);
             }
@@ -134,7 +150,7 @@ public class UsuarioDao {
                 usuario.setId(Integer.valueOf(rs.getString("ID_usuario")));
                 usuario.setUsuario(rs.getString("usuario"));
                 usuario.setContraseña(rs.getString("contraseña"));
-                usuario.setEstado(Integer.valueOf(rs.getString("estado")));
+                usuario.setEstado(rs.getBoolean("estado"));
                 int tipoUsuarioOrdinal = rs.getInt("id_tipo_usuario") - 1;
                 usuario.setTipoUsuario(eTipoUsuario.values()[tipoUsuarioOrdinal]);
             }

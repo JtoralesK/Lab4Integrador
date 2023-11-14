@@ -23,4 +23,8 @@ public class UsuarioNeg {
     public boolean bajaUsuario(Usuario usuario) {
     	return usuarioDao.baja(usuario);
     }
+    
+    public boolean altaUsuario(Usuario usuario) {
+    	return usuarioDao.alta(usuario);
+    }
 }
