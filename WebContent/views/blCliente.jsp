@@ -67,16 +67,12 @@
 		                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnModificar">Ver/Editar</button>
 		            </form>
 		        </td>
-		        <td class="border px-4 py-2">
-				    <form action="/ProjectBeta1/servletCliente" method="post">
-				        <input type="hidden" name="btnToggleEstado" value="<%= cliente.getId() %>">
-				        
+		        <td class="border px-4 py-2">				        
 				        <% if (cliente.getEstado()) { %>
-				            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnEliminar">Eliminar</button>
-				        <% } else { %>
-				            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnActivar">Activar</button>
-				        <% } %>
-				    </form>
+						    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnEliminar" onclick="openModal('eliminar', '<%= cliente.getId() %>')">Eliminar</button>
+						<% } else { %>
+						    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnActivar" onclick="openModal('activar', '<%= cliente.getId() %>')">Activar</button>
+						<% } %>
 				</td>
 
 		    </tr>
@@ -96,6 +92,60 @@
 	</div>
 		<jsp:include page="paginacion.jsp" />
 		<jsp:include page="modal.jsp" />
+	
+	<!-- MODAL DE CONFIRMACIÓN -->
+		<div id="confirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+		  <div class="bg-white p-8 rounded shadow-lg">
+		    <p id="modalText" class="text-gray-700"></p>
+		    <div class="mt-4 flex justify-end">
+		      <form id="confirmForm" action="/ProjectBeta1/servletCliente" method="post">
+		        <input type="hidden" name="btnToggleEstado" id="btnToggleEstado" value="">
+		        <button id="confirmBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" type="submit"></button>
+		      </form>
+		      <button class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded" onclick="closeModal()">Cancelar</button>
+		    </div>
+		  </div>
+		</div>
+
+	
+	<script>
+		function openModal(action, clientId) {
+		    const modal = document.getElementById("confirmModal");
+		    const confirmBtn = document.getElementById("confirmBtn");
+		    const btnToggleEstado = document.getElementById("btnToggleEstado");
+		    const modalText = document.getElementById("modalText");
+	
+		    var actionText = '';
+		    if(action == "eliminar"){
+		    	actionText = 'Eliminar';
+		    	modalText.textContent = 'Seguro que desea eliminar el cliente '+ clientId +'?';
+		    }else{
+		    	actionText = 'Reactivar';
+		    	modalText.textContent = 'Seguro que desea reactivar el cliente '+ clientId + '?';
+		    }
+		    
+		    confirmBtn.textContent = actionText; 
+		    confirmBtn.onclick = function () {
+		        btnToggleEstado.value = clientId;
+		        document.getElementById("confirmForm").submit();
+		        closeModal();
+		    };
+	
+		    modal.style.display = "flex";
+		}
+
+		function closeModal() {
+		  const modal = document.getElementById("confirmModal");
+		  modal.style.display = "none";
+		}
+
+		window.onclick = function (event) {
+		  const modal = document.getElementById("confirmModal");
+		  if (event.target === modal) {
+		    modal.style.display = "none";
+		  }
+		};
+	</script>
 	
 </body>
 </html>
