@@ -42,7 +42,6 @@ public class clienteDao {
 				+",'"+cliente.getFechaNacimiento().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))+"','"+cliente.getDireccion().getDireccion()+"',"+cliente.getDireccion().getLocalidad().getId()
 				+",'"+cliente.getEmail()+"',"+cliente.getTelefono()+","+idUsuario+")";
 		
-		System.out.println(query);
 		try
 		{
 			estado=cn.execute(query);

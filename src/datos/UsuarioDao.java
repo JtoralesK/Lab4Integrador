@@ -23,7 +23,7 @@ public class UsuarioDao {
 
         String query = "INSERT INTO usuarios (usuario, contraseña, id_tipo_usuario, estado) " +
                 "VALUES ('" + usuario.getUsuario() + "', '" + usuario.getContraseña() + "', " + (usuario.getTipoUsuario().ordinal() + 1) + ", true)";
-        System.out.println(query);
+
         try {
             estado = cn.execute(query);
         } catch (Exception e) {

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entidad.Config;
+
 /**
  * Servlet Filter implementation class loggedUserFilter
  */
@@ -20,11 +22,14 @@ public class loggedUserFilter implements Filter {
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		//chain.doFilter(request, response);
-
+		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        
-        HttpSession session = httpRequest.getSession(false);
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		HttpSession session = httpRequest.getSession();
+		
+		if(Config.isDevMode()) {
+			session.setAttribute("loggedUser", Config.getActiveUser());
+		}
         boolean isLoggedIn = session != null && session.getAttribute("loggedUser") != null;
 
         if (!isLoggedIn && !httpRequest.getRequestURI().endsWith("login.jsp") && !httpRequest.getRequestURI().endsWith("servletUsuario")) {

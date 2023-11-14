@@ -1,3 +1,4 @@
+<%@page import="entidad.Config"%>
 <%@page import="entidad.eTipoUsuario"%>
 <%@page import="entidad.Usuario"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"></head>
@@ -10,7 +11,16 @@
     bgColor = "bg-red-200"; 
 	}
 	//Logo rojo admin / gris usuario
+	if(Config.isDevMode()){
 %>
+	<div class="w-full bg-amber-100 p-2 flex items-center justify-center ">
+		<p class="text-sm mr-4 text-black">devMode activado</p>
+        <form method="post" action="<%= request.getContextPath() %>/servletConfig">
+            <input type="hidden" name="toggleUserType" value="true">
+            <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded">Cambiar tipo de usuario</button>
+        </form>
+	</div>
+	<%}%>	
 <nav class="w-full h-20 bg-white p-5 flex flex-row justify-between items-center border-b border-gray-300">
 	<img class="h-15 w-20"  src="/ProjectBeta1/views/Resources/bankLogo.png"></img>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
