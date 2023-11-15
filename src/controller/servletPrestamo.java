@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,9 +30,8 @@ public class servletPrestamo extends HttpServlet {
 			if ("adminPrestamo".equals(request.getParameter("accion")))
 			{
 				List<prestamo> prestamos = new prestamoNeg().listar();
-				request.setAttribute("prestamos", prestamos);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/views/adminPrestamos.jsp");
-				dispatcher.forward(request, response);				
+	        	request.getSession().setAttribute("lista", prestamos);
+		        request.getRequestDispatcher("/servletPaginacion?redirectUrl=adminPrestamos.jsp").forward(request, response);			
 			}			
 		}
 		
@@ -50,11 +48,10 @@ public class servletPrestamo extends HttpServlet {
 				texto = AprobarRechazarPrestamo(request, eEstadoPrestamo.Rechazado);
 			}
 			List<prestamo> prestamos = new prestamoNeg().listar();
-			request.setAttribute("prestamos", prestamos);
-			request.setAttribute("texto", texto);
+	        request.setAttribute("texto", texto);
 			request.setAttribute("modal", true);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/views/adminPrestamos.jsp");
-			dispatcher.forward(request, response);
+			request.getSession().setAttribute("lista", prestamos);
+			request.getRequestDispatcher("/servletPaginacion?redirectUrl=adminPrestamos.jsp").forward(request, response);		
 		}
 	}
 	

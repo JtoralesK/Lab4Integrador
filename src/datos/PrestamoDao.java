@@ -54,7 +54,8 @@ public class PrestamoDao {
 		cn = new conexion();
 		Connection connection  = cn.Open();	
 		
-		String query = "SELECT P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision, P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
+		String query = "SELECT P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision"
+				+ ", P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
 				"FROM prestamos P " + 
 				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
 				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision; ";

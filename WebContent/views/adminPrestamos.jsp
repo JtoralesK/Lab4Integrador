@@ -10,7 +10,7 @@
 <head>
 <%
 	request.setAttribute("titulo", "Administrar Prestamos");
-	List<prestamo> prestamos = (List<prestamo>)request.getAttribute("prestamos");
+	List<prestamo> prestamos = (List<prestamo>)request.getAttribute("listaPaginada");
 %>
 <jsp:include page="head.jsp" />
 </head>
@@ -53,6 +53,7 @@
             </tbody>
         </table>
     </div>
+	<jsp:include page="paginacion.jsp" />
 	<jsp:include page="modal.jsp" />
 </body>
 </html>
