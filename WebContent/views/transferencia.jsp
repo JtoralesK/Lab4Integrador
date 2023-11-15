@@ -68,8 +68,6 @@
             </table>
         </div>
     </div>
-    <%request.setAttribute("texto", "¡Transferencia Exitosa!"); %>
-    <%request.setAttribute("modal", true); %>
     <jsp:include page="modal.jsp" />
 
 </body>
