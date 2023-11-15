@@ -22,7 +22,7 @@ public class localidadDao {
         try {
             ResultSet rs = cn.query(query);
             while (rs.next()) {
-            	localidad localidad = new localidad(rs.getInt("id_provincia"), rs.getString("localidad"), new provincia(rs.getInt("id_provincia")));
+            	localidad localidad = new localidad(rs.getInt("id_localidad"), rs.getString("localidad"), new provincia(rs.getInt("id_provincia")));
                 localidades.add(localidad);
             }
         } catch (Exception e) {

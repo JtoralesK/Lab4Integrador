@@ -313,7 +313,7 @@ select 3,114,2,2555333,"2021-01-08","552258",1;
 /***************************************************************/
 INSERT INTO  estado_prestamo(descripcion)
 select "Rechazado" union
-select "Aceptado" union
+select "Aprobado" union
 select "Pendiente";
 
 /****************************************************************/

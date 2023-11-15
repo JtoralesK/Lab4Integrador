@@ -10,7 +10,7 @@
 <head>
 <%
 	request.setAttribute("titulo", "Administrar Prestamos");
-	List<prestamo> prestamos = (List<prestamo>)request.getAttribute("prestamos");
+	List<prestamo> prestamos = (List<prestamo>)request.getAttribute("listaPaginada");
 %>
 <jsp:include page="head.jsp" />
 </head>
@@ -38,7 +38,7 @@
                     <td class="p-2 text-center">$<%=prestamo.getImporte()%></td>
                     <td class="p-2 text-center">$<%=(prestamo.getImporte() * prestamo.getInteres()) / prestamo.getPlazo()%></td>
                     <td class="p-2 text-center"><%=prestamo.getPlazo()%></td>
-                    <td class="p-2 text-center <%=prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aceptado ? "text-green-600" 
+                    <td class="p-2 text-center <%=prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aprobado ? "text-green-600" 
                     		: prestamo.getEstadoPrestamo() == eEstadoPrestamo.Rechazado ? "text-red-600"
                     		: "text-yellow-600"%>"><%=prestamo.getEstadoPrestamo()%></td>
                     <td class="p-2 text-center">
@@ -53,6 +53,7 @@
             </tbody>
         </table>
     </div>
+	<jsp:include page="paginacion.jsp" />
 	<jsp:include page="modal.jsp" />
 </body>
 </html>

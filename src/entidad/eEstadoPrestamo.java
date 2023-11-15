@@ -2,7 +2,7 @@ package entidad;
 
 public enum eEstadoPrestamo {
 	Rechazado,
-	Aceptado,
+	Aprobado,
 	Pendiente
 
 }
