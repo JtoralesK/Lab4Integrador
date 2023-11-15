@@ -42,7 +42,7 @@ public class servletPrestamo extends HttpServlet {
 			String texto = "";
 			if (request.getParameter("btnAprobar") != null)
 			{
-				texto = AprobarRechazarPrestamo(request, eEstadoPrestamo.Aceptado);
+				texto = AprobarRechazarPrestamo(request, eEstadoPrestamo.Aprobado);
 			}
 			
 			if (request.getParameter("btnRechazar") != null)

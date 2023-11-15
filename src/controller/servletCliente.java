@@ -13,11 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.ws.db.glassfish.BridgeWrapper;
-
-import datos.localidadDao;
-import datos.nacionalidadDao;
-import datos.provinciaDao;
 import entidad.cliente;
 import entidad.eSexo;
 import entidad.localidad;
@@ -46,12 +41,7 @@ public class servletCliente extends HttpServlet {
 	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
     		request.setAttribute("clienteModificar", clienteModificar);
 	    }
-	    if(request.getParameter("idCliente")!=null)
-	    {
-	    	int idCliente = Integer.parseInt(request.getParameter("idCliente"));
-	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
-    		request.setAttribute("clienteModificar", clienteModificar);
-	    }
+
 	    if (request.getParameter("busqueda") != null || request.getParameter("filtroEstado") != null) {
 	        String filtroBusqueda = request.getParameter("busqueda");
 	        String filtroEstado = request.getParameter("filtroEstado");
@@ -87,9 +77,9 @@ public class servletCliente extends HttpServlet {
 				session.setAttribute("lista", listaCompleta);
 				request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCliente.jsp").forward(request, response);
 			}else {
-				if (request.getParameter("idCliente") != null)
+				if (request.getAttribute("idCliente") != null)
 				{
-					int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+					int idCliente = Integer.parseInt(request.getAttribute("idCliente").toString());
 					cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
 					request.setAttribute("clienteModificar", clienteModificar);				
 				}
@@ -261,6 +251,7 @@ public class servletCliente extends HttpServlet {
 	    	{
 	    		request.setAttribute("texto", textoAMostrar);
 		    	request.setAttribute("modal", true);
+	    		request.setAttribute("accion", "amCliente");
 	    		request.setAttribute("idCliente", idCliente);
 		    	RequestDispatcher dispatcher = request.getRequestDispatcher("/servletCliente");
 				dispatcher.forward(request, response);
