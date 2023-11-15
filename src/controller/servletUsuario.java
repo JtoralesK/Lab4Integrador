@@ -6,12 +6,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.cj.Session;
 
 import entidad.Usuario;
+import entidad.cliente;
 import entidad.eTipoUsuario;
 import negocio.UsuarioNeg;
+import negocio.clienteNeg;
 
 @WebServlet("/servletUsuario")
 public class servletUsuario extends HttpServlet {
@@ -22,7 +25,18 @@ public class servletUsuario extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
+    	if (request.getParameter("userInfo")!= null) {
+    		HttpSession session = request.getSession();
+    		Usuario loggedUser = (Usuario) session.getAttribute("loggedUser");
+    		if(loggedUser.getTipoUsuario() == eTipoUsuario.Cliente) {
+    			clienteNeg clienteNeg = new clienteNeg();
+    			cliente loggedCliente = clienteNeg.obtenerClientePorIdUsuario(loggedUser.getId());
+    			session.setAttribute("loggedCliente", loggedCliente);
+    		}
+    		
+    		response.sendRedirect(request.getContextPath() + "/views/userInfo.jsp");
+    		
+    	}
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -18,6 +18,8 @@ public class cliente {
 	private eTipoUsuario tipoUsuario;
 	private boolean estado;
 	
+	public cliente() {}
+	
 	public cliente(direccion direccion, int dni, Long cuil, String nombre, String apellido, eSexo sexo,
 			nacionalidad nacionalidad, LocalDate fechaNacimiento, String email, Long telefono, String usuario,
 			String password, eTipoUsuario tipoUsuario) {

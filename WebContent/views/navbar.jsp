@@ -25,7 +25,7 @@
 	<img class="h-15 w-20"  src="/ProjectBeta1/views/Resources/bankLogo.png"></img>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
 	<div class="flex flex-row gap-5">
-	<a href="/ProjectBeta1/views/home.jsp" class="group-hover:bg-gray-200 focus:outline-none"">Home</a>
+	<a href="/ProjectBeta1/views/home.jsp" class="group-hover:bg-gray-200 focus:outline-none">Home</a>
 	<% if(user.getTipoUsuario() == eTipoUsuario.Administrador){ %>
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Clientes</button>
@@ -82,7 +82,10 @@
       <span class="border rounded-full <%= bgColor %> p-3 cursor-pointer"><i class="fa-regular fa-user"></i></span>
 		<span><%= user.getUsuario() %></span>
         <div class="hidden absolute bg-white group-hover:block w-40 text-center mt-2">
-            <a href="/ProjectBeta1/views/userInfo.jsp" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Ver Perfil</a>
+        <form method="get" action="<%= request.getContextPath() %>/servletUsuario">
+        	<input type="hidden" name="userInfo" value=<%= user.getUsuario() %>>
+            <button type="submit" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center w-full">Ver Perfil</button>
+        </form>
             <form method="post" action="<%= request.getContextPath() %>/servletUsuario">
 			    <input type="hidden" name="logout" value="true">
 			    <button type="submit" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center w-full">Cerrar Sesión</button>

@@ -1,15 +1,33 @@
-package entidad;		
+package entidad;
+
+import org.apache.catalina.User;
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
+import negocio.UsuarioNeg;
+import negocio.clienteNeg;
 
 public final class Config {
 	private static boolean devMode = true;
 	private boolean admin = true;
 	private static Usuario activeUser;
+	private static Usuario userAdmin = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,true);
+	private static Usuario userCliente;
 	
 	private static final Config INSTANCE = new Config();
 	 
 	public Config() {
-		if (admin)activeUser = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,true);
-		else activeUser = new Usuario(1,"devCliente","",eTipoUsuario.Cliente,true);
+		UsuarioNeg usuarioNeg = new UsuarioNeg();
+		userCliente = usuarioNeg.getUsuarioPorNombre("devCliente");
+		if( userCliente == null) {
+			clienteNeg clienteNeg = new clienteNeg();
+			clienteNeg.guardarCliente("1111111", "112312", "dev", "Cliente", "1", "1", "1111-11-11", "Calle falsa 123", "1", "1", "dev@mail.com", "1111111", "devCliente", "");
+			userCliente = usuarioNeg.getUsuarioPorNombre("devCliente");
+		}
+		
+		if (admin)activeUser = userAdmin;
+		else activeUser = userCliente;
+		
+		
 	}
 
 	public static boolean isDevMode() {
@@ -18,9 +36,9 @@ public final class Config {
 	
 	public static Usuario switchUser() {
 		if(activeUser.getTipoUsuario() == eTipoUsuario.Administrador) {
-			activeUser = new Usuario(1,"devCliente","",eTipoUsuario.Cliente,true);
+			activeUser = userCliente;
 		}else {
-			activeUser = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,true);
+			activeUser = userAdmin;
 		}
 		return activeUser;
 	}

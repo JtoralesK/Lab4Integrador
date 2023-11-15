@@ -167,6 +167,50 @@ public class clienteDao {
         return cliente;
     }
     
+    public cliente obtenerPorIdUsuario(int idUsuario) {
+    	cliente cliente = null;
+    	
+		cn = new conexion();
+        Connection connection = cn.Open(); 
+
+        String query = "SELECT id_cliente, dni, cuil, nombre, apellido, id_sexo, id_nacionalidad, fecha_nacimiento, direccion, C.id_localidad, L.id_provincia, mail, id_usuario, telefono FROM clientes C INNER JOIN localidades L ON C.id_localidad = L.id_localidad WHERE id_usuario = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idUsuario);
+            ResultSet rs = preparedStatement.executeQuery();
+    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    		
+            if (rs.next()) {
+                cliente = new cliente(
+                			new direccion(rs.getString("direccion"), 
+            					new localidadDao().obtenerUno(rs.getInt("id_localidad"))),
+                			rs.getInt("dni"),
+                			rs.getLong("cuil"),
+                			rs.getString("nombre"),
+                			rs.getString("apellido"),
+                			eSexo.values()[rs.getInt("id_sexo") - 1],
+                			new nacionalidadDao().obtenerUno(rs.getInt("id_nacionalidad")),
+                			LocalDate.parse(rs.getString("fecha_nacimiento"), formatter),
+                			rs.getString("mail"),
+                			rs.getLong("telefono")
+                			);
+                cliente.setId(rs.getInt("id_cliente"));
+                
+                Usuario usuario = new UsuarioDao().obtenerPorId(rs.getInt("id_usuario"));
+                cliente.setUsuario(usuario.getUsuario());
+                cliente.setPassword(usuario.getContraseña());
+                cliente.setTipoUsuario(usuario.getTipoUsuario());
+                cliente.setEstado(usuario.getEstado());
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cn.close(); 
+        }
+        return cliente;
+    }
+    
     public List<cliente> listarClientes(boolean activo, boolean todos) {
         List<cliente> clientes = new ArrayList<>();
         cn = new conexion();

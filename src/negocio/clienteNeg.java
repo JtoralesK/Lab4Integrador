@@ -74,6 +74,10 @@ public class clienteNeg {
 	{						
 		return clienteDao.obtenerPorId(idCliente);
 	}
+	
+	public cliente obtenerClientePorIdUsuario(int idUsuario) {
+		return clienteDao.obtenerPorIdUsuario(idUsuario);
+	}
 	public List<cliente> listarClientes(boolean activo, boolean todos) {
 	    return clienteDao.listarClientes(activo,todos);
 	}
