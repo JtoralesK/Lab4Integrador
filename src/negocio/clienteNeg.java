@@ -32,7 +32,7 @@ public class clienteNeg {
 		LocalDate fechaNacimiento =  LocalDate.parse(fechaNacimientoStr, formatter);
 		Long telefono = Long.parseLong(telefonoStr);
 		
-		if (clienteDao.validarDniCuil(dni, cuil))
+		if (!clienteDao.validarDniCuil(dni, cuil))
 		{
 			throw new ArgumentoInvalidoException("El Dni o el Cuil ingresado ya se encuentra registrado");
 		}

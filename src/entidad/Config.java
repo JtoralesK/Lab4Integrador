@@ -7,7 +7,7 @@ import negocio.UsuarioNeg;
 import negocio.clienteNeg;
 
 public final class Config {
-	private static boolean devMode = false;
+	private static boolean devMode = true;
 	private boolean admin = true;
 	private static Usuario activeUser;
 	private static Usuario userAdmin = new Usuario(1,"devAdmin","",eTipoUsuario.Administrador,true);

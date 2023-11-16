@@ -330,7 +330,7 @@ public class clienteDao {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, dniCliente);
-            preparedStatement.setLong(1, cuilCliente);
+            preparedStatement.setLong(2, cuilCliente);
             ResultSet rs = preparedStatement.executeQuery();
     		
             if (rs.next()) {
