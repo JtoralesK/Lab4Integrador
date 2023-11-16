@@ -18,7 +18,7 @@ public final class Config {
 	public Config() {
 		UsuarioNeg usuarioNeg = new UsuarioNeg();
 		userCliente = usuarioNeg.getUsuarioPorNombre("devCliente");
-		if( userCliente == null) {
+		if(devMode && userCliente == null) {
 			clienteNeg clienteNeg = new clienteNeg();
 			clienteNeg.guardarCliente("1111111", "112312", "dev", "Cliente", "1", "1", "1111-11-11", "Calle falsa 123", "1", "1", "dev@mail.com", "1111111", "devCliente", "");
 			userCliente = usuarioNeg.getUsuarioPorNombre("devCliente");
