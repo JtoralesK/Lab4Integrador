@@ -4,52 +4,47 @@ import java.sql.Date;
 import java.util.List;
 
 import datos.movimientosDao;
-import entidad.movimientos;
+import entidad.eTipoMovimiento;
+import entidad.movimiento;
 
 public class movimientosNeg {
 
-public  List<movimientos> listar_movimientos(int n) 
+public  List<movimiento> listarMovimientos(int n) 
 {
 	movimientosDao movimientos = new movimientosDao();
-	return movimientos.listarmovimientos();
+	return movimientos.listarMovimientos();
 }
 
-public  List<movimientos> listar_movimientos_cliete(int n) 
+public List<movimiento> listarMovimientosPorIdCliente(int idCliente)
 {
-	movimientosDao movimientos = new movimientosDao();
-	return movimientos.listarmovimientosxclientes(n);
+	return new movimientosDao().listarMovimientosPorIdCliente(idCliente);
 }
 
-public List<movimientos> listado_movimientos_clientes(int id_cliente)
+public List<movimiento> listarMovimientosPorIdClienteYFecha(int idCliente,Date fecha)
 {
-	return new movimientosDao().listarmovimientosxclientes(id_cliente);
+	return new movimientosDao().listarMovimientosPorIdClienteYFecha(idCliente,fecha);
 }
 
-public List<movimientos> listar_movimiento_fecha(int id_cliente,Date fecha)
+public List<movimiento> listarMovimientosPorIdClienteYTipo(int idCliente,eTipoMovimiento tipoMovimiento) 
 {
-	return new movimientosDao().listarxmovimientosxfecha(id_cliente,fecha);
+	return new movimientosDao().listarMovimientosPorIdClienteYTipo(idCliente, tipoMovimiento);
 }
 
-public List<movimientos> listado_movimientos_tipovimientos(int id_cliente,int id_tipo_movimiento) 
+public List<movimiento> listarMovimientosPorTipoYFecha(int idCliente,eTipoMovimiento tipoMovimiento,Date fecha) 
 {
-	return new movimientosDao().listarmovimientosxtipomovimientos(id_cliente, id_tipo_movimiento);
-}
-
-public List<movimientos> listado_movimientos_tipovimientos_fecha(int id_cliente,int id_tipo_movimiento,Date fecha) 
-{
-	return new movimientosDao().listarmovimientosxtipovimientosxfecha(id_cliente,id_tipo_movimiento,fecha);
+	return new movimientosDao().listarMovimientosPorTipoYFecha(idCliente,tipoMovimiento,fecha);
 
 }
 /****Saca el importe segun el tipo de movimiento  ****/
 
-public Double Dinero_Segun_tipomovimiento_Cliente(int id_cliente,int id_tipo_movimiento)
+public Double getImportePorClienteYTipo(int idCliente,eTipoMovimiento tipoMovimiento)
 {
-	return new movimientosDao().Dinero(id_cliente, id_tipo_movimiento);
+	return new movimientosDao().getImportePorClienteYTipo(idCliente, tipoMovimiento);
 }
 
-public Double Dinero_Segun_tipoMovimiento(int id_tipo_movimiento)
+public Double getImportePorTipoMovimiento(eTipoMovimiento tipoMovimiento)
 {
-	return new movimientosDao().DineroxTipoMovimiento(id_tipo_movimiento);
+	return new movimientosDao().getImportePorTipoMovimiento(tipoMovimiento);
 }
 }
 

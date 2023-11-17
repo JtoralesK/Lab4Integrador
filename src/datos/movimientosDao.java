@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import entidad.movimientos;
-import entidad.tipo_movimientos;
+import entidad.movimiento;
+import entidad.eTipoMovimiento;
 
 
 
@@ -16,12 +16,12 @@ public class movimientosDao {
 	        cn = new conexion();
 	    }
 	
-	 public boolean insertar(movimientos movimientos) {
+	 public boolean insertar(movimiento movimiento) {
 	        boolean estado = true;
 	        cn.Open();
 
 	        String query = "INSERT INTO movimientos(n_cuenta,id_cliente,id_tipo_movimiento,fecha,hora,importe) " +
-	                "VALUES ('" + movimientos.getN_cuenta() + "', '" + movimientos.getId_cliente() + "', " + movimientos.getId_tipo_movimiento().getId_tipo_movimiento() + ","+ movimientos.getFecha()+","+movimientos.getHora()+","+movimientos.getImporte()+")";
+	                "VALUES ('" + movimiento.getN_cuenta() + "', '" + movimiento.getId_cliente() + "', " + movimiento.getTipoMovimiento().ordinal()+1 + ","+ movimiento.getFecha()+","+movimiento.getHora()+","+movimiento.getImporte()+")";
 	        System.out.println(query);
 	        try {
 	            estado = cn.execute(query);
@@ -33,8 +33,8 @@ public class movimientosDao {
 	        return estado;
 	    }
 	 
-	    public List<movimientos> listarmovimientos() {
-	        List<movimientos> movimientos = new ArrayList<>();
+	    public List<movimiento> listarMovimientos() {
+	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
 
 	        String query = "SELECT * FROM movimientos";
@@ -42,7 +42,14 @@ public class movimientosDao {
 	        try {
 	            ResultSet rs = cn.query(query);
 	            while (rs.next()) {
-	            	movimientos movimiento = new movimientos(rs.getInt("id_movimiento"),rs.getInt("n_cuenta"),rs.getInt("id_cliente"),new tipo_movimientos(rs.getInt("id_tipo_movimiento")),rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"), rs.getString("concepto"));
+	            	movimiento movimiento = new movimiento(
+	            			rs.getInt("id_movimiento"),
+	            			rs.getInt("n_cuenta"),
+	            			rs.getInt("id_cliente"),
+	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
+	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getString("concepto")
+            			);
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {
@@ -53,16 +60,23 @@ public class movimientosDao {
 	        return movimientos;
 	    }
 	    /****Listar por clientes****/
-	    public List<movimientos> listarmovimientosxclientes(int id_cliente) {
-	        List<movimientos> movimientos = new ArrayList<>();
+	    public List<movimiento> listarMovimientosPorIdCliente(int idCliente) {
+	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
 
-	        String query = "SELECT * FROM movimientos where id_cliente="+id_cliente;
+	        String query = "SELECT * FROM movimientos where id_cliente="+idCliente;
 
 	        try {
 	            ResultSet rs = cn.query(query);
 	            while (rs.next()) {
-	            	movimientos movimiento = new movimientos(rs.getInt("id_movimiento"),rs.getInt("n_cuenta"),rs.getInt("id_cliente"),new tipo_movimientos(rs.getInt("id_tipo_movimiento")),rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"), rs.getString("concepto"));
+	            	movimiento movimiento = new movimiento(
+	            			rs.getInt("id_movimiento"),
+	            			rs.getInt("n_cuenta"),
+	            			rs.getInt("id_cliente"),
+	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
+	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getString("concepto")
+            			);
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {
@@ -74,16 +88,23 @@ public class movimientosDao {
 	    }
 	    
 	    /****Listar por fecha****/
-	    public List<movimientos> listarxmovimientosxfecha(int id_cliente,Date fecha) {
-	        List<movimientos> movimientos = new ArrayList<>();
+	    public List<movimiento> listarMovimientosPorIdClienteYFecha(int idCliente,Date fecha) {
+	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
 
-	        String query = "SELECT * FROM movimientos whwre fecha="+fecha+"&& id_cliente="+id_cliente;
+	        String query = "SELECT * FROM movimientos whwre fecha="+fecha+"&& id_cliente="+idCliente;
 
 	        try {
 	            ResultSet rs = cn.query(query);
 	            while (rs.next()) {
-	            	movimientos movimiento = new movimientos(rs.getInt("id_movimiento"),rs.getInt("n_cuenta"),rs.getInt("id_cliente"),new tipo_movimientos(rs.getInt("id_tipo_movimiento")),rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"), rs.getString("concepto"));
+	            	movimiento movimiento = new movimiento(
+	            			rs.getInt("id_movimiento"),
+	            			rs.getInt("n_cuenta"),
+	            			rs.getInt("id_cliente"),
+	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
+	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getString("concepto")
+            			);
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {
@@ -95,16 +116,23 @@ public class movimientosDao {
 	    }
 	    
 	    /****Listar por tipos movimietos ****/
-	    public List<movimientos> listarmovimientosxtipomovimientos(int id_cliente,int id_tipo_movimiento) {
-	        List<movimientos> movimientos = new ArrayList<>();
+	    public List<movimiento> listarMovimientosPorIdClienteYTipo(int idCliente,eTipoMovimiento tipoMovimiento) {
+	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
-
-	        String query = "SELECT * FROM movimientos where id_tipo_movimiento="+id_tipo_movimiento+"&& id_cliente="+id_cliente;
+	        int idTipoMovimiento = tipoMovimiento.ordinal() + 1;
+	        String query = "SELECT * FROM movimientos where id_tipo_movimiento="+idTipoMovimiento+"&& id_cliente="+idCliente;
 
 	        try {
 	            ResultSet rs = cn.query(query);
 	            while (rs.next()) {
-	            	movimientos movimiento = new movimientos(rs.getInt("id_movimiento"),rs.getInt("n_cuenta"),rs.getInt("id_cliente"),new tipo_movimientos(rs.getInt("id_tipo_movimiento")),rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"), rs.getString("concepto"));
+	            	movimiento movimiento = new movimiento(
+	            			rs.getInt("id_movimiento"),
+	            			rs.getInt("n_cuenta"),
+	            			rs.getInt("id_cliente"),
+	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
+	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getString("concepto")
+            			);
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {
@@ -117,16 +145,24 @@ public class movimientosDao {
 	    
 	    /****Listar X tipos movimietos X fecha ****/
 	   
-	    public List<movimientos> listarmovimientosxtipovimientosxfecha(int id_cliente,int id_tipo_movimiento,Date fecha) {
-	        List<movimientos> movimientos = new ArrayList<>();
+	    public List<movimiento> listarMovimientosPorTipoYFecha(int idCliente,eTipoMovimiento tipoMovimiento
+	    		,Date fecha) {
+	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
-
-	        String query = "SELECT * FROM movimientos where id_tipo_movimiento="+id_tipo_movimiento+"&& id_cliente="+id_cliente+"&& fecha="+fecha;
+	        int idTipoMovimiento = tipoMovimiento.ordinal() + 1;
+	        String query = "SELECT * FROM movimientos where id_tipo_movimiento="+idTipoMovimiento+"&& id_cliente="+idCliente+"&& fecha="+fecha;
 
 	        try {
 	            ResultSet rs = cn.query(query);
 	            while (rs.next()) {
-	            	movimientos movimiento = new movimientos(rs.getInt("id_movimiento"),rs.getInt("n_cuenta"),rs.getInt("id_cliente"),new tipo_movimientos(rs.getInt("id_tipo_movimiento")),rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"), rs.getString("concepto"));
+	            	movimiento movimiento = new movimiento(
+	            			rs.getInt("id_movimiento"),
+	            			rs.getInt("n_cuenta"),
+	            			rs.getInt("id_cliente"),
+	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
+	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getString("concepto")
+            			);
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {
@@ -137,10 +173,11 @@ public class movimientosDao {
 	        return movimientos;
 	    }
 	    /****Saca el importe segun el tipo de movimiento  ****/
-	    public Double Dinero(int id_cliente,int id_tipo_movimiento) {
+	    public Double getImportePorClienteYTipo(int idCliente,eTipoMovimiento tipoMovimiento) {
 	        cn.Open();
-	    	Double dinero = 0.0;
-	        String query = "select sum(importe) FROM movimientos where id_tipo_movimiento="+id_tipo_movimiento+"&& id_cliente="+id_cliente;
+	    	Double dinero = 0.00;
+	    	int idTipoMovimiento = tipoMovimiento.ordinal()+1;
+	        String query = "select sum(importe) FROM movimientos where id_tipo_movimiento="+idTipoMovimiento+"&& id_cliente="+idCliente;
 
 	        try {
 	            ResultSet rs = cn.query(query);
@@ -155,10 +192,11 @@ public class movimientosDao {
 	        return dinero;
 	    }
 	    
-	    public Double DineroxTipoMovimiento(int id_tipo_movimiento) {
+	    public Double getImportePorTipoMovimiento(eTipoMovimiento tipoMovimiento) {
 	        cn.Open();
-	    	Double dinero = 0.0;
-	        String query = "select sum(importe) FROM movimientos where id_tipo_movimiento="+id_tipo_movimiento;
+	    	Double dinero = 0.00;
+	    	int idTipoMovimiento = tipoMovimiento.ordinal()+1;
+	        String query = "select sum(importe) FROM movimientos where id_tipo_movimiento="+idTipoMovimiento;
 
 	        try {
 	            ResultSet rs = cn.query(query);

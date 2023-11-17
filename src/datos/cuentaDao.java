@@ -127,7 +127,7 @@ public class cuentaDao {
 		return estado;
 	}
 
-	public Boolean logicalDelete(int n_cuenta, int id_Cliente) {
+	public boolean logicalDelete(int n_cuenta, int id_Cliente) {
 		boolean estado = true;
 
 		try (Connection connection = cn.Open();
@@ -142,6 +142,8 @@ public class cuentaDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			estado = false;
+		}finally {
+			cn.close();
 		}
 
 		return estado;

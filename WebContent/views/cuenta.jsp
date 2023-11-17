@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-    <%@page import="entidad.movimientos"%>
+    <%@page import="entidad.movimiento"%>
     <%@page import="negocio.movimientosNeg"%>
-    <%@page import="entidad.tipo_movimientos"%>
-    <%@page import="negocio.tipo_movimientosNeg"%>
+    <%@page import="entidad.eTipoMovimiento"%>
     <%@page import="java.util.List"%>
     <%@page import="java.util.ArrayList"%>
     <%@page import="entidad.Usuario"%>
@@ -17,17 +16,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <%request.setAttribute("titulo", "Cuenta"); %>
+    <%
+    	request.setAttribute("titulo", "Cuenta");
+    %>
     <jsp:include page="head.jsp"/>
 </head>
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 <br>
- <%Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
- cliente cliente = new cliente();
- cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());
+ <%
+ 	Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
+  cliente cliente = new cliente();
+  cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());
  %>
-<h2 class="text-center mx-auto text-4xl">ID Cliente <%= cliente.getId()%></h2>
+<h2 class="text-center mx-auto text-4xl">ID Cliente <%=cliente.getId()%></h2>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
 
@@ -49,15 +51,17 @@
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
-		<% List<movimientos>ListaMovimientos = new movimientosNeg().listar_movimientos_cliete(101);
- 		for(movimientos Movimientos : ListaMovimientos ){ %>
+		<%
+			List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(101);
+		 		for(movimiento movimiento : ListaMovimientos ){
+		%>
 			<tr>
-				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getId_movimiento() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getN_cuenta() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getId_tipo_movimiento().getDescripcion() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getFecha() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getHora() %>HS</td>
-				<td class="px-6 py-4 whitespace-nowrap text-red-500">$<%= Movimientos.getImporte() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getId_movimiento() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getN_cuenta() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getTipoMovimiento().name()%></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getFecha() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getHora() %>HS</td>
+				<td class="px-6 py-4 whitespace-nowrap text-red-500">$<%= movimiento.getImporte() %></td>
 			</tr>
 		<%}%>
 		</tbody>
