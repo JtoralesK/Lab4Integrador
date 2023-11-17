@@ -22,6 +22,9 @@ public class cuentaNeg {
 	public List<cuenta> selectAllByOneClient(int id_Cliente) {
 		return cuentaDao.selectAllByOneClient(id_Cliente);
 	}
+	public Boolean updateRegisterState(int n_cuenta, int id_Cliente, boolean stateToChange) {
+		return cuentaDao.updateRegisterState(n_cuenta, id_Cliente,stateToChange);
+	}
 	
 	public boolean altaCuenta(int idCliente,eTipoCuenta tipoCuenta) {
 		cuenta cuenta = new cuenta();

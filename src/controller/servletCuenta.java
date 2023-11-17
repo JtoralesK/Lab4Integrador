@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -109,6 +110,31 @@ public class servletCuenta extends HttpServlet {
 			}
 		 }
 		
+		//eliminar-activar
+		if (request.getParameter("btnCuentaId") != null && request.getParameter("btnClienteId") != null && request.getParameter("btnEstado") != null )
+		{
+			int cuentaId = Integer.parseInt(request.getParameter("btnCuentaId"));
+			int id_Cliente = Integer.parseInt(request.getParameter("btnClienteId"));
+			String btnEstado = request.getParameter("btnEstado");
+			boolean stateToChange = Boolean.valueOf(btnEstado);
+			cuentaNeg cuentaNeg = new cuentaNeg();
+
+			boolean modificado= cuentaNeg.updateRegisterState(cuentaId, id_Cliente, !stateToChange);
+			if(modificado)
+			{
+	    		request.setAttribute("texto", "Estado de cuenta modificado con exito");
+			}
+			else
+			{
+	    		request.setAttribute("texto", "No se pudo modificar el estado de la cuenta");
+			}
+			
+	    	request.setAttribute("modal", true);
+	    	request.getSession().setAttribute("lista", cuentaNeg.selectAll());
+	    	RequestDispatcher dispatcher = request.getRequestDispatcher("/servletPaginacion?redirectUrl=blCuentas.jsp");
+			dispatcher.forward(request, response);	
+			return;
+		}
 	}
 
 }

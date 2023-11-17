@@ -127,15 +127,15 @@ public class cuentaDao {
 		return estado;
 	}
 
-	public Boolean logicalDelete(int n_cuenta, int id_Cliente) {
+	public Boolean updateRegisterState(int n_cuenta, int id_Cliente,boolean stateToChange) {
 		boolean estado = true;
 
 		try (Connection connection = cn.Open();
 				PreparedStatement preparedStatement = connection
-						.prepareStatement("UPDATE cuentas SET estado = 0 WHERE n_cuenta = ? AND id_cliente = ?")) {
-
-			preparedStatement.setInt(1, n_cuenta);
-			preparedStatement.setInt(2, id_Cliente);
+						.prepareStatement("UPDATE cuentas SET estado = ? WHERE n_cuenta = ? AND id_cliente = ?")) {
+			preparedStatement.setBoolean(1, stateToChange);
+			preparedStatement.setInt(2, n_cuenta);
+			preparedStatement.setInt(3, id_Cliente);
 
 			estado = preparedStatement.executeUpdate() > 0;
 
