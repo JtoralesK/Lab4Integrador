@@ -72,15 +72,78 @@
                 </form>
             </td>  
              <td class="p-2 text-center">
-                <form>
-                <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Eliminar</button>
-                </form>
+               <% if (cuenta.isEstado()) { %>
+						    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnEliminar" onclick="openModal('eliminar', '<%= cuenta.getId_cuenta() %>', '<%= cuenta.getId_cliente() %>', '<%= cuenta.isEstado() %>')">Eliminar</button>
+						<% } else { %>
+						    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnActivar" onclick="openModal('activar', '<%= cuenta.getId_cuenta() %>', '<%= cuenta.getId_cliente() %>', '<%= cuenta.isEstado() %>')">Activar</button>
+			<% } %>
             </td>
         </tr>
     <% } %>
     </tbody>
 </table>
 	<jsp:include page="paginacion.jsp" />
+	<jsp:include page="modal.jsp" />
+	
+	<!-- MODAL DE CONFIRMACIÓN -->
+		<div id="confirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+		  <div class="bg-white p-8 rounded shadow-lg">
+		    <p id="modalText" class="text-gray-700"></p>
+		    <div class="mt-4 flex justify-end">
+		      <form id="confirmForm" action="/ProjectBeta1/servletCuenta" method="post">
+		        <input type="hidden" name="btnCuentaId" id="btnCuentaId" value="">
+		        <input type="hidden" name="btnClienteId" id="btnClienteId" value="">
+		        <input type="hidden" name="btnEstado" id="btnEstado" value="">		         		        
+		        <button id="confirmBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" type="submit"></button>
+		      </form>
+		      <button class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded" onclick="closeModal()">Cancelar</button>
+		    </div>
+		  </div>
+		</div>
+
+	
+	<script>
+		function openModal(action,cuentaId ,clientId,estado) {
+		    const modal = document.getElementById("confirmModal");
+		    const confirmBtn = document.getElementById("confirmBtn");
+		    const btnCuentaId = document.getElementById("btnCuentaId");
+		    const btnClienteId = document.getElementById("btnClienteId");
+		    const btnEstado = document.getElementById("btnEstado");
+		    const modalText = document.getElementById("modalText");
+	
+		    var actionText = '';
+		    if(action == "eliminar"){
+		    	actionText = 'Eliminar';
+		    	modalText.textContent = 'Seguro que desea eliminar la cuenta '+ cuentaId +' del cliente '+ clientId+'?';
+		    }else{
+		    	actionText = 'Reactivar';
+		    	modalText.textContent = 'Seguro que desea reactivar cuenta '+ cuentaId + ' del cliente '+ clientId+'?';
+		    }
+		    
+		    confirmBtn.textContent = actionText; 
+		    confirmBtn.onclick = function () {
+		    	btnCuentaId.value = cuentaId;
+		    	btnClienteId.value = clientId;
+		    	btnEstado.value = estado;
+		        document.getElementById("confirmForm").submit();
+		        closeModal();
+		    };
+	
+		    modal.style.display = "flex";
+		}
+
+		function closeModal() {
+		  const modal = document.getElementById("confirmModal");
+		  modal.style.display = "none";
+		}
+
+		window.onclick = function (event) {
+		  const modal = document.getElementById("confirmModal");
+		  if (event.target === modal) {
+		    modal.style.display = "none";
+		  }
+		};
+	</script>
     </div>
 </body>
 </html>
