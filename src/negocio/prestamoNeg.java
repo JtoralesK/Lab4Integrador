@@ -14,4 +14,8 @@ public class prestamoNeg {
 	public boolean actualizar(prestamo prestamo){
 		return prestamoDao.actualizar(prestamo);
 	}
+	/*** Listar por cliente***/
+	public List<prestamo> listarXcliente(int cliente){
+		return prestamoDao.listarXcliente(cliente);
+	}
 }

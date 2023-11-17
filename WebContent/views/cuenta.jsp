@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
+    <%@page import="entidad.movimientos"%>
+    <%@page import="negocio.movimientosNeg"%>
+    <%@page import="entidad.tipo_movimientos"%>
+    <%@page import="negocio.tipo_movimientosNeg"%>
+    <%@page import="java.util.List"%>
+    <%@page import="java.util.ArrayList"%>
+    <%@page import="entidad.Usuario"%>
+    <%@page import="entidad.cliente"%>
+    <%@page import="negocio.clienteNeg"%>
+	<%@page import="entidad.prestamo"%>
+    <%@page import="negocio.prestamoNeg"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,63 +23,43 @@
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 <br>
- 
+ <%Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
+ cliente cliente = new cliente();
+ cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());
+ %>
+<h2 class="text-center mx-auto text-4xl">ID Cliente <%= cliente.getId()%></h2>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
+
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
 				<th
-					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo
-					de Movimiento</th>
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id Movimiento</th>
+				<th
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nº Cuenta</th>
+				<th
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo Movimiento</th>
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Importe</th>
-				<th
-					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Concepto</th>
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
+		<% List<movimientos>ListaMovimientos = new movimientosNeg().listar_movimientos_cliete(101);
+ 		for(movimientos Movimientos : ListaMovimientos ){ %>
 			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">Transferencia</td>
-				<td class="px-6 py-4 whitespace-nowrap">20/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">14:00</td>
-				<td class="px-6 py-4 whitespace-nowrap text-red-500">$5000</td>
-				<td class="px-6 py-4 whitespace-nowrap">CBU Destino:
-					0021548410054</td>
-
+				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getId_movimiento() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getN_cuenta() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getId_tipo_movimiento().getDescripcion() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getFecha() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= Movimientos.getHora() %>HS</td>
+				<td class="px-6 py-4 whitespace-nowrap text-red-500">$<%= Movimientos.getImporte() %></td>
 			</tr>
-			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">Alta de préstamo</td>
-				<td class="px-6 py-4 whitespace-nowrap">18/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">13:15</td>
-				<td class="px-6 py-4 whitespace-nowrap text-green-500">$150000</td>
-				<td class="px-6 py-4 whitespace-nowrap">Préstamo ID: 2</td>
-			</tr>
-			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">Pago de préstamo</td>
-				<td class="px-6 py-4 whitespace-nowrap">15/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">13:15</td>
-				<td class="px-6 py-4 whitespace-nowrap text-red-500">$6500</td>
-				<td class="px-6 py-4 whitespace-nowrap">Préstamo ID: 1</td>
-			</tr>
-			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">Alta de préstamo</td>
-				<td class="px-6 py-4 whitespace-nowrap">07/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">13:15</td>
-				<td class="px-6 py-4 whitespace-nowrap text-green-500">$12000</td>
-				<td class="px-6 py-4 whitespace-nowrap">Préstamo ID: 1</td>
-			</tr>
-			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">Alta de cuenta</td>
-				<td class="px-6 py-4 whitespace-nowrap">01/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">10:25</td>
-				<td class="px-6 py-4 whitespace-nowrap text-green-500">$10000</td>
-				<td class="px-6 py-4 whitespace-nowrap">Nueva cuenta creada</td>
-			</tr>
+		<%}%>
 		</tbody>
 	</table>
 <br>
@@ -79,33 +72,39 @@
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Préstamo ID</th>
 				<th
-					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Importe total</th>
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> Nº cuenta</th>
 				<th
-					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad de cuotas</th>
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Importe total</th>
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Solicitud</th>
 				<th
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+				<th
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plazo</th>
+				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Aprobación</th>
+				<th
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interes</th>
+				<th
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cuotas Pagas</th>
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
+		<% List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(101);
+ 		for(prestamo prestamos : ListaPrestamos ){ %>
 			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">2</td>
-				<td class="px-6 py-4 whitespace-nowrap">$150000</td>
-				<td class="px-6 py-4 whitespace-nowrap">9</td>
-				<td class="px-6 py-4 whitespace-nowrap">15/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">18/10/2023</td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getIdCuenta() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getImporte() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaSolicitud() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getEstadoPrestamo() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getPlazo() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaRevision() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getInteres() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getCuotasPagas() %></td>
 			</tr>
-
-			<tr>
-				<td class="px-6 py-4 whitespace-nowrap">1</td>
-				<td class="px-6 py-4 whitespace-nowrap">$12000</td>
-				<td class="px-6 py-4 whitespace-nowrap">3</td>
-				<td class="px-6 py-4 whitespace-nowrap">05/10/2023</td>
-				<td class="px-6 py-4 whitespace-nowrap">07/10/2023</td>
-			</tr>
+		<%}%>
 		</tbody>
 	</table>
 </body>
 </html>
-

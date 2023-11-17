@@ -118,4 +118,54 @@ public class PrestamoDao {
 		
 		return estado;
 	}
+	
+	/*** Listar por cliente***/
+	public List<prestamo> listarXcliente(int cliente)
+	{
+		List<prestamo> prestamos = new ArrayList<>();
+		
+		cn = new conexion();
+		Connection connection  = cn.Open();	
+		
+		String query = "SELECT P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision"
+				+ ", P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
+				"FROM prestamos P " + 
+				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo && id_cliente" + cliente +
+				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision; ";
+		
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
+        {		
+            ResultSet rs = preparedStatement.executeQuery();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            while (rs.next()) {
+            	prestamo prestamo = new prestamo(
+            			rs.getLong("id_cliente"),
+            			rs.getLong("n_cuenta"),
+            			rs.getFloat("importe"),
+            			LocalDate.parse(rs.getString("fecha_solicitud"), formatter),
+            			eEstadoPrestamo.values()[rs.getInt("id_estado") - 1],
+            			rs.getInt("plazo"),
+            			LocalDate.parse(rs.getString("fecha_Revision"), formatter)
+        			);
+            	prestamo.setId(rs.getLong("id_prestamo"));
+            	prestamo.setCuotasPagas(rs.getInt("cuotasPagas"));
+            	prestamo.setInteres(rs.getFloat("interes"));
+            	
+            	prestamos.add(prestamo);
+            }
+            
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			cn.close();
+		}
+		
+		return prestamos;
+	}
+	
 }
