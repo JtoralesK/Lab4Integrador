@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.List"%>
+<%@page import="entidad.prestamo"%>
+<%@page import="entidad.eEstadoPrestamo"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <%request.setAttribute("titulo", "Prestamo"); %>
+    <%request.setAttribute("titulo", "Prestamo");
+ 	List<prestamo> prestamos = (List<prestamo>) request.getAttribute("listaPaginada");
+ 	int cantCuentas = (int) request.getAttribute("cantCuenta");
+    %>
     <jsp:include page="head.jsp"/>
 </head>
 <body class="bg-gray-100">
@@ -17,7 +23,7 @@
 					<label for="monto" class="text-sm font-medium">Monto del Préstamo:</label>
 					<div class="flex">
 						<span class="bg-gray-200 p-2 rounded-l-md">$</span> 
-						<input type="number" id="monto" name="monto" placeholder="0" class="w-full border border-gray-300 rounded-md p-2">
+						<input type="number" id="monto" name="monto" placeholder="0" min="1" required class="w-full border border-gray-300 rounded-md p-2">
 					</div>
 				</div>
 				<div class="mb-4">
@@ -60,77 +66,38 @@
 						</tr>
 					</thead>
 					<tbody>
+					<% for (prestamo prestamo : prestamos) {%>
 						<tr>
 							<td class="p-2 text-center">
 							<select class="border border-gray-300 rounded-md p-2">
-									<option value="cuenta1">Cuenta 1</option>
-									<option value="cuenta2">Cuenta 2</option>
+							<%for (int i = 1; i <= cantCuentas; i++) {%>
+									<option value="<%=i%>">Cuenta <%=i%></option>
+							<%} %>
 							</select></td>
-							<td class="p-2 text-center">10/11/23</td>
-							<td class="p-2 text-center">$250</td>
-							<td class="p-2 text-center">$100</td>
-							<td class="p-2 text-center">3</td>
+							<td class="p-2 text-center"><%=prestamo.getFechaSolicitud()%></td>
+							<td class="p-2 text-center">$<%=prestamo.getImporte()%></td>
+							<td class="p-2 text-center">$<%=(prestamo.getImporte() * prestamo.getInteres()) / prestamo.getPlazo()%></td>
+							<td class="p-2 text-center"><%=prestamo.getPlazo()%></td>
 							<td class="p-2 text-center">
 							<select class="border border-gray-300 rounded-md p-2">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
+							<%for (int i = 1; i <= prestamo.getPlazo(); i++) {%>
+									<option value="<%=i%>"><%=i%></option>
+							<%} %>							
 							</select></td>
-							<td class="p-2 text-center text-center text-green-600">Aprobado</td>
+							<td class="p-2 text-center <%=prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aprobado ? "text-green-600" 
+	                    		: prestamo.getEstadoPrestamo() == eEstadoPrestamo.Rechazado ? "text-red-600"
+	                    		: "text-yellow-600"%>"><%=prestamo.getEstadoPrestamo()%></td>
 							<td class="p-2 text-center">
-								<button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Pagar</button>
+								<button <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado ? "disabled" : "" %> class="text-white px-4 py-2 rounded-md <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"%> ">Pagar</button>
 							</td>
 						</tr>
-						<tr>
-							<td class="p-2 text-center">
-							<select class="border border-gray-300 rounded-md p-2">
-									<option value="cuenta1">Cuenta 1</option>
-									<option value="cuenta2">Cuenta 2</option>
-							</select></td>
-							<td class="p-2 text-center">25/11/23</td>
-							<td class="p-2 text-center">$550</td>
-							<td class="p-2 text-center">$150</td>
-							<td class="p-2 text-center">4</td>
-							<td class="p-2 text-center">
-							<select class="border border-gray-300 rounded-md p-2">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-							</select></td>
-							<td class="p-2 text-center text-yellow-600">Pendiente</td>
-							<td class="p-2 text-center">
-								<button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed" disabled>Pagar</button>
-							</td>
-						</tr>
-						<tr>
-							<td class="p-2 text-center">
-							<select class="border border-gray-300 rounded-md p-2">
-									<option value="cuenta1">Cuenta 1</option>
-									<option value="cuenta2">Cuenta 2</option>
-							</select></td>
-							<td class="p-2 text-center">12/12/23</td>
-							<td class="p-2 text-center">$1200</td>
-							<td class="p-2 text-center">$120</td>
-							<td class="p-2 text-center">x</td>
-							<td class="p-2 text-center">
-							<select	class="border border-gray-300 rounded-md p-2" disabled>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-							</select></td>
-							<td class="p-2 text-center text-red-600">Rechazado</td>
-							<td class="p-2 text-center">
-								<button class="bg-gray-300 text-gray-600 px-4 py-2 rounded-md cursor-not-allowed">Pagar</button>
-							</td>
-						</tr>
+					<%} %>						
 					</tbody>
 				</table>
 			</form>
+			<jsp:include page="paginacion.jsp" />
 		</div>
 	</div>
-
-	<%request.setAttribute("texto", "¡Prestamo solicitado, espere confirmación!");%>
-	<%request.setAttribute("modal", true);%>
 
 	<jsp:include page="modal.jsp" />
 </body>

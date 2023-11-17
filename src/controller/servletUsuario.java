@@ -64,6 +64,11 @@ public class servletUsuario extends HttpServlet {
             
             if (loginCorrect) {
             	request.getSession().setAttribute("loggedUser", foundUser);
+        		if(foundUser.getTipoUsuario() == eTipoUsuario.Cliente) {
+        			clienteNeg clienteNeg = new clienteNeg();
+        			cliente loggedCliente = clienteNeg.obtenerClientePorIdUsuario(foundUser.getId());
+        			request.getSession().setAttribute("loggedCliente", loggedCliente);
+        		}
             	response.sendRedirect(request.getContextPath() + "/views/home.jsp");
             } else {
                 textoAMostrar = "El usuario o la contraseña son incorrectos";
