@@ -130,11 +130,13 @@ public class PrestamoDao {
 		String query = "SELECT P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision"
 				+ ", P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
 				"FROM prestamos P " + 
-				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo && id_cliente" + cliente +
+				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
+				"WHERE P.id_cliente = ? " +
 				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision; ";
 		
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
         {		
+        	preparedStatement.setInt(1, cliente);
             ResultSet rs = preparedStatement.executeQuery();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
+import negocio.cuentaNeg;
 import negocio.prestamoNeg;
+import entidad.Usuario;
+import entidad.cliente;
 import entidad.eEstadoPrestamo;
 import entidad.prestamo;
 
@@ -32,7 +36,15 @@ public class servletPrestamo extends HttpServlet {
 				List<prestamo> prestamos = new prestamoNeg().listar();
 	        	request.getSession().setAttribute("lista", prestamos);
 		        request.getRequestDispatcher("/servletPaginacion?redirectUrl=adminPrestamos.jsp").forward(request, response);			
-			}			
+			}
+			if ("clientePrestamo".equals(request.getParameter("accion")))
+			{
+				cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
+				int cantCuenta = new cuentaNeg().selectAllByOneClient(cliente.getId()).size();
+				request.setAttribute("cantCuenta", cantCuenta);
+	        	request.getSession().setAttribute("lista", new prestamoNeg().listarXcliente(cliente.getId()));
+		        request.getRequestDispatcher("/servletPaginacion?redirectUrl=prestamo.jsp").forward(request, response);			
+			}
 		}
 		
 		if (request.getParameter("btnAprobar") != null || request.getParameter("btnRechazar") != null)
