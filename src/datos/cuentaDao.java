@@ -83,7 +83,7 @@ public class cuentaDao {
 		Connection connection = cn.Open();
 		String query = "select n_cuenta,cuentas.id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,cuentas.estado from usuarios "
 				+ "inner join clientes on usuarios.id_usuario = clientes.id_usuario "
-				+ "inner join cuentas on clientes.id_cliente = cuentas.id_cliente where cuentas.id_cliente = ?";
+				+ "inner join cuentas on clientes.id_cliente = cuentas.id_cliente where clientes.id_usuario = ?";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setInt(1, idUsuario);

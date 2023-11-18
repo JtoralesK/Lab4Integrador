@@ -1,9 +1,11 @@
 package datos;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
 
 import entidad.movimiento;
 import entidad.eTipoMovimiento;
@@ -17,13 +19,23 @@ public class movimientosDao {
 	    }
 	
 	 public boolean insertar(movimiento movimiento) {
-	        boolean estado = true;
-	        cn.Open();
-
+	        boolean estado = false;
+	        
+	        Connection connection = cn.Open();
+	        
 	        String query = "INSERT INTO movimientos(n_cuenta,id_cliente,id_tipo_movimiento,fecha,hora,importe,concepto) " +
-	                "VALUES ('" + movimiento.getN_cuenta() + "', '" + movimiento.getId_cliente() + "', " + movimiento.getTipoMovimiento().ordinal()+1 + ","+ movimiento.getFecha()+","+movimiento.getHora()+","+movimiento.getImporte()+","+movimiento.getConcepto()+")";
-	        try {
-	            estado = cn.execute(query);
+	                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	            preparedStatement.setInt(1, movimiento.getN_cuenta());
+	            preparedStatement.setInt(2, movimiento.getId_cliente());
+	            preparedStatement.setInt(3, movimiento.getTipoMovimiento().ordinal() + 1); 
+	            preparedStatement.setDate(4, java.sql.Date.valueOf(movimiento.getFecha()));
+	            preparedStatement.setTime(5, java.sql.Time.valueOf(movimiento.getHora()));
+	            preparedStatement.setDouble(6, movimiento.getImporte());
+	            preparedStatement.setString(7, movimiento.getConcepto());
+
+	            estado = preparedStatement.execute();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
