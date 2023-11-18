@@ -67,8 +67,11 @@
 		</div>
 	<%} else {%>
 	
-	<a href="/ProjectBeta1/views/cuenta.jsp" class="group-hover:bg-gray-200 focus:outline-none">Cuentas</a>
-	<a href="/ProjectBeta1/views/transferencia.jsp" class="group-hover:bg-gray-200 focus:outline-none">Transferencia</a>
+		<a href="/ProjectBeta1/views/cuenta.jsp" class="group-hover:bg-gray-200 focus:outline-none">Cuentas</a>
+		<form method="get" action="<%= request.getContextPath() %>/servletTransferencia">
+           <input type="hidden" name="homeTransferencias">
+           <button class="group-hover:bg-gray-200 focus:outline-none">Transferencias</button>
+       </form>
        <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
            <input type="hidden" name="accion" value="clientePrestamo">
            <button class="group-hover:bg-gray-200 focus:outline-none">Prestamos</button>

@@ -91,7 +91,8 @@ public class servletCuenta extends HttpServlet {
 				 if(!existe) throw new ArgumentoInvalidoException("El número de cliente indicado no existe");
 				 if(!activo) throw new ArgumentoInvalidoException("El cliente no se encuentra activo");
 				 cuentaNeg cuentaNeg = new cuentaNeg();
-				 boolean tooMany = cuentaNeg.selectAllByOneClient(clientId).size() > 2;
+				 int cuentasActivas = cuentasActivas(cuentaNeg.selectAllByOneClientId(clientId));
+				 boolean tooMany = cuentasActivas > 2;
 				 if(tooMany) throw new ArgumentoInvalidoException("El cliente ya posee 3 cuentas");
 				 eTipoCuenta tipoCuenta = request.getParameter("tipoCuenta").equals("ca") ? eTipoCuenta.CajaDeAhorro : eTipoCuenta.CuentaCorriente;
 				 boolean alta = cuentaNeg.altaCuenta(clientId,tipoCuenta);
@@ -118,8 +119,10 @@ public class servletCuenta extends HttpServlet {
 			String btnEstado = request.getParameter("btnEstado");
 			boolean stateToChange = Boolean.valueOf(btnEstado);
 			cuentaNeg cuentaNeg = new cuentaNeg();
-
-			boolean modificado= cuentaNeg.updateRegisterState(cuentaId, id_Cliente, !stateToChange);
+			boolean modificado=false;
+			int cuentasActivas = cuentasActivas(cuentaNeg.selectAllByOneClientId(id_Cliente));
+			if(stateToChange || cuentasActivas <= 2)
+			 modificado = cuentaNeg.updateRegisterState(cuentaId, id_Cliente, !stateToChange);
 			if(modificado)
 			{
 	    		request.setAttribute("texto", "Estado de cuenta modificado con exito");
@@ -136,5 +139,12 @@ public class servletCuenta extends HttpServlet {
 			return;
 		}
 	}
-
+	
+	private int cuentasActivas(List<cuenta> cuentas) {
+		int cuentasActivas = 0;
+		for(cuenta cuenta : cuentas) {
+			if(cuenta.isEstado())cuentasActivas++;
+		}
+		return cuentasActivas;
+	}
 }

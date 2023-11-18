@@ -46,12 +46,11 @@
 		
 			<div class="flex flex-row gap-5 py-5 ">
 				<%
-				cuentaDao ctaDao = new cuentaDao();
-				List<cuenta> list = ctaDao.selectAllByOneClient(user.getId());
-				for(cuenta c : list){
-					System.out.println(c.toString());
-				
-			%>
+					cuentaDao ctaDao = new cuentaDao();
+						List<cuenta> list = ctaDao.selectAllByOneUserId(user.getId());
+						for(cuenta c : list){
+							System.out.println(c.toString());
+				%>
 				<div class="w-1/3 h-24  border rounded-lg border-gray-300 py-3 px-6">
 				<div class="flex flex-row gap-6">
 				<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>

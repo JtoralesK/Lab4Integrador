@@ -78,7 +78,7 @@ public class cuentaDao {
 		return cuentas;
 	}
 
-	public List<cuenta> selectAllByOneClient(int id_Cliente) {
+	public List<cuenta> selectAllByOneUserId(int idUsuario) {
 		List<cuenta> cuentas = new ArrayList<>();
 		Connection connection = cn.Open();
 		String query = "select n_cuenta,cuentas.id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,cuentas.estado from usuarios\r\n"
@@ -86,7 +86,7 @@ public class cuentaDao {
 				+ "inner join cuentas on clientes.id_cliente = cuentas.id_cliente where usuarios.id_usuario = ?";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-			preparedStatement.setInt(1, id_Cliente);
+			preparedStatement.setInt(1, idUsuario);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				cuenta cta = mapResultSetToCuenta(rs);
@@ -99,7 +99,69 @@ public class cuentaDao {
 		}
 		return cuentas;
 	}
+	
+	public List<cuenta> selectAllByOneClientId(int idCliente){
+		List<cuenta> cuentas = new ArrayList<>();
+		Connection connection = cn.Open();
+		String query = "select n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
+				+ "WHERE id_cliente = ?";
 
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, idCliente);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				cuenta cta = mapResultSetToCuenta(rs);
+				cuentas.add(cta);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
+		return cuentas;
+	}
+	
+	public cuenta buscarPorIdCuenta(int idCuenta) {
+		cuenta cuenta = new cuenta();
+		Connection connection = cn.Open();
+		String query = "select 1 n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
+				+ "WHERE n_cuenta = ?";
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, idCuenta);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				cuenta = mapResultSetToCuenta(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
+		return cuenta;
+	}
+	
+	public boolean modificarSaldo(int idCuenta,double saldo) {
+		boolean estado = true;
+
+		try (Connection connection = cn.Open();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("UPDATE cuentas SET saldo = ? WHERE n_cuenta = ?")) {
+			preparedStatement.setDouble(1, saldo);
+			preparedStatement.setInt(2, idCuenta);
+
+			estado = preparedStatement.executeUpdate() > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			estado = false;
+		}finally {
+			cn.close();
+		}
+
+		return estado;
+	}
+	
 	public boolean altaCuenta(cuenta cta) {
 		boolean estado = true;
 		Connection connection = cn.Open();
@@ -110,7 +172,7 @@ public class cuentaDao {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setInt(1, cta.getId_cuenta());
 			preparedStatement.setInt(2, cta.getId_cliente());
-			preparedStatement.setInt(3, cta.getId_tipo_cuenta().ordinal() + 1);
+			preparedStatement.setInt(3, cta.tipoCuenta().ordinal() + 1);
 			preparedStatement.setDouble(4, cta.getSaldo());
 			preparedStatement.setDate(5, java.sql.Date.valueOf(cta.getFecha_creacion()));
 			preparedStatement.setString(6, cta.getCbu());

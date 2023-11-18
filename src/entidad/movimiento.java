@@ -2,6 +2,8 @@ package entidad;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 public class movimiento {
@@ -9,14 +11,14 @@ private int	idMovimiento;
 private int nCuenta;
 private int idCliente;
 private eTipoMovimiento tipoMovimiento;
-private Date fecha;
-private Time  hora;
+private LocalDate fecha;
+private LocalTime  hora;
 private Double importe;
-private String concepto;
+private String concepto="";
 
 
 public movimiento() {}
-public movimiento(int idMovimiento,int nCuenta,int idCliente,eTipoMovimiento tipoMovimiento,Date fecha, Time  hora,Double importe, String concepto) 
+public movimiento(int idMovimiento,int nCuenta,int idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe, String concepto) 
 {
 	this.idMovimiento=idMovimiento;
 	this.nCuenta=nCuenta;
@@ -28,7 +30,7 @@ public movimiento(int idMovimiento,int nCuenta,int idCliente,eTipoMovimiento tip
 	this.concepto=concepto;
 	
 }
-public movimiento(int nCuenta,int idCliente,eTipoMovimiento tipoMovimiento,Date fecha, Time  hora,Double importe) 
+public movimiento(int nCuenta,int idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe) 
 {
 	this.nCuenta=nCuenta;
 	this.idCliente=idCliente;
@@ -63,16 +65,16 @@ public eTipoMovimiento getTipoMovimiento() {
 public void setTipoMovimiento(eTipoMovimiento tipoMovimiento) {
 	this.tipoMovimiento = tipoMovimiento;
 }
-public Date getFecha() {
+public LocalDate getFecha() {
 	return fecha;
 }
-public void setFecha(Date fecha) {
+public void setFecha(LocalDate fecha) {
 	this.fecha = fecha;
 }
-public Time getHora() {
+public LocalTime getHora() {
 	return hora;
 }
-public void setHora(Time hora) {
+public void setHora(LocalTime hora) {
 	this.hora = hora;
 }
 public Double getImporte() {

@@ -20,9 +20,8 @@ public class movimientosDao {
 	        boolean estado = true;
 	        cn.Open();
 
-	        String query = "INSERT INTO movimientos(n_cuenta,id_cliente,id_tipo_movimiento,fecha,hora,importe) " +
-	                "VALUES ('" + movimiento.getN_cuenta() + "', '" + movimiento.getId_cliente() + "', " + movimiento.getTipoMovimiento().ordinal()+1 + ","+ movimiento.getFecha()+","+movimiento.getHora()+","+movimiento.getImporte()+")";
-	        System.out.println(query);
+	        String query = "INSERT INTO movimientos(n_cuenta,id_cliente,id_tipo_movimiento,fecha,hora,importe,concepto) " +
+	                "VALUES ('" + movimiento.getN_cuenta() + "', '" + movimiento.getId_cliente() + "', " + movimiento.getTipoMovimiento().ordinal()+1 + ","+ movimiento.getFecha()+","+movimiento.getHora()+","+movimiento.getImporte()+","+movimiento.getConcepto()+")";
 	        try {
 	            estado = cn.execute(query);
 	        } catch (Exception e) {
@@ -47,7 +46,9 @@ public class movimientosDao {
 	            			rs.getInt("n_cuenta"),
 	            			rs.getInt("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
-	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getDate("fecha").toLocalDate(),
+	            			rs.getTime("hora").toLocalTime(),
+	            			rs.getDouble("importe"),
 	            			rs.getString("concepto")
             			);
 	            	movimientos.add(movimiento);
@@ -74,7 +75,9 @@ public class movimientosDao {
 	            			rs.getInt("n_cuenta"),
 	            			rs.getInt("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
-	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getDate("fecha").toLocalDate(),
+	            			rs.getTime("hora").toLocalTime(),
+	            			rs.getDouble("importe"),
 	            			rs.getString("concepto")
             			);
 	            	movimientos.add(movimiento);
@@ -102,7 +105,9 @@ public class movimientosDao {
 	            			rs.getInt("n_cuenta"),
 	            			rs.getInt("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
-	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getDate("fecha").toLocalDate(),
+	            			rs.getTime("hora").toLocalTime(),
+	            			rs.getDouble("importe"),
 	            			rs.getString("concepto")
             			);
 	            	movimientos.add(movimiento);
@@ -130,9 +135,11 @@ public class movimientosDao {
 	            			rs.getInt("n_cuenta"),
 	            			rs.getInt("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
-	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getDate("fecha").toLocalDate(),
+	            			rs.getTime("hora").toLocalTime(),
+	            			rs.getDouble("importe"),
 	            			rs.getString("concepto")
-            			);
+            			);;
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {
@@ -160,9 +167,11 @@ public class movimientosDao {
 	            			rs.getInt("n_cuenta"),
 	            			rs.getInt("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
-	            			rs.getDate("fecha"),rs.getTime("hora"),rs.getDouble("importe"),
+	            			rs.getDate("fecha").toLocalDate(),
+	            			rs.getTime("hora").toLocalTime(),
+	            			rs.getDouble("importe"),
 	            			rs.getString("concepto")
-            			);
+            			);;
 	            	movimientos.add(movimiento);
 	            }
 	        } catch (Exception e) {

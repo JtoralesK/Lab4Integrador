@@ -62,7 +62,7 @@
         <tr>
             <td class="p-2 text-center"><%= cuenta.getId_cuenta() %></td>
             <td class="p-2 text-center"><%= cuenta.getId_cliente() %></td>
-            <td class="p-2 text-center"><%= cuenta.getId_tipo_cuenta() %></td>
+            <td class="p-2 text-center"><%=cuenta.tipoCuenta()%></td>
             <td class="p-2 text-center"><%= cuenta.getSaldo() %></td>
             <td class="p-2 text-center"><%= cuenta.getFecha_creacion() %></td>
             <td class="p-2 text-center text-green-600"><%= cuenta.getCbu() %></td>

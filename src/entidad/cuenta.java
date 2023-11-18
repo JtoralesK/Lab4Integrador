@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class cuenta {
 	private int id_cuenta;
 	private int id_cliente;
-	private eTipoCuenta id_tipo_cuenta;
+	private eTipoCuenta tipoCuenta;
 	private double saldo;
 	private LocalDate fecha_creacion;
 	private String cbu;
@@ -19,7 +19,7 @@ public class cuenta {
 		super();
 		this.id_cuenta = id_cuenta;
 		this.id_cliente = id_cliente;
-		this.id_tipo_cuenta = id_tipo_cuenta;
+		this.tipoCuenta = id_tipo_cuenta;
 		this.saldo = saldo;
 		this.fecha_creacion = fecha_creacion;
 		this.cbu = cbu;
@@ -41,12 +41,12 @@ public class cuenta {
 		this.id_cliente = id_cliente;
 	}
 
-	public eTipoCuenta getId_tipo_cuenta() {
-		return id_tipo_cuenta;
+	public eTipoCuenta tipoCuenta() {
+		return tipoCuenta;
 	}
 
 	public void setId_tipo_cuenta(eTipoCuenta id_tipo_cuenta) {
-		this.id_tipo_cuenta = id_tipo_cuenta;
+		this.tipoCuenta = id_tipo_cuenta;
 	}
 
 	public double getSaldo() {
@@ -80,7 +80,7 @@ public class cuenta {
 	}
 	@Override
 	public String toString() {
-		return "cuenta [id_cuenta=" + id_cuenta + ", id_cliente=" + id_cliente + ", id_tipo_cuenta=" + id_tipo_cuenta
+		return "cuenta [id_cuenta=" + id_cuenta + ", id_cliente=" + id_cliente + ", id_tipo_cuenta=" + tipoCuenta
 				+ ", saldo=" + saldo + ", fecha_creacion=" + fecha_creacion + ", cbu=" + cbu + ", estado=" + estado
 				+ "]";
 	}

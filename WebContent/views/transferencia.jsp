@@ -1,22 +1,41 @@
+<%@page import="entidad.eTipoCuenta"%>
+<%@page import="entidad.cuenta"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="entidad.movimiento"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <%request.setAttribute("titulo", "Transferencias"); %>
     <jsp:include page="head.jsp"/>
+    
+    <%
+		List<movimiento> lista =(List<movimiento>) request.getSession().getAttribute("lista");    
+    	List<cuenta> cuentas = (List<cuenta>) request.getAttribute("cuentas");
+    %>
 </head>
 <body class="bg-gray-100">
     <jsp:include page="navbar.jsp" />
     <div class="bg-white p-4 shadow-md rounded-md w-10/12 mx-auto mt-8 flex">
         <div class="w-1/2 pr-4">
             <h1 class="text-2xl font-semibold mb-4 text-center">Transferencia Bancaria</h1>
-            <form>
+            <form method="post" action="<%= request.getContextPath()%>/servletTransferencia" >
                 <div class="mb-4">
                     <label for="origen" class="text-sm font-medium block">Cuenta de Origen:</label>
-                    <select id="origen" class="w-full border border-gray-300 rounded-md p-2">
-                        <option value="cuenta1">Cuenta 1</option>
-                        <option value="cuenta2">Cuenta 2</option>
+                    <select id="origen" class="w-full border border-gray-300 rounded-md p-2" required>
+                        <% if (cuentas.size() == 0){%>
+                        	<option disabled selected> No hay cuentas registradas </option>
+                        <%}else{%>
+                        	<option disabled selected> Cuenta a debitar </option>
+                        <%
+                        	for (cuenta cuenta : cuentas) {
+                        		String tipoCuenta;
+                        		if(cuenta.tipoCuenta() == eTipoCuenta.CajaDeAhorro) tipoCuenta = "CA";
+                        		else tipoCuenta = "CC";
+                        %>
+                        	<option><%= tipoCuenta %> - <%= cuenta.getId_cuenta() %></option>
+                        <%}} %>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -24,10 +43,10 @@
                     <input type="text" id="destino" class="w-full border border-gray-300 rounded-md p-2">
                 </div>
                 <div class="mb-4">
-                    <label for="cantidad" class="text-sm font-medium block">Cantidad:</label>
+                    <label for="cantidad" class="text-sm font-medium block">Importe:</label>
                     <div class="flex">
                         <span class="bg-gray-200 p-2 rounded-l-md">$</span>
-                        <input type="number" id="cantidad" placeholder="0"
+                        <input type="decimal" min="1" id="cantidad" placeholder="0.00"
                             class="w-full border border-gray-300 rounded-md p-2 pl-2">
                     </div>
                 </div>

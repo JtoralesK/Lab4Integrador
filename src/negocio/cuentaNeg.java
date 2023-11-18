@@ -1,11 +1,15 @@
 package negocio;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import datos.cuentaDao;
 import entidad.cuenta;
 import entidad.eTipoCuenta;
+import entidad.eTipoMovimiento;
+import entidad.movimiento;
+import excepciones.SaldoInsuficienteException;
 
 public class cuentaNeg {
 	
@@ -19,16 +23,24 @@ public class cuentaNeg {
 		return cuentaDao.selectAllByTypeOf(e, prefix);
 	}
 	
-	public List<cuenta> selectAllByOneClient(int id_Cliente) {
-		return cuentaDao.selectAllByOneClient(id_Cliente);
+	public List<cuenta> selectAllByOneUserId(int idUsuario) {
+		return cuentaDao.selectAllByOneUserId(idUsuario);
+	}
+	public List<cuenta> selectAllByOneClientId(int idCliente) {
+		return cuentaDao.selectAllByOneClientId(idCliente);
 	}
 	public Boolean updateRegisterState(int n_cuenta, int id_Cliente, boolean stateToChange) {
 		return cuentaDao.updateRegisterState(n_cuenta, id_Cliente,stateToChange);
 	}
 	
+	public cuenta buscarPorIdCuenta(int idCuenta) {
+		return cuentaDao.buscarPorIdCuenta(idCuenta);
+	}
+	
 	public boolean altaCuenta(int idCliente,eTipoCuenta tipoCuenta) {
+		boolean estado= false;
 		cuenta cuenta = new cuenta();
-		int cantCuentas = selectAllByOneClient(idCliente).size();
+		int cantCuentas = selectAllByOneClientId(idCliente).size();
 		int tipo = tipoCuenta == eTipoCuenta.CajaDeAhorro ? 10 : 20;
 		String stringCuenta = "12" + Integer.toString(idCliente) + Integer.toString(tipo)+ Integer.toString(cantCuentas); 
 		int nroCuenta = Integer.parseInt(stringCuenta);
@@ -41,11 +53,29 @@ public class cuentaNeg {
         cuenta.setId_cuenta(nroCuenta);
 		cuenta.setId_cliente(idCliente);
 		cuenta.setId_tipo_cuenta(tipoCuenta);
-		cuenta.setSaldo(10000);
+		cuenta.setSaldo(0);
 		cuenta.setFecha_creacion(LocalDate.now());
 		cuenta.setCbu(sb.toString());
 		cuenta.setEstado(true);
-
-		return cuentaDao.altaCuenta(cuenta);
+		
+		if(cuentaDao.altaCuenta(cuenta)) {
+			new movimientosNeg().nuevoMovimiento(new movimiento(
+					cuenta.getId_cuenta(),
+					cuenta.getId_cliente(),
+					eTipoMovimiento.AltaCuenta,
+					LocalDate.now(),
+					LocalTime.now(),
+					10000.00
+					));
+			estado=true;
+		}
+		return estado;
+	}
+	
+	public boolean modificarSaldo(int idCuenta, double importe) {
+		double saldo = buscarPorIdCuenta(idCuenta).getSaldo();
+		saldo += importe;
+		if(saldo<0) throw new SaldoInsuficienteException();
+		return new cuentaDao().modificarSaldo(idCuenta, saldo);
 	}
 }
