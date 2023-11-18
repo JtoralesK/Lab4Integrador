@@ -40,7 +40,7 @@ public class servletPrestamo extends HttpServlet {
 			if ("clientePrestamo".equals(request.getParameter("accion")))
 			{
 				cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
-				int cantCuenta = new cuentaNeg().selectAllByOneClient(cliente.getId()).size();
+				int cantCuenta = new cuentaNeg().selectAllByOneClientId(cliente.getId()).size();
 				request.setAttribute("cantCuenta", cantCuenta);
 	        	request.getSession().setAttribute("lista", new prestamoNeg().listarXcliente(cliente.getId()));
 		        request.getRequestDispatcher("/servletPaginacion?redirectUrl=prestamo.jsp").forward(request, response);			
