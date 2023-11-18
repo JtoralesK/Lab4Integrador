@@ -9,7 +9,7 @@ import entidad.movimiento;
 
 public class movimientosNeg {
 
-	public  List<movimiento> listarMovimientos(int n) 
+	public  List<movimiento> listarMovimientos() 
 	{
 		movimientosDao movimientos = new movimientosDao();
 		return movimientos.listarMovimientos();

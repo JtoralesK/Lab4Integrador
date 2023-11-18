@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +45,9 @@ public class servletTransferencia extends HttpServlet {
 			Usuario loggedUser = (Usuario)request.getSession().getAttribute("loggedUser");
 			cliente cliente = new clienteNeg().obtenerClientePorIdUsuario(loggedUser.getId());
 			List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
+			List<movimiento> lista = new movimientosNeg().listarMovimientosPorIdClienteYTipo(cliente.getId(), eTipoMovimiento.Transferencia);
+			Collections.sort(lista, (m1, m2) -> m2.getFecha().compareTo(m1.getFecha()));
+			request.setAttribute("lista", lista);
 			request.setAttribute("cuentas", cuentas);
 			request.getRequestDispatcher("/views/transferencia.jsp").forward(request, response);;
 	}
@@ -55,9 +59,10 @@ public class servletTransferencia extends HttpServlet {
 		if(request.getParameter("cancelar") != null) {
 			doGet(request, response);			
 		}
-		if(request.getParameter("transferir") != null) {
+
+		if(request.getParameter("btnConfirmTransferencia") != null) {
 			try{
-				String concepto = "";
+				String concepto = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
 				int idCuentaOrigen = Integer.parseInt(request.getParameter("origen"));
 				String cbu = request.getParameter("destino");
 				double importe = Double.parseDouble(request.getParameter("importe"));
