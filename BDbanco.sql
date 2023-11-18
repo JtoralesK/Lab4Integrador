@@ -92,6 +92,7 @@ CREATE TABLE cuentas
     cbu CHAR(30) NOT NULL,
     estado BIT NOT NULL,
     CONSTRAINT nroCuenta UNIQUE (n_cuenta),
+    CONSTRAINT cbu UNIQUE (cbu),
     CONSTRAINT Cuentas PRIMARY KEY (n_cuenta,id_cliente),
     CONSTRAINT FK_CuentasXClientes FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente),
     CONSTRAINT FK_CuentasXTipoDeCuentas FOREIGN KEY (id_tipo_cuenta) REFERENCES tipo_cuentas (id_tipo_cuenta)
