@@ -141,6 +141,26 @@ public class cuentaDao {
 		return cuenta;
 	}
 	
+	public cuenta buscarPorCbu(String cbu) {
+		cuenta cuenta = new cuenta();
+		Connection connection = cn.Open();
+		String query = "select 1 n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
+				+ "WHERE cbu = ?";
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, cbu);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				cuenta = mapResultSetToCuenta(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cn.close();
+		}
+		return cuenta;
+	}
+	
 	public boolean modificarSaldo(int idCuenta,double saldo) {
 		boolean estado = true;
 

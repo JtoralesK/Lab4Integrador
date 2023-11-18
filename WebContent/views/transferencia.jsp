@@ -23,30 +23,30 @@
             <form method="post" action="<%= request.getContextPath()%>/servletTransferencia" >
                 <div class="mb-4">
                     <label for="origen" class="text-sm font-medium block">Cuenta de Origen:</label>
-                    <select id="origen" class="w-full border border-gray-300 rounded-md p-2" required>
+                    <select name="origen" id="origen" class="w-full border border-gray-300 rounded-md p-2" required>
                         <% if (cuentas.size() == 0){%>
-                        	<option disabled selected> No hay cuentas registradas </option>
+                        	<option value="" disabled selected> No hay cuentas registradas </option>
                         <%}else{%>
-                        	<option disabled selected> Cuenta a debitar </option>
+                        	<option value="" disabled selected> Cuenta a debitar </option>
                         <%
                         	for (cuenta cuenta : cuentas) {
                         		String tipoCuenta;
                         		if(cuenta.tipoCuenta() == eTipoCuenta.CajaDeAhorro) tipoCuenta = "CA";
                         		else tipoCuenta = "CC";
                         %>
-                        	<option><%= tipoCuenta %> - <%= cuenta.getId_cuenta() %></option>
+                        	<option value=<%= cuenta.getId_cuenta() %>><%= tipoCuenta %> - <%= cuenta.getId_cuenta()%> - Saldo disponible $ <%= cuenta.getSaldo() %></option>
                         <%}} %>
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="destino" class="text-sm font-medium block">CBU de Cuenta de Destino:</label>
-                    <input type="text" id="destino" class="w-full border border-gray-300 rounded-md p-2">
+                    <label class="text-sm font-medium block">CBU de Cuenta de Destino:</label>
+                    <input type="text" required id="destino" name="destino" class="w-full border border-gray-300 rounded-md p-2" onblur="formatCbu()">
                 </div>
                 <div class="mb-4">
                     <label for="cantidad" class="text-sm font-medium block">Importe:</label>
                     <div class="flex">
                         <span class="bg-gray-200 p-2 rounded-l-md">$</span>
-                        <input type="decimal" min="1" id="cantidad" placeholder="0.00"
+                        <input type="number" name="importe" required step=".01" min="1" id="cantidad" placeholder="0.00"
                             class="w-full border border-gray-300 rounded-md p-2 pl-2">
                     </div>
                 </div>
@@ -54,11 +54,11 @@
                     <label for="mensaje" class="text-sm font-medium block">Mensaje (Opcional):</label>
                     <textarea id="mensaje" class="w-full border border-gray-300 rounded-md p-2" rows="4"></textarea>
                 </div>
-                <div class="flex items-center justify-between">
-                    <button type="submit" id="Transferir"
+                <div class="flex items-center justify-center gap-10">
+                    <button type="button" name="cancelar" value="true"
+                        class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onclick="cancelarTransferencia()">Cancelar</button>
+                    <button type="submit" name="transferir" value="true"
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Transferir</button>
-                    <button type="submit"
-                        class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -88,6 +88,17 @@
         </div>
     </div>
     <jsp:include page="modal.jsp" />
-
+	<script>
+        function formatCbu() {
+            var cbuInput = document.getElementById('destino');
+            var cleanedCBU = cbuInput.value.replace(/\D/g, '');
+            cbuInput.value = cleanedCBU;
+        }
+        
+        function cancelarTransferencia() {
+            // Redirigir a la misma página
+            window.location.href = window.location.href;
+        }
+    </script>
 </body>
 </html>

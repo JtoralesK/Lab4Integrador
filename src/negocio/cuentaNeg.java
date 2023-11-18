@@ -37,6 +37,10 @@ public class cuentaNeg {
 		return cuentaDao.buscarPorIdCuenta(idCuenta);
 	}
 	
+	public cuenta buscarPorCbu(String cbu) {
+		return cuentaDao.buscarPorCbu(cbu);
+	}
+	
 	public boolean altaCuenta(int idCliente,eTipoCuenta tipoCuenta) {
 		boolean estado= false;
 		cuenta cuenta = new cuenta();

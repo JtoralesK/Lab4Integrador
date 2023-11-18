@@ -47,8 +47,10 @@ public class movimientosNeg {
 		return new movimientosDao().getImportePorTipoMovimiento(tipoMovimiento);
 	}
 	public boolean nuevoMovimiento(movimiento movimiento) {
-		boolean regMov = new movimientosDao().insertar(movimiento);
 		boolean movCuenta = new cuentaNeg().modificarSaldo(movimiento.getN_cuenta(), movimiento.getImporte());
+		System.out.println("saldo modificado");
+		boolean regMov = new movimientosDao().insertar(movimiento);
+		if(regMov)System.out.println("movimiento registrado");
 		return regMov && movCuenta;
 	}
 }

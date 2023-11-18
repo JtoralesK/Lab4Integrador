@@ -35,7 +35,7 @@ public class movimientosDao {
 	            preparedStatement.setDouble(6, movimiento.getImporte());
 	            preparedStatement.setString(7, movimiento.getConcepto());
 
-	            estado = preparedStatement.execute();
+	            estado = preparedStatement.executeUpdate() == 1;
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {

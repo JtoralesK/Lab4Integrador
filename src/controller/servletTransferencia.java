@@ -1,6 +1,8 @@
 	package controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,8 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import entidad.Usuario;
 import entidad.cliente;
 import entidad.cuenta;
+import entidad.eTipoMovimiento;
+import entidad.movimiento;
+import excepciones.CbuIncorrecto;
+import excepciones.ErrorGenerico;
 import negocio.clienteNeg;
 import negocio.cuentaNeg;
+import negocio.movimientosNeg;
 
 /**
  * Servlet implementation class servletTransferencia
@@ -34,22 +41,62 @@ public class servletTransferencia extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("homeTransferencias")!= null) {
 			Usuario loggedUser = (Usuario)request.getSession().getAttribute("loggedUser");
 			cliente cliente = new clienteNeg().obtenerClientePorIdUsuario(loggedUser.getId());
 			List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
 			request.setAttribute("cuentas", cuentas);
-			
 			request.getRequestDispatcher("/views/transferencia.jsp").forward(request, response);;
-		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		if(request.getParameter("cancelar") != null) {
+			doGet(request, response);			
+		}
+		if(request.getParameter("transferir") != null) {
+			try{
+				String concepto = "";
+				int idCuentaOrigen = Integer.parseInt(request.getParameter("origen"));
+				String cbu = request.getParameter("destino");
+				double importe = Double.parseDouble(request.getParameter("importe"));
+				transferir(idCuentaOrigen, cbu, importe, concepto);
+				request.setAttribute("texto", "Transferencia realizada correctamente");
+				request.setAttribute("modal", true);
+			}catch (Exception e) {
+				request.setAttribute("texto", e.getMessage());
+				request.setAttribute("modal", true);
+			}
+			finally {
+				doGet(request, response);
+			}
+		}
 	}
-
+	
+	private boolean transferir(int idCuentaOrigen, String cbu, double importe, String concepto) {
+		
+		cuentaNeg cuentaNeg = new cuentaNeg();
+		movimiento movimiento = new movimiento();
+		movimientosNeg movNeg = new movimientosNeg();
+		movimiento.setFecha(LocalDate.now());
+		movimiento.setHora(LocalTime.now());
+		movimiento.setConcepto(concepto);
+		movimiento.setTipoMovimiento(eTipoMovimiento.Transferencia);
+		cuenta cuentaOrigen = cuentaNeg.buscarPorIdCuenta(idCuentaOrigen);
+		cuenta cuentaDestino = cuentaNeg.buscarPorCbu(cbu);
+		if(cuentaDestino == null || !cuentaDestino.isEstado()) throw new CbuIncorrecto();
+		movimiento.setN_cuenta(idCuentaOrigen);
+		movimiento.setId_cliente(cuentaOrigen.getId_cliente());
+		movimiento.setImporte(importe*-1);
+		if(!movNeg.nuevoMovimiento(movimiento)) throw new ErrorGenerico();
+		System.out.println("mov origen");
+		//seteo cuenta destino
+		movimiento.setN_cuenta(cuentaDestino.getId_cuenta());
+		movimiento.setId_cliente(cuentaDestino.getId_cliente());
+		movimiento.setImporte(importe);
+		if(!movNeg.nuevoMovimiento(movimiento)) throw new ErrorGenerico();
+		System.out.println("mov destino");
+		return true;
+	}
 }
