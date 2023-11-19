@@ -49,7 +49,6 @@
 					cuentaDao ctaDao = new cuentaDao();
 						List<cuenta> list = ctaDao.selectAllByOneUserId(user.getId());
 						for(cuenta c : list){
-							System.out.println(c.toString());
 				%>
 				<div class="w-1/3 h-24  border rounded-lg border-gray-300 py-3 px-6">
 				<div class="flex flex-row gap-6">
