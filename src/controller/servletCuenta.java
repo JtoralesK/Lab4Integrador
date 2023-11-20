@@ -84,7 +84,7 @@ public class servletCuenta extends HttpServlet {
 		if(request.getParameter("nroCliente") != null) {
 			try {
 				 clienteNeg clienteNeg = new clienteNeg();
-				 int clientId = Integer.parseInt(request.getParameter("nroCliente"));
+				 Long clientId = Long.parseLong(request.getParameter("nroCliente"));
 				 cliente aux = clienteNeg.obtenerCliente(clientId);
 				 boolean existe = aux != null;
 				 boolean activo = existe ? aux.getEstado() : false;
@@ -115,7 +115,7 @@ public class servletCuenta extends HttpServlet {
 		if (request.getParameter("btnCuentaId") != null && request.getParameter("btnClienteId") != null && request.getParameter("btnEstado") != null )
 		{
 			int cuentaId = Integer.parseInt(request.getParameter("btnCuentaId"));
-			int id_Cliente = Integer.parseInt(request.getParameter("btnClienteId"));
+			Long id_Cliente = Long.parseLong(request.getParameter("btnClienteId"));
 			String btnEstado = request.getParameter("btnEstado");
 			boolean stateToChange = Boolean.valueOf(btnEstado);
 			cuentaNeg cuentaNeg = new cuentaNeg();

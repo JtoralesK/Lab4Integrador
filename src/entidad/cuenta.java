@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class cuenta {
 	private int id_cuenta;
-	private int id_cliente;
+	private Long id_cliente;
 	private eTipoCuenta tipoCuenta;
 	private double saldo;
 	private LocalDate fecha_creacion;
@@ -14,7 +14,7 @@ public class cuenta {
 	public cuenta () {
 		
 	}
-	public cuenta(int id_cuenta, int id_cliente, eTipoCuenta id_tipo_cuenta, double saldo, LocalDate fecha_creacion,
+	public cuenta(int id_cuenta, Long id_cliente, eTipoCuenta id_tipo_cuenta, double saldo, LocalDate fecha_creacion,
 			String cbu) {
 		super();
 		this.id_cuenta = id_cuenta;
@@ -33,11 +33,11 @@ public class cuenta {
 		this.id_cuenta = id_cuenta;
 	}
 
-	public int getId_cliente() {
+	public Long getId_cliente() {
 		return id_cliente;
 	}
 
-	public void setId_cliente(int id_cliente) {
+	public void setId_cliente(Long id_cliente) {
 		this.id_cliente = id_cliente;
 	}
 

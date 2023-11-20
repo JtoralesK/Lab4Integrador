@@ -47,24 +47,24 @@ public class clienteNeg {
 		return clienteDao.insertar(cliente);
 	}
 	
-	public boolean eliminarCliente(int idCliente)
+	public boolean eliminarCliente(Long idCliente)
 	{						
 		return clienteDao.eliminar(idCliente);
 	}
 	
-	public boolean activarCliente(int idCliente)
+	public boolean activarCliente(Long idCliente)
 	{						
 		return clienteDao.altaLogica(idCliente);
 	}
 	
-	public boolean toggleEstado(int idCliente) {
+	public boolean toggleEstado(Long idCliente) {
 		boolean toggled = false;
 		if(obtenerCliente(idCliente).getEstado()) toggled = eliminarCliente(idCliente);
 		else toggled = activarCliente(idCliente);
 		return toggled;
 	}
 	
-	public boolean actualizarCliente(String dniStr, String cuilStr, String nombre, String apellido, String sexoId, String nacionalidadId, String fechaNacimientoStr, String direccionStr, String localidadId, String provinciaId, String email, String telefonoStr, int idCliente)
+	public boolean actualizarCliente(String dniStr, String cuilStr, String nombre, String apellido, String sexoId, String nacionalidadId, String fechaNacimientoStr, String direccionStr, String localidadId, String provinciaId, String email, String telefonoStr, Long idCliente)
 	{	
 		int dni = Integer.parseInt(dniStr);
 		Long cuil = Long.parseLong(cuilStr.replace("-", ""));
@@ -82,7 +82,7 @@ public class clienteNeg {
 		return clienteDao.actualizar(cliente);
 	}
 	
-	public cliente obtenerCliente(int idCliente)
+	public cliente obtenerCliente(Long idCliente)
 	{						
 		return clienteDao.obtenerPorId(idCliente);
 	}

@@ -87,7 +87,7 @@ public class clienteDao {
         return estado;
     }
 
-    public boolean eliminar(int idCliente) {
+    public boolean eliminar(Long idCliente) {
         boolean estado = true;
         
 		cn = new conexion();
@@ -105,7 +105,7 @@ public class clienteDao {
         return estado;   
     }
     
-    public boolean altaLogica(int idCliente) {
+    public boolean altaLogica(Long idCliente) {
         boolean estado = true;
         
 		cn = new conexion();
@@ -123,7 +123,7 @@ public class clienteDao {
         return estado;   
     }
     
-    public cliente obtenerPorId(int idCliente) {
+    public cliente obtenerPorId(Long idCliente) {
     	cliente cliente = null;
     	
 		cn = new conexion();
@@ -132,7 +132,7 @@ public class clienteDao {
         String query = "SELECT id_cliente, dni, cuil, nombre, apellido, id_sexo, id_nacionalidad, fecha_nacimiento, direccion, C.id_localidad, L.id_provincia, mail, id_usuario, telefono FROM clientes C INNER JOIN localidades L ON C.id_localidad = L.id_localidad WHERE id_cliente = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, idCliente);
+            preparedStatement.setLong(1, idCliente);
             ResultSet rs = preparedStatement.executeQuery();
     		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     		
@@ -150,7 +150,7 @@ public class clienteDao {
                 			rs.getString("mail"),
                 			rs.getLong("telefono")
                 			);
-                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setId(rs.getLong("id_cliente"));
                 
                 Usuario usuario = new UsuarioDao().obtenerPorId(rs.getInt("id_usuario"));
                 cliente.setUsuario(usuario.getUsuario());
@@ -194,7 +194,7 @@ public class clienteDao {
                 			rs.getString("mail"),
                 			rs.getLong("telefono")
                 			);
-                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setId(rs.getLong("id_cliente"));
                 
                 Usuario usuario = new UsuarioDao().obtenerPorId(rs.getInt("id_usuario"));
                 cliente.setUsuario(usuario.getUsuario());
@@ -243,7 +243,7 @@ public class clienteDao {
                         rs.getString("mail"),
                         rs.getLong("telefono")
                     );
-                    cliente.setId(rs.getInt("id_cliente"));
+                    cliente.setId(rs.getLong("id_cliente"));
                     cliente.setEstado(rs.getBoolean("estado"));
                     cliente.setUsuario(rs.getString("usuario"));
                     clientes.add(cliente);

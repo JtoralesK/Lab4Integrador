@@ -94,13 +94,13 @@ public class servletTransferencia extends HttpServlet {
 		movimiento.setN_cuenta(idCuentaOrigen);
 		movimiento.setId_cliente(cuentaOrigen.getId_cliente());
 		movimiento.setImporte(importe*-1);
-		if(!movNeg.nuevoMovimiento(movimiento)) throw new ErrorGenerico();
+		if(movNeg.nuevoMovimiento(movimiento) == -1) throw new ErrorGenerico();
 		System.out.println("mov origen");
 		//seteo cuenta destino
 		movimiento.setN_cuenta(cuentaDestino.getId_cuenta());
 		movimiento.setId_cliente(cuentaDestino.getId_cliente());
 		movimiento.setImporte(importe);
-		if(!movNeg.nuevoMovimiento(movimiento)) throw new ErrorGenerico();
+		if(movNeg.nuevoMovimiento(movimiento) == -1) throw new ErrorGenerico();
 		System.out.println("mov destino");
 		return true;
 	}
