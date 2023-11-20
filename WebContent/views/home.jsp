@@ -27,15 +27,64 @@
 					<b>Hola,<%=user.getUsuario() %></b>
 				</h2>
 			</div>
-			<div class="h-32 border rounded-lg border-gray-300 px-6 py-2">
+			<div class="h-32 border rounded-lg border-gray-300 px-6 py-2 shadow-md">
 				<h3 class="text-lg">Accesos Directos</h3>
+				<%if(user.getTipoUsuario()==eTipoUsuario.Administrador){ %>
 				<div class="flex flex-row gap-5 py-3">
-					<div class="w-1/5 h-16  border rounded-lg border-gray-300"></div>
-					<div class="w-1/5 h-16  border rounded-lg border-gray-300"></div>
-					<div class="w-1/5 h-16  border rounded-lg border-gray-300"></div>
-					<div class="w-1/5 h-16  border rounded-lg border-gray-300"></div>
-					<div class="w-1/5 h-16  border rounded-lg border-gray-300"></div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300  ">
+					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200" href="/ProjectBeta1/views/repMovimientos.jsp">
+					<span class="text-2xl"><i class="fa-solid fa-money-bill-transfer"></i></span>
+					<p class="text-lg font-bold">Movimientos</p>
+					</a>
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
+					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200 " href="/ProjectBeta1/views/repPrestamos.jsp">
+					<span class="text-2xl"><i class="fa-solid fa-chart-pie"></i></span>
+					<p class="text-lg font-bold">Reporte Prestamos</p>
+					</a>
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300 ">
+					<form class="w-full h-full" method="post" action="<%= request.getContextPath() %>/servletCliente">
+		            <input type="hidden" name="accion" value="altaCliente">
+		            <button class="w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200">
+		            <span class="text-2xl"><i class="fa-solid fa-user-plus"></i></span>
+		           	<p class="text-lg font-bold">Alta Cliente</p>
+		            </button>
+		       	    </form>
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
+					<form class="w-full h-full" method="get" action="<%= request.getContextPath() %>/servletCuenta">
+		            <input type="hidden" name="accion" value="blCuentas">
+		            <button class="w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200">
+		            <span class="text-1xl"><i class="fa-solid fa-users"></i></span>
+		           	<p class="text-lg font-bold">Administrar cuentas</p>
+		            </button>
+		       	    </form>
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
+					<form class="w-full h-full" method="post" action="<%= request.getContextPath() %>/servletPrestamo">
+		            <input type="hidden" name="accion" value="adminPrestamo">
+		            <button class="w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200">
+		            <span class="text-2xl"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+		           	<p class="text-lg font-bold">Gestión Prestamos</p>
+		            </button>
+		       	    </form>
+					</div>
 				</div>
+				<%}else{ %>
+				<div class="flex flex-row gap-5 py-3">
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300  ">
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300 ">
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
+					</div>
+					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
+					</div>
+				</div>
+					<%} %>
 			</div>
 			<%if(user.getTipoUsuario()==eTipoUsuario.Cliente){ %>
 			<div class="h-44 border rounded-lg border-gray-300 px-6 py-2">
