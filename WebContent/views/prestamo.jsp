@@ -56,6 +56,25 @@
 		</div>
 		<div class="w-8/12 pl-1">
 			<h2 class="text-2xl font-semibold mb-4 text-center">Menú de Pago de Préstamos</h2>
+			<form method="post" action="<%= request.getContextPath() %>/servletPrestamo" class="mb-8">
+			    <div class="flex w-11/12 items-center space-x-4 mx-auto">
+			        <label for="filtroFechaDesde" class="mr-2">Fecha Desde:</label>
+			        <input type="date" id="filtroFechaDesde" name="filtroFechaDesde" class="border border-gray-300 rounded-md p-2">
+
+			        <label for="filtroFechaHasta" class="mr-2">Fecha Hasta:</label>
+			        <input type="date" id="filtroFechaHasta" name="filtroFechaHasta" class="border border-gray-300 rounded-md p-2">
+
+			        <label for="filtroEstado" class="mr-2">Estado:</label>
+			        <select id="filtroEstado" name="filtroEstado" class="border border-gray-300 rounded-md p-2">
+			            <option value="-1">Todos</option>
+			            <% for (eEstadoPrestamo estado : eEstadoPrestamo.values()) { %>
+			                <option value="<%= estado.ordinal() %>"><%= estado.name() %></option>
+			            <% } %>
+			        </select>
+			        <input type="hidden" id="accion" name="accion" value="clientePrestamo">
+				    <button id="btnFiltrar" name="btnFiltrar" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Filtrar</button>
+			    </div>			
+			</form>
 			<form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
 				<table
 					class="w-11/12 bg-white p-4 shadow-md rounded-md mb-8 mx-auto">

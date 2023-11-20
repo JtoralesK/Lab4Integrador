@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,6 @@ import java.util.List;
 
 import negocio.cuentaNeg;
 import negocio.prestamoNeg;
-import entidad.Usuario;
 import entidad.cliente;
 import entidad.cuenta;
 import entidad.eEstadoPrestamo;
@@ -44,7 +44,51 @@ public class servletPrestamo extends HttpServlet {
 				cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
 				List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
 				request.getSession().setAttribute("cuentas", cuentas);
-	        	request.getSession().setAttribute("lista", new prestamoNeg().listarXcliente(cliente.getId()));
+				List<prestamo> prestamos = new prestamoNeg().listarXcliente(cliente.getId());
+				
+				if (request.getParameter("btnFiltrar") != null)
+				{
+					try
+					{
+						if (!request.getParameter("filtroFechaDesde").isEmpty() && !request.getParameter("filtroFechaHasta").isEmpty())
+						{
+							LocalDate fechaDesde = LocalDate.parse(request.getParameter("filtroFechaDesde"));
+							LocalDate fechaHasta = LocalDate.parse(request.getParameter("filtroFechaHasta"));
+							if (fechaDesde.isAfter(fechaHasta))
+							{
+								throw new ArgumentoInvalidoException("La Fecha Desde no puede ser posterior a la Fecha Hasta");	
+							}
+						}
+						
+						if (!request.getParameter("filtroFechaDesde").isEmpty())
+						{
+							LocalDate fechaDesde = LocalDate.parse(request.getParameter("filtroFechaDesde"));
+							prestamos.removeIf(x -> x.getFechaSolicitud().isBefore(fechaDesde));
+						}
+						if (!request.getParameter("filtroFechaHasta").isEmpty())
+						{
+							LocalDate fechaHasta = LocalDate.parse(request.getParameter("filtroFechaHasta"));
+							prestamos.removeIf(x -> x.getFechaSolicitud().isAfter(fechaHasta));
+						}
+						if (request.getParameter("filtroEstado") != null)
+						{
+							int idEstado = Integer.parseInt(request.getParameter("filtroEstado"));
+							if (idEstado > -1)
+							{
+								eEstadoPrestamo estado = eEstadoPrestamo.values()[idEstado];
+								prestamos.removeIf(x -> x.getEstadoPrestamo() != estado);
+							}
+						}					
+						
+					}
+					catch (ArgumentoInvalidoException e)
+					{
+						request.setAttribute("texto", e.getMessage());
+						request.setAttribute("modal", true);
+					}
+				}
+				
+	        	request.getSession().setAttribute("lista", prestamos);
 		        request.getRequestDispatcher("/servletPaginacion?redirectUrl=prestamo.jsp").forward(request, response);			
 			}
 			return;
@@ -170,6 +214,7 @@ public class servletPrestamo extends HttpServlet {
 				request.getRequestDispatcher("/servletPrestamo").forward(request, response);	
 			}
 		}
+	
 	}
 	
 	private String AprobarRechazarPrestamo(HttpServletRequest request, eEstadoPrestamo estadoPrestamo)
