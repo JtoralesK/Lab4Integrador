@@ -3,6 +3,7 @@ package datos;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -18,30 +19,37 @@ public class movimientosDao {
 	        cn = new conexion();
 	    }
 	
-	 public boolean insertar(movimiento movimiento) {
-	        boolean estado = false;
+	 public Long insertar(movimiento movimiento) {
+		 Long idRegistroInsertado = -1L;
 	        
 	        Connection connection = cn.Open();
 	        
 	        String query = "INSERT INTO movimientos(n_cuenta,id_cliente,id_tipo_movimiento,fecha,hora,importe,concepto) " +
 	                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 	        
-	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 	            preparedStatement.setInt(1, movimiento.getN_cuenta());
-	            preparedStatement.setInt(2, movimiento.getId_cliente());
+	            preparedStatement.setLong(2, movimiento.getId_cliente());
 	            preparedStatement.setInt(3, movimiento.getTipoMovimiento().ordinal() + 1); 
 	            preparedStatement.setDate(4, java.sql.Date.valueOf(movimiento.getFecha()));
 	            preparedStatement.setTime(5, java.sql.Time.valueOf(movimiento.getHora()));
 	            preparedStatement.setDouble(6, movimiento.getImporte());
 	            preparedStatement.setString(7, movimiento.getConcepto());
 
-	            estado = preparedStatement.executeUpdate() == 1;
+	            if (preparedStatement.executeUpdate() == 1)
+	            {
+	            	try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+	            		if (generatedKeys.next()) {
+	            			idRegistroInsertado = generatedKeys.getLong(1);
+	            		}
+	            	}	            	
+	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
 	            cn.close();
 	        }
-	        return estado;
+	        return idRegistroInsertado;
 	    }
 	 
 	    public List<movimiento> listarMovimientos() {
@@ -56,7 +64,7 @@ public class movimientosDao {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
 	            			rs.getInt("n_cuenta"),
-	            			rs.getInt("id_cliente"),
+	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
 	            			rs.getTime("hora").toLocalTime(),
@@ -85,7 +93,7 @@ public class movimientosDao {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
 	            			rs.getInt("n_cuenta"),
-	            			rs.getInt("id_cliente"),
+	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
 	            			rs.getTime("hora").toLocalTime(),
@@ -115,7 +123,7 @@ public class movimientosDao {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
 	            			rs.getInt("n_cuenta"),
-	            			rs.getInt("id_cliente"),
+	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
 	            			rs.getTime("hora").toLocalTime(),
@@ -133,7 +141,7 @@ public class movimientosDao {
 	    }
 	    
 	    /****Listar por tipos movimietos ****/
-	    public List<movimiento> listarMovimientosPorIdClienteYTipo(int idCliente,eTipoMovimiento tipoMovimiento) {
+	    public List<movimiento> listarMovimientosPorIdClienteYTipo(Long idCliente,eTipoMovimiento tipoMovimiento) {
 	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
 	        int idTipoMovimiento = tipoMovimiento.ordinal() + 1;
@@ -145,7 +153,7 @@ public class movimientosDao {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
 	            			rs.getInt("n_cuenta"),
-	            			rs.getInt("id_cliente"),
+	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
 	            			rs.getTime("hora").toLocalTime(),
@@ -177,7 +185,7 @@ public class movimientosDao {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
 	            			rs.getInt("n_cuenta"),
-	            			rs.getInt("id_cliente"),
+	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
 	            			rs.getTime("hora").toLocalTime(),

@@ -3,6 +3,7 @@ package datos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class PrestamoDao {
             preparedStatement.setInt(6, prestamo.getPlazo());
             preparedStatement.setNull(7, java.sql.Types.NULL);
 
-			estado=cn.execute(query);
+			estado = preparedStatement.executeUpdate() == 1;
 		}
 		catch(Exception e)
 		{
@@ -120,7 +121,7 @@ public class PrestamoDao {
 	}
 	
 	/*** Listar por cliente***/
-	public List<prestamo> listarXcliente(int cliente)
+	public List<prestamo> listarXcliente(Long cliente)
 	{
 		List<prestamo> prestamos = new ArrayList<>();
 		
@@ -130,13 +131,13 @@ public class PrestamoDao {
 		String query = "SELECT P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision"
 				+ ", P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
 				"FROM prestamos P " + 
-				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
+				"LEFT JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
 				"WHERE P.id_cliente = ? " +
 				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision; ";
 		
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
         {		
-        	preparedStatement.setInt(1, cliente);
+        	preparedStatement.setLong(1, cliente);
             ResultSet rs = preparedStatement.executeQuery();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -148,7 +149,7 @@ public class PrestamoDao {
             			LocalDate.parse(rs.getString("fecha_solicitud"), formatter),
             			eEstadoPrestamo.values()[rs.getInt("id_estado") - 1],
             			rs.getInt("plazo"),
-            			LocalDate.parse(rs.getString("fecha_Revision"), formatter)
+            			rs.getString("fecha_Revision") != null ? LocalDate.parse(rs.getString("fecha_Revision"), formatter) : null
         			);
             	prestamo.setId(rs.getLong("id_prestamo"));
             	prestamo.setCuotasPagas(rs.getInt("cuotasPagas"));
@@ -169,5 +170,33 @@ public class PrestamoDao {
 		
 		return prestamos;
 	}
-	
+	public boolean pagarPrestamo(Long idPrestamo, Long idMovimiento, int cuotaPagar)
+	{
+		boolean estado=false;
+
+		cn = new conexion();
+		Connection connection = cn.Open();	
+		String query = "INSERT INTO pagos_prestamos (id_prestamo, id_movimiento, fecha, cuota) " + 
+						"VALUES (?,?,?,?); ";
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
+        {		
+        	preparedStatement.setLong(1, idPrestamo);
+        	preparedStatement.setLong(2, idMovimiento);
+        	preparedStatement.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+        	preparedStatement.setInt(4, cuotaPagar);
+
+        	estado = preparedStatement.executeUpdate() == 1;           
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			cn.close();
+		}
+		
+		return estado;
+	}
 }

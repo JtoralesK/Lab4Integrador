@@ -100,14 +100,14 @@ public class cuentaDao {
 		return cuentas;
 	}
 	
-	public List<cuenta> selectAllByOneClientId(int idCliente){
+	public List<cuenta> selectAllByOneClientId(Long idCliente){
 		List<cuenta> cuentas = new ArrayList<>();
 		Connection connection = cn.Open();
 		String query = "select n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
 				+ "WHERE id_cliente = ?";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-			preparedStatement.setInt(1, idCliente);
+			preparedStatement.setLong(1, idCliente);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				cuenta cta = mapResultSetToCuenta(rs);
@@ -191,7 +191,7 @@ public class cuentaDao {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setInt(1, cta.getId_cuenta());
-			preparedStatement.setInt(2, cta.getId_cliente());
+			preparedStatement.setLong(2, cta.getId_cliente());
 			preparedStatement.setInt(3, cta.tipoCuenta().ordinal() + 1);
 			preparedStatement.setDouble(4, cta.getSaldo());
 			preparedStatement.setDate(5, java.sql.Date.valueOf(cta.getFecha_creacion()));
@@ -210,7 +210,7 @@ public class cuentaDao {
 	}
 
 
-	public Boolean updateRegisterState(int n_cuenta, int id_Cliente,boolean stateToChange) {
+	public Boolean updateRegisterState(int n_cuenta, Long id_Cliente,boolean stateToChange) {
 		boolean estado = true;
 
 		try (Connection connection = cn.Open();
@@ -218,7 +218,7 @@ public class cuentaDao {
 						.prepareStatement("UPDATE cuentas SET estado = ? WHERE n_cuenta = ? AND id_cliente = ?")) {
 			preparedStatement.setBoolean(1, stateToChange);
 			preparedStatement.setInt(2, n_cuenta);
-			preparedStatement.setInt(3, id_Cliente);
+			preparedStatement.setLong(3, id_Cliente);
 
 			estado = preparedStatement.executeUpdate() > 0;
 
@@ -235,7 +235,7 @@ public class cuentaDao {
 	private cuenta mapResultSetToCuenta(ResultSet rs) throws SQLException {
 		cuenta cta = new cuenta();
 		cta.setId_cuenta(Integer.parseInt(rs.getString("n_cuenta")));
-		cta.setId_cliente(Integer.parseInt(rs.getString("id_cliente")));
+		cta.setId_cliente(Long.parseLong(rs.getString("id_cliente")));
 		int tipoCuentaOrdinal = rs.getInt("id_tipo_cuenta") - 1;
 		cta.setId_tipo_cuenta(eTipoCuenta.values()[tipoCuentaOrdinal]);
 		cta.setSaldo(Double.valueOf(rs.getString("saldo")));

@@ -25,7 +25,7 @@ public class movimientosNeg {
 		return new movimientosDao().listarMovimientosPorIdClienteYFecha(idCliente,fecha);
 	}
 	
-	public List<movimiento> listarMovimientosPorIdClienteYTipo(int idCliente,eTipoMovimiento tipoMovimiento) 
+	public List<movimiento> listarMovimientosPorIdClienteYTipo(Long idCliente,eTipoMovimiento tipoMovimiento) 
 	{
 		return new movimientosDao().listarMovimientosPorIdClienteYTipo(idCliente, tipoMovimiento);
 	}
@@ -46,10 +46,10 @@ public class movimientosNeg {
 	{
 		return new movimientosDao().getImportePorTipoMovimiento(tipoMovimiento);
 	}
-	public boolean nuevoMovimiento(movimiento movimiento) {
+	public Long nuevoMovimiento(movimiento movimiento) {
 		boolean movCuenta = new cuentaNeg().modificarSaldo(movimiento.getN_cuenta(), movimiento.getImporte());
-		boolean regMov = movCuenta ? new movimientosDao().insertar(movimiento) : false;
-		return regMov && movCuenta;
+		Long regMov = movCuenta ? new movimientosDao().insertar(movimiento) : -1L;
+		return regMov;
 	}
 }
 

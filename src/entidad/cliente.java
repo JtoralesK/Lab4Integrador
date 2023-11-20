@@ -2,7 +2,7 @@ package entidad;
 import java.time.LocalDate;
 
 public class cliente {
-	private int id;
+	private Long id;
 	private direccion direccion;
 	private int dni;
 	private Long cuil;
@@ -50,11 +50,11 @@ public class cliente {
 		this.email = email;
 		this.telefono = telefono;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public eTipoUsuario getTipoUsuario() {

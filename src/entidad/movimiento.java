@@ -1,7 +1,5 @@
 package entidad;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -9,7 +7,7 @@ import java.time.LocalTime;
 public class movimiento {
 private int	idMovimiento;
 private int nCuenta;
-private int idCliente;
+private Long idCliente;
 private eTipoMovimiento tipoMovimiento;
 private LocalDate fecha;
 private LocalTime  hora;
@@ -18,7 +16,7 @@ private String concepto="";
 
 
 public movimiento() {}
-public movimiento(int idMovimiento,int nCuenta,int idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe, String concepto) 
+public movimiento(int idMovimiento,int nCuenta,Long idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe, String concepto) 
 {
 	this.idMovimiento=idMovimiento;
 	this.nCuenta=nCuenta;
@@ -30,7 +28,7 @@ public movimiento(int idMovimiento,int nCuenta,int idCliente,eTipoMovimiento tip
 	this.concepto=concepto;
 	
 }
-public movimiento(int nCuenta,int idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe) 
+public movimiento(int nCuenta,Long idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe) 
 {
 	this.nCuenta=nCuenta;
 	this.idCliente=idCliente;
@@ -53,10 +51,10 @@ public int getN_cuenta() {
 public void setN_cuenta(int nCuenta) {
 	this.nCuenta = nCuenta;
 }
-public int getId_cliente() {
+public Long getId_cliente() {
 	return idCliente;
 }
-public void setId_cliente(int idCliente) {
+public void setId_cliente(Long idCliente) {
 	this.idCliente = idCliente;
 }
 public eTipoMovimiento getTipoMovimiento() {

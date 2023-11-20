@@ -37,7 +37,7 @@ public class servletCliente extends HttpServlet {
 		RellenarSelect(request);
 	    if(request.getParameter("btnModificarCliente")!=null)
 	    {
-	    	int idCliente = Integer.parseInt(request.getParameter("btnModificarCliente"));
+	    	Long idCliente = Long.parseLong(request.getParameter("btnModificarCliente"));
 	    	cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
     		request.setAttribute("clienteModificar", clienteModificar);
 	    }
@@ -79,7 +79,7 @@ public class servletCliente extends HttpServlet {
 			}else {
 				if (request.getAttribute("idCliente") != null)
 				{
-					int idCliente = Integer.parseInt(request.getAttribute("idCliente").toString());
+					Long idCliente = Long.parseLong(request.getAttribute("idCliente").toString());
 					cliente clienteModificar = new clienteNeg().obtenerCliente(idCliente);
 					request.setAttribute("clienteModificar", clienteModificar);				
 				}
@@ -154,7 +154,7 @@ public class servletCliente extends HttpServlet {
 	    	String provincia = request.getParameter("cbProvincia");
 	    	String email = request.getParameter("txtEmail");
 	    	String telefono = request.getParameter("txtTelefono");
-	    	int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+	    	Long idCliente = Long.parseLong(request.getParameter("idCliente"));
 
 	    	String textoAMostrar = "";
 	    	try
@@ -192,7 +192,7 @@ public class servletCliente extends HttpServlet {
 		
 		if (request.getParameter("btnToggleEstado") != null)
 		{
-			int clientId = Integer.parseInt(request.getParameter("btnToggleEstado"));
+			Long clientId = Long.parseLong(request.getParameter("btnToggleEstado"));
 			
 			boolean modificado= clienteNeg.toggleEstado(clientId);
 			if(modificado)
