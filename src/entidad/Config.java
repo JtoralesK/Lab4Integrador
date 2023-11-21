@@ -42,6 +42,9 @@ public final class Config {
 		}
 		return activeUser;
 	}
+	public static Usuario getUserCliente(){
+		return userCliente;
+	}
 	public boolean isAdmin() {
 		return admin;
 	}

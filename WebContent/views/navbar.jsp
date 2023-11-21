@@ -62,7 +62,10 @@
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Informes</button>
 		    <div class="hidden absolute bg-white group-hover:block">
 		        <a href="/ProjectBeta1/views/repMovimientos.jsp" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Movimientos</a>
-		        <a href="/ProjectBeta1/views/repPrestamos.jsp" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</a>
+		        <form method="get" action="<%= request.getContextPath() %>/servletInformePrestamos">
+		            <input type="hidden" name="informePrestamos" value="prestamos">
+		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</button>
+		        </form>
 		    </div>
 		</div>
 	<%} else {%>
