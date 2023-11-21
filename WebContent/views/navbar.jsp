@@ -45,7 +45,10 @@
            <button class="group-hover:bg-gray-200 focus:outline-none">Prestamos</button>
        </form>
         <div class="relative group">
+        <form method="get" action="<%= request.getContextPath() %>/servletMovimientos">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
+		    <input type="hidden" name="accion" value="cuentas">
+		    </form>
 		    <div class="hidden absolute bg-white group-hover:block">
 		        <form method="get" action="<%= request.getContextPath() %>/servletCuenta">
 		            <input type="hidden" name="accion" value="blCuentas">

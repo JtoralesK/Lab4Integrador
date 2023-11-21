@@ -30,7 +30,7 @@
 <h2 class="text-center mx-auto text-4xl">ID Cliente </h2>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
-<form action="/servletMovimientos" method="get">
+<form method="get" action="<%= request.getContextPath() %>/servletMovimientos" >
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
@@ -49,11 +49,11 @@
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
-		<%
-			//List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
-			List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("ListaMovimientos");
-		 		for(movimiento movimientos : ListaMovimientos ){
-		%>
+<%
+//List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
+List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("ListaMovimientos");
+		for(movimiento movimientos : ListaMovimientos ){ 
+%>
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getId_movimiento() %></td>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getN_cuenta() %></td>
