@@ -27,15 +27,10 @@
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 <br>
- <%
- 	Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
-  cliente cliente = new cliente();
-  cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());
- %>
-<h2 class="text-center mx-auto text-4xl">ID Cliente <%=cliente.getId()%></h2>
+<h2 class="text-center mx-auto text-4xl">ID Cliente </h2>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
-
+<form action="/servletMovimientos" method="get">
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
@@ -55,21 +50,23 @@
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
 		<%
-			List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(101);
-		 		for(movimiento movimiento : ListaMovimientos ){
+			//List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
+			List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("ListaMovimientos");
+		 		for(movimiento movimientos : ListaMovimientos ){
 		%>
 			<tr>
-				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getId_movimiento() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getN_cuenta() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getTipoMovimiento().name()%></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getFecha() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= movimiento.getHora() %>HS</td>
-				<td class="px-6 py-4 whitespace-nowrap text-red-500">$<%= movimiento.getImporte() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getId_movimiento() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getN_cuenta() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getTipoMovimiento().name()%></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getFecha() %></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getHora() %>HS</td>
+				<td class="px-6 py-4 whitespace-nowrap text-red-500">$<%= movimientos.getImporte() %></td>
 			</tr>
 		<%}%>
 		</tbody>
 	</table>
-<br>
+	<jsp:include page="paginacion.jsp" />
+	<jsp:include page="modal.jsp" />
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
 <br>
 	
@@ -97,7 +94,8 @@
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
-		<% List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(101L);
+		<% //List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
+		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("ListaPrestamos");
  		for(prestamo prestamos : ListaPrestamos ){ %>
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
@@ -113,5 +111,8 @@
 		<%}%>
 		</tbody>
 	</table>
+</form>
+	<jsp:include page="paginacion.jsp" />
+	<jsp:include page="modal.jsp" />
 </body>
 </html>
