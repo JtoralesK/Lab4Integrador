@@ -5,33 +5,27 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import entidad.Usuario;
-import entidad.cliente;
 import entidad.movimiento;
 import entidad.prestamo;
-import negocio.clienteNeg;
 import negocio.movimientosNeg;
 import negocio.prestamoNeg;
 
-
 /**
- * Servlet implementation class servletMovimientos
+ * Servlet implementation class servletCuentasClientes
  */
-@WebServlet("/servletMovimientos")
-public class servletMovimientos extends HttpServlet {
+@WebServlet("/servletCuentasClientes")
+public class servletCuentasClientes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public servletMovimientos() {
+    public servletCuentasClientes() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,7 +43,6 @@ public class servletMovimientos extends HttpServlet {
 		request.setAttribute("ListaPrestamos", ListaPrestamos);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/cuenta.jsp");   
         rd.forward(request, response);
-		
 	}
 
 	/**
@@ -57,6 +50,7 @@ public class servletMovimientos extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

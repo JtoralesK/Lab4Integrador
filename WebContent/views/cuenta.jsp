@@ -30,7 +30,7 @@
 <h2 class="text-center mx-auto text-4xl">ID Cliente </h2>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
-<form method="get" action="<%= request.getContextPath() %>/servletMovimientos" >
+<form method="get" action="<%= request.getContextPath() %>/servletCuentasClientes" >
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
