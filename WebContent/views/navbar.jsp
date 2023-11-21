@@ -45,6 +45,7 @@
            <button class="group-hover:bg-gray-200 focus:outline-none">Prestamos</button>
        </form>
         <div class="relative group">
+		    <button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
 		    <div class="hidden absolute bg-white group-hover:block">
 		        <form method="get" action="<%= request.getContextPath() %>/servletCuenta">
 		            <input type="hidden" name="accion" value="blCuentas">
@@ -68,8 +69,10 @@
 		    </div>
 		</div>
 	<%} else {%>
-	
-		<a href="/ProjectBeta1/views/cuenta.jsp" class="group-hover:bg-gray-200 focus:outline-none">Cuentas</a>
+		<form method="get" action="<%= request.getContextPath() %>/servletCuentasClientes"> 
+			<input type="hidden" name="accion" value="cuentas">
+			<button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
+		</form>
 		<form method="get" action="<%= request.getContextPath() %>/servletTransferencia">
            <input type="hidden" name="homeTransferencias">
            <button class="group-hover:bg-gray-200 focus:outline-none">Transferencias</button>
@@ -77,11 +80,8 @@
        <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
            <input type="hidden" name="accion" value="clientePrestamo">
            <button class="group-hover:bg-gray-200 focus:outline-none">Prestamos</button>
-       <form method="get" action="<%= request.getContextPath() %>/servletCuentasClientes"> 
-       <input type="hidden" name="accion" value="cuentas">
-		    <button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
-		    </form>
        </form>	<%}%>
+
 	</div>
 	</div>
 	<div class="w-2/12 flex flex-row justify-center items-center gap-3">
