@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entidad.Config;
+import entidad.cliente;
+import negocio.clienteNeg;
 
 /**
  * Servlet Filter implementation class loggedUserFilter
@@ -29,6 +31,8 @@ public class loggedUserFilter implements Filter {
 		
 		if(Config.isDevMode()) {
 			session.setAttribute("loggedUser", Config.getActiveUser());
+			cliente devCliente = new clienteNeg().obtenerClientePorIdUsuario(Config.getUserCliente().getId());
+			session.setAttribute("loggedCliente", devCliente);
 		}
         boolean isLoggedIn = session != null && session.getAttribute("loggedUser") != null;
 
