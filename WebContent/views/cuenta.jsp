@@ -97,7 +97,7 @@
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
-		<% List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(101);
+		<% List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(101L);
  		for(prestamo prestamos : ListaPrestamos ){ %>
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>

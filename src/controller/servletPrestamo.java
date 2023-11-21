@@ -15,6 +15,7 @@ import negocio.prestamoNeg;
 import entidad.cliente;
 import entidad.cuenta;
 import entidad.eEstadoPrestamo;
+import entidad.eFiltro;
 import entidad.prestamo;
 import excepciones.ArgumentoInvalidoException;
 
@@ -33,9 +34,23 @@ public class servletPrestamo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("accion") != null || request.getAttribute("accion") != null)
 		{
-			if ("adminPrestamo".equals(request.getParameter("accion")))
+			if ("adminPrestamo".equals(request.getParameter("accion")) || "adminPrestamo".equals(request.getAttribute("accion")))
 			{
 				List<prestamo> prestamos = new prestamoNeg().listar();
+				
+				if (request.getParameter("btnFiltrar") != null)
+				{
+					try
+					{
+						prestamos = AplicarFiltroAdmin(request, prestamos);
+					}
+					catch (ArgumentoInvalidoException e)
+					{
+						request.setAttribute("texto", e.getMessage());
+						request.setAttribute("modal", true);
+					}
+				}
+				
 	        	request.getSession().setAttribute("lista", prestamos);
 		        request.getRequestDispatcher("/servletPaginacion?redirectUrl=adminPrestamos.jsp").forward(request, response);			
 			}
@@ -50,36 +65,7 @@ public class servletPrestamo extends HttpServlet {
 				{
 					try
 					{
-						if (!request.getParameter("filtroFechaDesde").isEmpty() && !request.getParameter("filtroFechaHasta").isEmpty())
-						{
-							LocalDate fechaDesde = LocalDate.parse(request.getParameter("filtroFechaDesde"));
-							LocalDate fechaHasta = LocalDate.parse(request.getParameter("filtroFechaHasta"));
-							if (fechaDesde.isAfter(fechaHasta))
-							{
-								throw new ArgumentoInvalidoException("La Fecha Desde no puede ser posterior a la Fecha Hasta");	
-							}
-						}
-						
-						if (!request.getParameter("filtroFechaDesde").isEmpty())
-						{
-							LocalDate fechaDesde = LocalDate.parse(request.getParameter("filtroFechaDesde"));
-							prestamos.removeIf(x -> x.getFechaSolicitud().isBefore(fechaDesde));
-						}
-						if (!request.getParameter("filtroFechaHasta").isEmpty())
-						{
-							LocalDate fechaHasta = LocalDate.parse(request.getParameter("filtroFechaHasta"));
-							prestamos.removeIf(x -> x.getFechaSolicitud().isAfter(fechaHasta));
-						}
-						if (request.getParameter("filtroEstado") != null)
-						{
-							int idEstado = Integer.parseInt(request.getParameter("filtroEstado"));
-							if (idEstado > -1)
-							{
-								eEstadoPrestamo estado = eEstadoPrestamo.values()[idEstado];
-								prestamos.removeIf(x -> x.getEstadoPrestamo() != estado);
-							}
-						}					
-						
+						prestamos = AplicarFiltroCliente(request, prestamos);
 					}
 					catch (ArgumentoInvalidoException e)
 					{
@@ -231,5 +217,105 @@ public class servletPrestamo extends HttpServlet {
 			return "El prestamo no pudo ser actualizado";
 		}
 
+	}
+	private List<prestamo> AplicarFiltroCliente(HttpServletRequest request, List<prestamo> prestamos)
+	{
+		if (!request.getParameter("filtroFechaDesde").isEmpty() && !request.getParameter("filtroFechaHasta").isEmpty())
+		{
+			LocalDate fechaDesde = LocalDate.parse(request.getParameter("filtroFechaDesde"));
+			LocalDate fechaHasta = LocalDate.parse(request.getParameter("filtroFechaHasta"));
+			if (fechaDesde.isAfter(fechaHasta))
+			{
+				throw new ArgumentoInvalidoException("La Fecha Desde no puede ser posterior a la Fecha Hasta");	
+			}
+		}
+		
+		if (!request.getParameter("filtroFechaDesde").isEmpty())
+		{
+			LocalDate fechaDesde = LocalDate.parse(request.getParameter("filtroFechaDesde"));
+			prestamos.removeIf(x -> x.getFechaSolicitud().isBefore(fechaDesde));
+		}
+		if (!request.getParameter("filtroFechaHasta").isEmpty())
+		{
+			LocalDate fechaHasta = LocalDate.parse(request.getParameter("filtroFechaHasta"));
+			prestamos.removeIf(x -> x.getFechaSolicitud().isAfter(fechaHasta));
+		}
+		if (request.getParameter("filtroEstado") != null)
+		{
+			int idEstado = Integer.parseInt(request.getParameter("filtroEstado"));
+			if (idEstado > -1)
+			{
+				eEstadoPrestamo estado = eEstadoPrestamo.values()[idEstado];
+				prestamos.removeIf(x -> x.getEstadoPrestamo() != estado);
+			}
+		}
+		
+		return prestamos;
+	}
+	
+	private List<prestamo> AplicarFiltroAdmin(HttpServletRequest request, List<prestamo> prestamos)
+	{
+		prestamos = AplicarFiltroCliente(request, prestamos);
+		
+		if (!request.getParameter("filtroCliente").isEmpty())
+		{
+			Long idCliente = Long.parseLong(request.getParameter("filtroCliente"));
+			prestamos.removeIf(x -> x.getIdCliente() != idCliente);
+		}
+		
+		int filtroImporteComparacion = Integer.parseInt(request.getParameter("filtroImporteComparacion"));
+		if (filtroImporteComparacion > -1)
+		{
+			eFiltro filtro = eFiltro.values()[filtroImporteComparacion];
+			
+			if (request.getParameter("filtroImporte") == null)
+			{
+				throw new ArgumentoInvalidoException("Ingrese un importe por favor");	
+			}
+			
+			float filtroImporte = Float.parseFloat(request.getParameter("filtroImporte"));
+			prestamos.removeIf(x -> condicionFiltro(filtro, x.getImporte(), filtroImporte));
+		}
+		
+		int filtroCuotasComparacion = Integer.parseInt(request.getParameter("filtroCuotasComparacion"));
+		if (filtroCuotasComparacion > -1)
+		{
+			eFiltro filtro = eFiltro.values()[filtroCuotasComparacion];
+			int filtroCuotas = Integer.parseInt(request.getParameter("filtroCuotas"));
+			
+			if (filtroCuotas == -1)
+			{
+				throw new ArgumentoInvalidoException("Seleccione una cantidad de cuotas por favor");	
+			}
+			
+			prestamos.removeIf(x -> condicionFiltro(filtro, x.getPlazo(), filtroCuotas));
+		}
+		return prestamos;
+	}
+	
+	private boolean condicionFiltro(eFiltro filtro, float numeroLista, float numeroIngresado)
+	{
+		boolean condicion;
+        switch (filtro) {
+        case Menor:
+            condicion = numeroLista < numeroIngresado;
+            break;
+        case MenorIgual:
+            condicion = numeroLista <= numeroIngresado;
+            break;
+        case Mayor:
+            condicion = numeroLista > numeroIngresado;
+            break;
+        case MayorIgual:
+            condicion = numeroLista >= numeroIngresado;
+            break;
+        case Igual:
+            condicion = numeroLista == numeroIngresado;
+            break;
+        default:
+        	condicion = false;
+        	break;
+        }
+        return !condicion;
 	}
 }

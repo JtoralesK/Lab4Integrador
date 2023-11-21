@@ -59,7 +59,8 @@ public class PrestamoDao {
 				+ ", P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
 				"FROM prestamos P " + 
 				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
-				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision; ";
+				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision " +
+				"ORDER BY P.fecha_solicitud; ";
 		
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
         {		
@@ -133,7 +134,8 @@ public class PrestamoDao {
 				"FROM prestamos P " + 
 				"LEFT JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
 				"WHERE P.id_cliente = ? " +
-				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision; ";
+				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision " +
+				"ORDER BY P.fecha_solicitud DESC; ";
 		
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) 
         {		
