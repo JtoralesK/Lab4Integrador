@@ -38,10 +38,10 @@ public class cuentaDao {
 		return cuentas;
 	}
 
-	public List<cuenta> selectAllByTypeOf(eTipoCuenta e, String prefix, Boolean estado) {
+	public List<cuenta> selectAllByTypeOf(eTipoCuenta e, String cbu, String cliente , Boolean estado) {
 		// TODO Auto-generated method stub
 		List<cuenta> cuentas = null;
-		if (e != null || !prefix.isEmpty() || estado != null) {
+		if (e != null || !cbu.isEmpty() || estado != null || !cliente.isEmpty()) {
 			cuentas = new ArrayList<>();
 			Connection connection = cn.Open();
 			String query = "SELECT * FROM cuentas WHERE 1 = 1 ";
@@ -50,8 +50,11 @@ public class cuentaDao {
 				query += " AND id_tipo_cuenta = ?";
 			}
 			
+			if (!cliente.isEmpty()) {
+				query += " AND id_cliente = ?";
+			}
 			
-			if (!prefix.isEmpty()) {
+			if (!cbu.isEmpty()) {
 				query += " AND cbu LIKE ?";
 			}
 			
@@ -64,10 +67,14 @@ public class cuentaDao {
 					preparedStatement.setInt(paramIndex++, e == eTipoCuenta.CajaDeAhorro ? 1 : 2);
 				}
 
-				if (!prefix.isEmpty()) {
-					preparedStatement.setString(paramIndex++,"%"+ prefix + "%");
+				if (!cliente.isEmpty()) {
+					preparedStatement.setLong(paramIndex++, Long.parseLong(cliente));
 				}
 				
+				if (!cbu.isEmpty()) {
+					preparedStatement.setString(paramIndex++,"%"+ cbu + "%");
+				}
+								
 				if (estado != null) {
 					preparedStatement.setBoolean(paramIndex, estado);
 				}

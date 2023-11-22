@@ -55,6 +55,10 @@ public class servletCuenta extends HttpServlet {
 					if(!request.getParameter("filterCbu").isEmpty()) {
 						cbu = request.getParameter("filterCbu");
 					}
+					String cliente = "";
+					if(!request.getParameter("filterCliente").isEmpty()) {
+						cbu = request.getParameter("filterCliente");
+					}
 					eTipoCuenta tipoCuenta = null;
 					if(request.getParameter("filterTipo") != null) {
 						tipoCuenta = Integer.parseInt(request.getParameter("filterTipo"))==1?eTipoCuenta.CajaDeAhorro:eTipoCuenta.CuentaCorriente;
@@ -64,7 +68,7 @@ public class servletCuenta extends HttpServlet {
 						estado = Boolean.parseBoolean(request.getParameter("filterEstado"));
 					}
 					// si algunos de los 2 es verdadero, se filtra
-					List<cuenta> listaFiltrada = cuentaNeg.selectAllByTypeOf(tipoCuenta,cbu, estado);
+					List<cuenta> listaFiltrada = cuentaNeg.selectAllByTypeOf(tipoCuenta, cbu, cliente, estado);
 					
 					//si se ingreso el cbu pero esta vacio y el tipo de cuenta es null, se devuelve la lista completa
 					if(request.getParameter("filterCbu").isEmpty() && 

@@ -23,6 +23,7 @@
        <form method="get" action="<%= request.getContextPath() %>/servletCuenta" class="flex justify-center mb-4">
     <div class="w-11/12">
      <input type="hidden" name="accion" value="blCuentas">
+        <input type="text" placeholder="Cliente" name="filterCliente" class="w-64 border border-gray-300 rounded-md p-2">     
         <input type="text" placeholder="Cbu" name="filterCbu" class="w-64 border border-gray-300 rounded-md p-2">
         <select id="cuentaTipo" name="filterTipo" class="w-64 border border-gray-300 rounded-md p-2">
             <option value="blCuentas" disabled selected>Tipo de cuenta</option>
