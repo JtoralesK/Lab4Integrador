@@ -124,7 +124,7 @@
 				<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>
 				<div class="flex flex-col w-full">
 				<p class="font-bold text-lg">N°<%=c.getId_cuenta() %></p>
-				<p class="saldo"><%=c.getSaldo() %></p>
+				<p class="saldo">$ <%=c.getSaldo() %></p>
 				<div class="w-full flex flex-row justify-between">
 				<span></span>
 				</div>

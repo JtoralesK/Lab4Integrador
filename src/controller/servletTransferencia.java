@@ -93,7 +93,7 @@ public class servletTransferencia extends HttpServlet {
 		cuenta cuentaDestino = cuentaNeg.buscarPorCbu(cbu);
 		cliente clienteDestino = new clienteNeg().obtenerCliente(cuentaDestino.getId_cliente());
 		if(!clienteDestino.getEstado())throw new CbuIncorrecto();
-		if(cuentaOrigen.getId_cuenta() == cuentaDestino.getId_cuenta()) throw new ArgumentoInvalidoException("No se puede transferir a la misma cuenta de origen");
+		if(cuentaOrigen.getId_cuenta().equals(cuentaDestino.getId_cuenta())) throw new ArgumentoInvalidoException("No se puede transferir a la misma cuenta de origen");
 		if(cuentaDestino == null || !cuentaDestino.isEstado()) throw new CbuIncorrecto();
 		movimiento.setN_cuenta(idCuentaOrigen);
 		movimiento.setId_cliente(cuentaOrigen.getId_cliente());
