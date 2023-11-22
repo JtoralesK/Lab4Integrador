@@ -19,7 +19,10 @@ public class movimientosNeg {
 	{
 		return new movimientosDao().listarMovimientosPorIdCliente(idCliente);
 	}
-	
+	public List<movimiento> listarMovimientosPorIdCuenta(Long idCuenta)
+	{
+		return new movimientosDao().listarMovimientosPorIdCuenta(idCuenta);
+	}
 	public List<movimiento> listarMovimientosPorIdClienteYFecha(int idCliente,Date fecha)
 	{
 		return new movimientosDao().listarMovimientosPorIdClienteYFecha(idCliente,fecha);

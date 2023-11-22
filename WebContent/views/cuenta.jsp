@@ -28,25 +28,25 @@
 <div class="flex justify-center">
 	<div class="w-2/3 flex flex-row gap-5 py-5 ">
 		<%
-				List<cuenta> list = (List<cuenta>)request.getSession().getAttribute("cuentasLoggedCliente");
+			List<cuenta> list = (List<cuenta>)request.getSession().getAttribute("cuentasLoggedCliente");
 				for(cuenta c : list){
 		%>
-		<div class="w-1/3 h-24 bg-white border rounded-lg border-gray-300 py-3 px-6">
-		<div class="flex flex-row gap-6">
-		<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>
-		<div class="flex flex-col w-full">
-		<p class="font-bold text-lg">N°<%=c.getId_cuenta() %></p>
-		<p>$<%=c.getSaldo() %></p>
-		<div class="w-full flex flex-row justify-between">
-		<span></span>
-		</div>
-		</div>
-		</div>
-		</div>
-		<%
-		
-	}
-	%>
+		<form method="post" action="<%= request.getContextPath() %>/servletCuentasClientes" class="w-1/3 h-24 bg-white border rounded-lg border-gray-300 py-3 px-6">
+			<input type="hidden" name="IdCuenta" value="<%=c.getId_cuenta()%>">	
+			<button class="w-full">
+				<div class="flex flex-row gap-6">
+				<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>
+					<div class="flex flex-col w-full">
+						<p class="font-bold text-lg">N°<%=c.getId_cuenta() %></p>
+						<p>$<%=c.getSaldo() %></p>
+						<div class="w-full flex flex-row justify-between">
+							<span></span>
+						</div>
+					</div>
+				</div>
+			</button>
+		</form>
+		<%}%>
 	</div>
 </div>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>

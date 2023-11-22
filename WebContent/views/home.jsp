@@ -116,30 +116,29 @@
 		
 			<div class="flex flex-row gap-5 py-5 ">
 				<%
-						List<cuenta> list = (List<cuenta>)request.getAttribute("cuentas");
+					List<cuenta> list = (List<cuenta>)request.getAttribute("cuentas");
+					if (list != null && !list.isEmpty()) {
 						for(cuenta c : list){
 				%>
-				<div class="w-1/3 h-24  border rounded-lg border-gray-300 py-3 px-6">
-				<div class="flex flex-row gap-6">
-				<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>
-				<div class="flex flex-col w-full">
-				<p class="font-bold text-lg">N°<%=c.getId_cuenta() %></p>
-				<p class="saldo">$ <%=c.getSaldo() %></p>
-				<div class="w-full flex flex-row justify-between">
-				<span></span>
-				</div>
-				</div>
-				</div>
-				</div>
-				
-			<%
-			}
-						
-			if (list.isEmpty()) {
-				%>
-			<p class=" font-bold text-red-500 text-xl" >No se encontraron cuentas asociadas a tu usuario.</p>
-			<%} %>
-			
+				<form method="post" action="<%= request.getContextPath() %>/servletCuentasClientes" class="w-1/3 h-24  border rounded-lg border-gray-300 py-3 px-6">
+					<input type="hidden" name="IdCuenta" value="<%=c.getId_cuenta()%>">					
+					<button class="w-full">
+						<div class="flex flex-row gap-6">
+							<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>
+							<div class="flex flex-col w-full">
+								<p class="font-bold text-lg">N°<%=c.getId_cuenta() %></p>
+								<p class="saldo">$<%=c.getSaldo() %></p>
+								<div class="w-full flex flex-row justify-between">
+									<span></span>
+								</div>
+							</div>
+						</div>
+					</button>
+				</form>
+				<%				
+			} } else { %>
+				<p> Todavia no posee cuentas activas </p>
+			<%}%>
 			</div>
 		</div>
 			

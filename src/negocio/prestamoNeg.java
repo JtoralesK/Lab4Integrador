@@ -39,6 +39,10 @@ public class prestamoNeg {
 	public List<prestamo> listarXcliente(Long cliente){
 		return prestamoDao.listarXcliente(cliente);
 	}
+	/*** Listar por cuenta***/
+	public List<prestamo> listarXcuenta(Long idCuenta){
+		return prestamoDao.listarXcuenta(idCuenta);
+	}
 	public boolean pagarPrestamo(cliente cliente, Long nCuenta, Long idPrestamo, int cuotasPagar, int cuotasPagas, float cuota)
 	{	
 		int contador = 0;
