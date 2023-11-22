@@ -23,11 +23,16 @@
        <form method="get" action="<%= request.getContextPath() %>/servletCuenta" class="flex justify-center mb-4">
     <div class="w-11/12">
      <input type="hidden" name="accion" value="blCuentas">
-        <input type="text" placeholder="cbu" name="filterCbu" class="w-64 border border-gray-300 rounded-md p-2">
-        <select id="cuenta" name="filter" class="w-64 border border-gray-300 rounded-md p-2">
+        <input type="text" placeholder="Cbu" name="filterCbu" class="w-64 border border-gray-300 rounded-md p-2">
+        <select id="cuentaTipo" name="filterTipo" class="w-64 border border-gray-300 rounded-md p-2">
             <option value="blCuentas" disabled selected>Tipo de cuenta</option>
             <option value="1">Caja de ahorro</option>
             <option value="2">Cuenta corriente</option>
+        </select>
+        <select id="cuentaEstado" name="filterEstado" class="w-64 border border-gray-300 rounded-md p-2">
+            <option disabled selected>Estado</option>
+            <option value="true">Activa</option>
+            <option value="false">Inactiva</option>
         </select>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ml-2">Buscar</button>
     </div>
@@ -49,9 +54,7 @@
     </thead>
     <tbody>
     <% 
-    request.setAttribute("titulo", "Cuenta");
-	int paginaActual = (Integer) request.getAttribute("paginaActual");
-	int totalPaginas = (Integer) request.getAttribute("totalPaginas");
+
 	List<cuenta> listadoCuentas = (List<cuenta>) request.getAttribute("listaPaginada");
 
     for (cuenta cuenta : listadoCuentas) { 

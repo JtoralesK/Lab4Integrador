@@ -19,8 +19,8 @@ public class cuentaNeg {
 		return cuentaDao.selectAll();
 	}
 	
-	public List<cuenta> selectAllByTypeOf(eTipoCuenta e, String prefix) {
-		return cuentaDao.selectAllByTypeOf(e, prefix);
+	public List<cuenta> selectAllByTypeOf(eTipoCuenta e, String prefix, Boolean estado) {
+		return cuentaDao.selectAllByTypeOf(e, prefix, estado);
 	}
 	
 	public List<cuenta> selectAllByOneUserId(int idUsuario) {

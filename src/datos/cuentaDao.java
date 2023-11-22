@@ -38,10 +38,10 @@ public class cuentaDao {
 		return cuentas;
 	}
 
-	public List<cuenta> selectAllByTypeOf(eTipoCuenta e, String prefix) {
+	public List<cuenta> selectAllByTypeOf(eTipoCuenta e, String prefix, Boolean estado) {
 		// TODO Auto-generated method stub
 		List<cuenta> cuentas = null;
-		if (e != null || !prefix.isEmpty()) {
+		if (e != null || !prefix.isEmpty() || estado != null) {
 			cuentas = new ArrayList<>();
 			Connection connection = cn.Open();
 			String query = "SELECT * FROM cuentas WHERE 1 = 1 ";
@@ -49,18 +49,28 @@ public class cuentaDao {
 			if (e != null) {
 				query += " AND id_tipo_cuenta = ?";
 			}
-
+			
+			
 			if (!prefix.isEmpty()) {
 				query += " AND cbu LIKE ?";
 			}
+			
+			if (estado != null) {
+				query += " AND estado = ?";
+			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+				System.out.println(query);
 				int paramIndex = 1;
 				if (e != null) {
 					preparedStatement.setInt(paramIndex++, e == eTipoCuenta.CajaDeAhorro ? 1 : 2);
 				}
 
 				if (!prefix.isEmpty()) {
-					preparedStatement.setString(paramIndex, prefix + "%");
+					preparedStatement.setString(paramIndex++,"%"+ prefix + "%");
+				}
+				
+				if (estado != null) {
+					preparedStatement.setBoolean(paramIndex, estado);
 				}
 				ResultSet rs = preparedStatement.executeQuery();
 

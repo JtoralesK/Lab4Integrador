@@ -47,21 +47,29 @@ public class servletCuenta extends HttpServlet {
 			if("blCuentas".equals(accion)) {
 				HttpSession session = request.getSession();
 				List<cuenta> listaCompleta = cuentaNeg.selectAll();
-				if(request.getParameter("filter") != null || (request.getParameter("filterCbu") != null )) {
+				if(request.getParameter("filterTipo") != null || 
+						(request.getParameter("filterCbu") != null ) ||
+						request.getParameter("filterEstado")!=null) {
 					//filtrar lista
 					String cbu = "";
 					if(!request.getParameter("filterCbu").isEmpty()) {
 						cbu = request.getParameter("filterCbu");
 					}
 					eTipoCuenta tipoCuenta = null;
-					if(request.getParameter("filter") != null) {
-						tipoCuenta = Integer.parseInt(request.getParameter("filter"))==1?eTipoCuenta.CajaDeAhorro:eTipoCuenta.CuentaCorriente;
+					if(request.getParameter("filterTipo") != null) {
+						tipoCuenta = Integer.parseInt(request.getParameter("filterTipo"))==1?eTipoCuenta.CajaDeAhorro:eTipoCuenta.CuentaCorriente;
+					}
+					Boolean estado = null;
+					if(request.getParameter("filterEstado")!=null) {
+						estado = Boolean.parseBoolean(request.getParameter("filterEstado"));
 					}
 					// si algunos de los 2 es verdadero, se filtra
-					List<cuenta> listaFiltrada = cuentaNeg.selectAllByTypeOf(tipoCuenta,cbu);
+					List<cuenta> listaFiltrada = cuentaNeg.selectAllByTypeOf(tipoCuenta,cbu, estado);
 					
 					//si se ingreso el cbu pero esta vacio y el tipo de cuenta es null, se devuelve la lista completa
-					if(request.getParameter("filterCbu").isEmpty() && request.getParameter("filter") == null) {
+					if(request.getParameter("filterCbu").isEmpty() && 
+							request.getParameter("filterTipo") == null &&
+							request.getParameter("filterEstado") == null) {
 						listaFiltrada = cuentaNeg.selectAll();// => lista completa
 					}
 					session.setAttribute("lista", listaFiltrada);
