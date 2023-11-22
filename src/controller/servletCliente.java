@@ -110,7 +110,7 @@ public class servletCliente extends HttpServlet {
 	    	String textoAMostrar = "";
 	    	try
 	    	{
-		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia, fechaNacimiento);		    	
+		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, nacionalidad, localidad, provincia, fechaNacimiento);		    	
 		    	ValidarDatosUsuario(usuario, password, repetirPassword);		    	
 
 	    		boolean insertCorrecto = clienteNeg.guardarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
@@ -161,7 +161,7 @@ public class servletCliente extends HttpServlet {
 	    	String textoAMostrar = "";
 	    	try
 	    	{
-		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia, fechaNacimiento);		    	
+		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, nacionalidad, localidad, provincia, fechaNacimiento);		    	
 
 				boolean updateCorrecto = clienteNeg.actualizarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
 	    									, direccion, localidad, provincia, email, telefono, idCliente);
@@ -264,7 +264,7 @@ public class servletCliente extends HttpServlet {
 		}       
 	}
 	
-	public boolean ValidarDatosCliente(String dni, String cuil, String nombre, String apellido, String email, String localidad, String provincia, String fechaNacimiento) throws ArgumentoInvalidoException 
+	public boolean ValidarDatosCliente(String dni, String cuil, String nombre, String apellido, String email, String nacionalidad, String localidad, String provincia, String fechaNacimiento) throws ArgumentoInvalidoException 
 	{
     	if (dni.length() < 8)
     	{
@@ -285,6 +285,10 @@ public class servletCliente extends HttpServlet {
     	if (email.trim().length() < 1)
     	{
     		throw new ArgumentoInvalidoException("Complete el email correctamente");
+    	}
+    	if (nacionalidad == "-1")
+    	{
+    		throw new ArgumentoInvalidoException("No has seleccionado una nacionalidad");
     	}
     	if (localidad == "-1")
     	{

@@ -47,6 +47,7 @@ public class servletTransferencia extends HttpServlet {
 			cliente cliente = new clienteNeg().obtenerClientePorIdUsuario(loggedUser.getId());
 			List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
 			List<movimiento> lista = new movimientosNeg().listarMovimientosPorIdClienteYTipo(cliente.getId(), eTipoMovimiento.Transferencia);
+			Collections.reverse(lista);
 			Collections.sort(lista, (m1, m2) -> m2.getFecha().compareTo(m1.getFecha()));
 			request.setAttribute("lista", lista);
 			request.setAttribute("cuentas", cuentas);
@@ -93,7 +94,7 @@ public class servletTransferencia extends HttpServlet {
 		cuenta cuentaDestino = cuentaNeg.buscarPorCbu(cbu);
 		cliente clienteDestino = new clienteNeg().obtenerCliente(cuentaDestino.getId_cliente());
 		if(!clienteDestino.getEstado())throw new CbuIncorrecto();
-		if(cuentaOrigen.getId_cuenta() == cuentaDestino.getId_cuenta()) throw new ArgumentoInvalidoException("No se puede transferir a la misma cuenta de origen");
+		if(cuentaOrigen.getId_cuenta().equals(cuentaDestino.getId_cuenta())) throw new ArgumentoInvalidoException("No se puede transferir a la misma cuenta de origen");
 		if(cuentaDestino == null || !cuentaDestino.isEstado()) throw new CbuIncorrecto();
 		movimiento.setN_cuenta(idCuentaOrigen);
 		movimiento.setId_cliente(cuentaOrigen.getId_cliente());
