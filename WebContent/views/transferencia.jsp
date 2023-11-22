@@ -82,7 +82,7 @@
 				                    <tr>
 				                        <td class="text-center border-b p-2"><%= mov.getFecha() %></td>
 				                        <td class="text-center border-b p-2"><%= mov.getN_cuenta() %></td>
-				                        <td class="text-center border-b p-2">$<%= mov.getImporte()*-1 %></td>
+				                        <td class="text-center border-b p-2 <%= mov.getImporte() > 0 ? "text-green-600" : "text-red-600"%> ">$<%= mov.getImporte() %></td>
 				                    </tr>
 				    <%
 				                    count++;
