@@ -11,6 +11,7 @@
 	<%@page import="entidad.prestamo"%>
     <%@ page import="java.time.LocalDate" %>
 	<%@ page import="java.time.LocalTime" %>
+    <%@page import="entidad.eEstadoPrestamo"%>
     
 
 
@@ -51,6 +52,26 @@
 </div>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
+<form method="post" action="<%= request.getContextPath() %>/servletCuentasClientes" class="flex w-9/12 items-center mx-auto">
+    <div class="flex w-11/12 items-center space-x-4 mx-auto">
+        <label for="filtroFechaDesde" class="mr-2">Fecha Desde:</label>
+        <input type="date" id="filtroFechaDesde" name="filtroFechaDesde" class="border border-gray-300 rounded-md p-2">
+
+        <label for="filtroFechaHasta" class="mr-2">Fecha Hasta:</label>
+        <input type="date" id="filtroFechaHasta" name="filtroFechaHasta" class="border border-gray-300 rounded-md p-2">
+
+        <label for="filtroMovimiento" class="mr-2">Tipo Movimiento:</label>
+        <select id="filtroMovimiento" name="filtroMovimiento" class="border border-gray-300 rounded-md p-2">
+            <option value="-1">Todos</option>
+            <% for (eTipoMovimiento movimiento : eTipoMovimiento.values()) { %>
+                <option value="<%= movimiento.ordinal() %>"><%= movimiento.toString() %></option>
+            <% } %>
+        </select>
+        <input type="hidden" id="IdCuenta" name="IdCuenta" value="<%=request.getSession().getAttribute("idCuenta")%>">
+	    <button id="btnFiltrarMovimientos" name="btnFiltrarMovimientos" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Filtrar</button>
+    </div>			
+</form>
+<br>
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
@@ -83,7 +104,7 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getId_movimiento() %></td>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getN_cuenta() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getTipoMovimiento().name()%></td>
+				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getTipoMovimiento().toString()%></td>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getFecha() %></td>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getHora() %>HS</td>
 				<td class="px-6 py-4 whitespace-nowrap <%=importeClass%>">$<%= movimientos.getImporte() %></td>
@@ -131,6 +152,30 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 	</div>
 
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
+<br>
+<form method="post" action="<%= request.getContextPath() %>/servletCuentasClientes" class="flex w-9/12 items-center mx-auto">
+    <div class="flex w-11/12 items-center space-x-4 mx-auto">
+    	<select id="filtroSelectFecha" name="filtroSelectFecha" class="border border-gray-300 rounded-md p-2">
+    		<option value="Fecha Solicitud">Fecha Solicitud</option>
+    		<option value="Fecha Revision">Fecha Revision</option>
+    	</select>
+        <label for="filtroFechaDesde" class="mr-2">Fecha Desde:</label>
+        <input type="date" id="filtroFechaDesde" name="filtroFechaDesde" class="border border-gray-300 rounded-md p-2">
+
+        <label for="filtroFechaHasta" class="mr-2">Fecha Hasta:</label>
+        <input type="date" id="filtroFechaHasta" name="filtroFechaHasta" class="border border-gray-300 rounded-md p-2">
+
+        <label for="filtroEstado" class="mr-2">Estado:</label>
+        <select id="filtroEstado" name="filtroEstado" class="border border-gray-300 rounded-md p-2">
+            <option value="-1">Todos</option>
+            <% for (eEstadoPrestamo estado : eEstadoPrestamo.values()) { %>
+                <option value="<%= estado.ordinal() %>"><%= estado.toString() %></option>
+            <% } %>
+        </select>
+        <input type="hidden" id="IdCuenta" name="IdCuenta" value="<%=request.getSession().getAttribute("idCuenta")%>">      
+	    <button id="btnFiltrarPrestamos" name="btnFiltrarPrestamos" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Filtrar</button>
+    </div>			
+</form>
 <br>
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
