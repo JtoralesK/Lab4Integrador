@@ -67,7 +67,7 @@
             <td class="p-2 text-center"><%=cuenta.tipoCuenta()%></td>
             <td class="p-2 text-center"><%= cuenta.getSaldo() %></td>
             <td class="p-2 text-center"><%= cuenta.getFecha_creacion() %></td>
-            <td class="p-2 text-center text-green-600"><%= cuenta.getCbu() %></td>
+            <td class="p-2 text-center"><%= cuenta.getCbu() %></td>
              <td class="p-2 text-center">
                <% if (cuenta.isEstado()) { %>
 						    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnEliminar" onclick="openModal('eliminar', '<%= cuenta.getId_cuenta() %>', '<%= cuenta.getId_cliente() %>', '<%= cuenta.isEstado() %>')">Eliminar</button>

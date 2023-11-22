@@ -131,7 +131,8 @@ public class servletCuenta extends HttpServlet {
 			cuentaNeg cuentaNeg = new cuentaNeg();
 			boolean modificado=false;
 			int cuentasActivas = cuentasActivas(cuentaNeg.selectAllByOneClientId(id_Cliente));
-			if(stateToChange || cuentasActivas <= 2)
+			boolean cantidadOk = cuentasActivas <= 2;
+			if(stateToChange || cantidadOk)
 			 modificado = cuentaNeg.updateRegisterState(cuentaId, id_Cliente, !stateToChange);
 			if(modificado)
 			{
@@ -139,7 +140,8 @@ public class servletCuenta extends HttpServlet {
 			}
 			else
 			{
-	    		request.setAttribute("texto", "No se pudo modificar el estado de la cuenta");
+				if(!cantidadOk)request.setAttribute("texto", "El cliente ya posee 3 cuentas activas");
+				else request.setAttribute("texto", "No se pudo modificar el estado de la cuenta");
 			}
 			
 	    	request.setAttribute("modal", true);

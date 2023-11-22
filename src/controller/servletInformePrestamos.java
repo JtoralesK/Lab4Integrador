@@ -66,8 +66,8 @@ public class servletInformePrestamos extends HttpServlet {
 		List<prestamo> listaPrestamos = new prestamoNeg().listar();
 		float importeTotal = 0;
 		for(prestamo prestamo : listaPrestamos) {
-			if(prestamo.getFechaRevision().isAfter(fechaInicio) &&
-				prestamo.getFechaRevision().isBefore(fechaFin) &&
+			if(prestamo.getFechaRevision().plusDays(1).isAfter(fechaInicio) &&
+				prestamo.getFechaRevision().minusDays(1).isBefore(fechaFin) &&
 				prestamo.getEstadoPrestamo() == estado) {
 					importeTotal += prestamo.getImporte();
 			}
