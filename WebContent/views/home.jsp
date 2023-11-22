@@ -111,7 +111,7 @@
 			<div class="h-44 border rounded-lg border-gray-300 px-6 py-2">
 			<div class="flex flex-row gap-2 items-center ">
 			<h3 class="text-lg">Todas las cuentas</h3>
-			<span><i class="fa-solid fa-eye"></i></span>
+			<span class="text-2xl cursor-pointer" onclick="toggleSaldos()"><i id="iconoOjo" class="fa-solid fa-eye"></i></span>
 			</div>
 		
 			<div class="flex flex-row gap-5 py-5 ">
@@ -124,7 +124,7 @@
 				<span class="text-4xl text-blue-600"><i class="fa-solid fa-closed-captioning"></i></span>
 				<div class="flex flex-col w-full">
 				<p class="font-bold text-lg">N°<%=c.getId_cuenta() %></p>
-				<p>$<%=c.getSaldo() %></p>
+				<p class="saldo"><%=c.getSaldo() %></p>
 				<div class="w-full flex flex-row justify-between">
 				<span></span>
 				</div>
@@ -141,5 +141,26 @@
 			<%} %>
 		</div>
 	</div>
+	<script>
+	    function toggleSaldos() {
+	        var saldos = document.querySelectorAll(".saldo");
+	        for (var i = 0; i < saldos.length; i++) {
+	            if (saldos[i].innerText === "********") {
+	                saldos[i].innerText = saldos[i].dataset.originalValue;
+	            } else {
+	                saldos[i].dataset.originalValue = saldos[i].innerText;
+	                saldos[i].innerText = "********";
+	            }
+	        }
+	        var iconoOjo = document.getElementById("iconoOjo");
+	        if (iconoOjo.classList.contains("fa-eye")) {
+	            iconoOjo.classList.remove("fa-eye");
+	            iconoOjo.classList.add("fa-eye-slash");
+	        } else {
+	            iconoOjo.classList.remove("fa-eye-slash");
+	            iconoOjo.classList.add("fa-eye");
+	        }
+	    }
+	</script>
 </body>
 </html>

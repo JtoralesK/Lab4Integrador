@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidad.Usuario;
+import entidad.cliente;
 import entidad.cuenta;
 import entidad.eTipoUsuario;
 import negocio.cuentaNeg;
@@ -35,7 +36,8 @@ public class servletHome extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Usuario loggedUser = (Usuario) request.getSession().getAttribute("loggedUser");
 		if(loggedUser.getTipoUsuario() == eTipoUsuario.Cliente) {
-			List<cuenta> cuentas = new cuentaNeg().selectAllByOneUserId(loggedUser.getId());
+			cliente loggedCliente = (cliente) request.getSession().getAttribute("loggedCliente");
+			List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(loggedCliente.getId());
 			request.setAttribute("cuentas", cuentas);
 		}
 		request.getRequestDispatcher("/views/home.jsp").forward(request, response);;
