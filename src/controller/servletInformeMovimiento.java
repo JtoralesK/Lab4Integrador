@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import datos.PrestamoDao;
 import entidad.cuenta;
 import entidad.movimiento;
 import entidad.prestamo;
 import negocio.cuentaNeg;
 import negocio.movimientosNeg;
+import negocio.prestamoNeg;
 
 /**
  * Servlet implementation class servletInformeMovimiento
@@ -98,7 +98,7 @@ public class servletInformeMovimiento extends HttpServlet {
 	
 	private double getPrestamosTotalPendiente() {
 		double total = 0;
-		List<prestamo> listaPrestamos = new PrestamoDao().listar();
+		List<prestamo> listaPrestamos = new prestamoNeg().listar();
 		for (prestamo prestamo : listaPrestamos) {
 			int plazo = prestamo.getPlazo();
 			int cuotasPagas = prestamo.getCuotasPagas();

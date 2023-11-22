@@ -2,15 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 
     <%@page import="entidad.movimiento"%>
-    <%@page import="negocio.movimientosNeg"%>
     <%@page import="entidad.eTipoMovimiento"%>
     <%@page import="java.util.List"%>
     <%@page import="java.util.ArrayList"%>
     <%@page import="entidad.Usuario"%>
     <%@page import="entidad.cliente"%>
-    <%@page import="negocio.clienteNeg"%>
 	<%@page import="entidad.prestamo"%>
-    <%@page import="negocio.prestamoNeg"%>
     <%@ page import="java.time.LocalDate" %>
 	<%@ page import="java.time.LocalTime" %>
     
@@ -50,7 +47,6 @@
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
 <%
-//List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
 List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("ListaMovimientos");
 		for(movimiento movimientos : ListaMovimientos ){ 
 %>
@@ -94,7 +90,7 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("Lista
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
-		<% //List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
+		<% 
 		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("ListaPrestamos");
  		for(prestamo prestamos : ListaPrestamos ){ %>
 			<tr>
