@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,12 +105,13 @@ public class servletCliente extends HttpServlet {
 	    	String telefono = request.getParameter("txtTelefono");
 	    	String usuario = request.getParameter("txtUsuario");
 	    	String password = request.getParameter("txtPassword");
+	    	String repetirPassword = request.getParameter("txtRepetirPassword");
 	    	
 	    	String textoAMostrar = "";
 	    	try
 	    	{
-		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia);		    	
-		    	ValidarDatosUsuario(usuario, password);		    	
+		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia, fechaNacimiento);		    	
+		    	ValidarDatosUsuario(usuario, password, repetirPassword);		    	
 
 	    		boolean insertCorrecto = clienteNeg.guardarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
 	    				, direccion, localidad, provincia, email, telefono, usuario, password);
@@ -159,25 +161,28 @@ public class servletCliente extends HttpServlet {
 	    	String textoAMostrar = "";
 	    	try
 	    	{
-		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia);		    	
+		    	ValidarDatosCliente(dni, cuil, nombre, apellido, email, localidad, provincia, fechaNacimiento);		    	
 
 				boolean updateCorrecto = clienteNeg.actualizarCliente(dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento
 	    									, direccion, localidad, provincia, email, telefono, idCliente);
 				if(updateCorrecto)
 				{
 					textoAMostrar = "Cliente Modificado con exito";
+		    		request.setAttribute("accion", "blCliente");
 				}
 				else
 				{
 					textoAMostrar = "No se pudo modificar el Cliente";
+		    		request.setAttribute("idCliente", idCliente);
+					request.setAttribute("accion", "amCliente");
 				}
-	    		request.setAttribute("accion", "amCliente");
 	    	}
 	    	catch (ArgumentoInvalidoException e)
 	    	{
 	    		textoAMostrar = e.getMessage();
 	    		e.printStackTrace();
-	    		request.setAttribute("accion", "blCliente");
+	    		request.setAttribute("idCliente", idCliente);
+				request.setAttribute("accion", "amCliente");
 	    	}
 	    	finally
 	    	{
@@ -259,7 +264,7 @@ public class servletCliente extends HttpServlet {
 		}       
 	}
 	
-	public boolean ValidarDatosCliente(String dni, String cuil, String nombre, String apellido, String email, String localidad, String provincia) throws ArgumentoInvalidoException 
+	public boolean ValidarDatosCliente(String dni, String cuil, String nombre, String apellido, String email, String localidad, String provincia, String fechaNacimiento) throws ArgumentoInvalidoException 
 	{
     	if (dni.length() < 8)
     	{
@@ -289,11 +294,14 @@ public class servletCliente extends HttpServlet {
     	{
     		throw new ArgumentoInvalidoException("No has seleccionado una provincia");
     	}
-    	
+    	if (LocalDate.parse(fechaNacimiento).isAfter(LocalDate.now().minusYears(18)) )
+    	{
+    		throw new ArgumentoInvalidoException("Debe de ser mayor de edad para tener una cuenta");
+    	}
     	return true;
 	}
 	
-	public boolean ValidarDatosUsuario(String usuario, String password) throws ArgumentoInvalidoException 
+	public boolean ValidarDatosUsuario(String usuario, String password, String repetirPassword) throws ArgumentoInvalidoException 
 	{
     	if (usuario.trim().length() < 1)
     	{
@@ -303,7 +311,14 @@ public class servletCliente extends HttpServlet {
     	{
     		throw new ArgumentoInvalidoException("Complete la password correctamente");
     	}
-    	
+    	if (repetirPassword.trim().length() < 1)
+    	{
+    		throw new ArgumentoInvalidoException("Repita la password correctamente");
+    	}
+    	if (!repetirPassword.equals(password))
+    	{
+    		throw new ArgumentoInvalidoException("Las passwords ingresadas no coinciden");
+    	}
     	return true;
 	}
 	

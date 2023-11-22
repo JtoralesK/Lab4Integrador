@@ -92,8 +92,9 @@
 					</thead>
 					<tbody>
 					<% 
-					int contador = 0;
-					for (prestamo prestamo : prestamos) { 
+					if (prestamos != null && !prestamos.isEmpty()) {
+						int contador = 0;
+						for (prestamo prestamo : prestamos) { 
 						contador++;%>
 						<tr>
 							<td class="p-2 text-center">
@@ -127,7 +128,13 @@
 								<button id="btnPagarPrestamo" name="btnPagarPrestamo" value="<%=contador%>" type="submit" <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado || prestamo.getPlazo() - prestamo.getCuotasPagas() == 0 ? "disabled" : "" %> class="text-white px-4 py-2 rounded-md <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado || prestamo.getPlazo() - prestamo.getCuotasPagas() == 0 ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"%> ">Pagar</button>
 							</td>
 						</tr>
-					<%} %>						
+			    	<%}
+				    }else {
+					    %>
+					    <tr>
+			                <td colspan="8" class="border px-4 py-2 text-center">No hay datos disponibles</td>
+			            </tr>
+		            <%}%>					
 					</tbody>
 				</table>
 			</form>

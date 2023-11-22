@@ -265,21 +265,21 @@ select "Indefinido";
 
 /*****************************************************************/
 INSERT INTO  clientes(dni,cuil,nombre,apellido,id_sexo,id_nacionalidad,fecha_nacimiento,direccion,id_localidad,mail,telefono,id_usuario)
-select 7898,2078981,"Jean","Esquen",1,2,"2002-09-01","Urquiza 1126",1,"jeanesuqen@gmail.com",1153535,5 union
-select 789789,207897891,"Franco","Marcolongo",1,1,"2001-08-25","Martinez 322",5,"Franco@gmail.com",1135353,6 union
-select 78987,20789871,"Agustin","Sbernini",3,1,"2001-08-26","Calle 123",4,"Agustin@gmail.com",1196666,7 union
-select 86456,20864561,"Javier","Torales",1,1,"2001-08-27","Martinez 1322",5,"Javier@gmail.com",1158988,8 union
-select 65464,20654641,"Ariana","Martines",2,3,"2001-10-28","Roca 1132,",14,"Ari@hotmail.com",1199999,9 union
-select 45645,20456451,"Juana","Herrera",2,4,"1987-11-08","Valle 2663",13,"boquita@gmailcom",1118925,10 union
-select 645645,206456451,"Gustavo","Martin",1,4,"1999-05-31","Jose perez 2434",9,"jeanesuqen@gmail.com",1155756,11 union
-select 456546,204565461,"Mariana","Martin",2,5,"1996-02-06","Villa luro 3445",2,"River@gmail.com",1139654,12 union
-select 4545,2045451,"Juan","Perez",1,6,"1990-08-01","Markes 2334",9,"Juan5100@gmail.com",1189355,13 union
-select 456590,20456461,"Juana","Esquel",4,8,"2002-07-23","San martin 2344",12,"Juana@hotmail.com",1125686,14 union
-select 548456,205464561,"Carlos","Fonseca",1,9,"1993-06-30","Samiento 3445",10,"CFA@gmail.com",1125668,15 union
-select 54654,20546541,"Carla","Fonseca",5,5,"1985-05-05","Congreso 2455",3,"Carla1234@gmail.com",1182656,16 union
-select 6456,2064561,"Mariano","Ramirez",5,4,"2000-10-19","Palermo 3545",5,"Mramirez@gmail.com",1155665,17 union
-select 54645,20546451,"Rut","Nah",2,15,"2000-11-03","Peru 2455",7,"Rut1234@gmail.com",1123205,18 union
-select 64564,20645641,"Flor","Arispe",2,14,"2001-09-07","Mexico 3545",6,"Farispe@hotmail.com",1189654,15;
+select 78984123,207853981,"Jean","Esquen",1,2,"2002-09-01","Urquiza 1126",1,"jeanesuqen@gmail.com",1153535,5 union
+select 78924789,207897891,"Franco","Marcolongo",1,1,"2001-08-25","Martinez 322",5,"Franco@gmail.com",1135353,6 union
+select 78941287,207869871,"Agustin","Sbernini",3,1,"2001-08-26","Calle 123",4,"Agustin@gmail.com",1196666,7 union
+select 86442156,208664561,"Javier","Torales",1,1,"2001-08-27","Martinez 1322",5,"Javier@gmail.com",1158988,8 union
+select 65441264,206564641,"Ariana","Martines",2,3,"2001-10-28","Roca 1132,",14,"Ari@hotmail.com",1199999,9 union
+select 45667845,204536451,"Juana","Herrera",2,4,"1987-11-08","Valle 2663",13,"boquita@gmailcom",1118925,10 union
+select 64565645,206256451,"Gustavo","Martin",1,4,"1999-05-31","Jose perez 2434",9,"jeanesuqen@gmail.com",1155756,11 union
+select 45694546,204565461,"Mariana","Martin",2,5,"1996-02-06","Villa luro 3445",2,"River@gmail.com",1139654,12 union
+select 45497635,204524451,"Juan","Perez",1,6,"1990-08-01","Markes 2334",9,"Juan5100@gmail.com",1189355,13 union
+select 45656490,204566461,"Juana","Esquel",4,8,"2002-07-23","San martin 2344",12,"Juana@hotmail.com",1125686,14 union
+select 54803456,205464561,"Carlos","Fonseca",1,9,"1993-06-30","Samiento 3445",10,"CFA@gmail.com",1125668,15 union
+select 54194654,205468541,"Carla","Fonseca",5,5,"1985-05-05","Congreso 2455",3,"Carla1234@gmail.com",1182656,16 union
+select 64424656,206452461,"Mariano","Ramirez",5,4,"2000-10-19","Palermo 3545",5,"Mramirez@gmail.com",1155665,17 union
+select 54664345,205461451,"Rut","Nah",2,15,"2000-11-03","Peru 2455",7,"Rut1234@gmail.com",1123205,18 union
+select 64568824,206445641,"Flor","Arispe",2,14,"2001-09-07","Mexico 3545",6,"Farispe@hotmail.com",1189654,15;
 
 /*******************************************************************************************************************************/
 INSERT INTO  tipo_cuentas(nombre)
@@ -334,7 +334,7 @@ select 15,107,2,"2023-09-23","17:50:00",1662 union
 select 9,115,2,"2023-11-02","00:01:00",0 union
 select 2,101,2,"2023-06-19","01:01:00",3225 union
 select 10,115,2,"2023-07-08","02:01:00",2115 union
-select 1,101,2,"2023-12-12","03:01:00",0 union
+select 1,101,2,"2023-11-12","03:01:00",0 union
 select 11,102,2,"2023-10-22","04:01:00",0  union
 select 8,112,2,"2023-10-29","05:01:00",0 union 
 select 12,102,2,"2023-01-30","06:01:00",16660 union
@@ -384,7 +384,7 @@ select 1,101,124256,"2023-01-12",4,"2023-02-08",3 union
 select 4,103,1581249,"2023-08-19",3,"2023-08-19",3 union
 select 15,107,161262,"2023-09-23",6,"2023-09-23",2 union
 select 10,115,212215,"2023-07-08",4,"2023-07-08",2 union
-select 2,101,164466,"2023-12-12",12,"2023-12-12",3 union
+select 2,101,164466,"2023-11-12",12,"2023-12-12",3 union
 select 13,112,161259,"2023-10-25",12,"2023-10-29",1 union
 select 12,102,164266,"2023-01-20",9,"2023-01-30",2 union
 select 14,106,16516,"2023-05-25",6,"2023-05-25",2 union

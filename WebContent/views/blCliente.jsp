@@ -43,8 +43,7 @@
 				<th class="px-4 py-2">Fecha de nacimiento</th>
 				<th class="px-4 py-2">Mail</th>
 				<th class="px-4 py-2">Telefono</th>
-				<th class="px-4 py-2">Acciones</th>
-				<th class="px-4 py-2"></th>
+				<th class="px-4 py-2" colspan="2">Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -61,19 +60,19 @@
 		        <td class="border px-4 py-2 break-words"><%= cliente.getFechaNacimiento() %></td>
 		        <td class="border px-4 py-2 break-words"><%= cliente.getEmail() %></td>
 		        <td class="border px-4 py-2 break-words"><%= cliente.getTelefono() %></td>
-		        <td class="border px-4 py-2">
-		            <form action="/ProjectBeta1/servletCliente" method="get">
-		                <input type="hidden" name="btnModificarCliente" value="<%= cliente.getId() %>">
-		                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnModificar">Ver/Editar</button>
-		            </form>
-		        </td>
-		        <td class="border px-4 py-2">				        
+		        <td class="border px-4 py-2" colspan="2">
+		        	<div class="flex space-x-4">
+			            <form action="/ProjectBeta1/servletCliente" method="get">
+			                <input type="hidden" name="btnModificarCliente" value="<%= cliente.getId() %>">
+			                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" name="btnModificar">Ver/Editar</button>
+			            </form>
 				        <% if (cliente.getEstado()) { %>
 						    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnEliminar" onclick="openModal('eliminar', '<%= cliente.getId() %>')">Eliminar</button>
 						<% } else { %>
 						    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="button" name="btnActivar" onclick="openModal('activar', '<%= cliente.getId() %>')">Activar</button>
 						<% } %>
-				</td>
+		        	</div>
+		        </td>
 
 		    </tr>
 		    <%

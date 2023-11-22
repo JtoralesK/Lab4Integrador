@@ -103,7 +103,7 @@ public class PrestamoDao {
 
 		cn = new conexion();
 		cn.Open();	
-		String query = "UPDATE prestamos SET id_estado = "+ (prestamo.getEstadoPrestamo().ordinal() + 1) + " WHERE id_prestamo = " + prestamo.getId();
+		String query = "UPDATE prestamos SET id_estado = "+ (prestamo.getEstadoPrestamo().ordinal() + 1) + ", fecha_revision = '"+ prestamo.getFechaRevision().toString() +"' WHERE id_prestamo = " + prestamo.getId();
 		
         try  
         {		

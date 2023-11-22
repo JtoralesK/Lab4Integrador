@@ -210,6 +210,7 @@ public class servletPrestamo extends HttpServlet {
 		prestamo.setIdCuenta(Long.parseLong(request.getParameter("idCuenta")));
 		prestamo.setIdCliente(Long.parseLong(request.getParameter("idCliente")));
 		prestamo.setImporte(Float.parseFloat(request.getParameter("importePrestamo")));
+		prestamo.setFechaRevision(LocalDate.now());;
 		prestamo.setEstadoPrestamo(estadoPrestamo);
 		if (new prestamoNeg().actualizar(prestamo))
 		{

@@ -90,7 +90,9 @@
                 </tr>
             </thead>
             <tbody>
-            <%for (prestamo prestamo : prestamos) {%>
+            <%
+            if (prestamos != null && !prestamos.isEmpty()) {
+            for (prestamo prestamo : prestamos) {%>
                 <tr>
                     <td class="p-2 text-center"><%=prestamo.getIdCliente()%></td>
                     <td class="p-2 text-center"><%=prestamo.getFechaSolicitud()%></td>
@@ -111,7 +113,14 @@
                     </form>
                     </td>
                 </tr>    
-             <%} %>            				
+       		<% }
+		    }else {
+		    %>
+		    <tr>
+                <td colspan="7" class="border px-4 py-2 text-center">No hay datos disponibles</td>
+            </tr>
+            <%}%>    
+                    				
             </tbody>
         </table>
     </div>

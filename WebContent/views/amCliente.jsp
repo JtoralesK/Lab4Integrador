@@ -116,16 +116,25 @@
 					<%} %>
 				</div>
 				<div>
-				<div class="flex flex-col">
-					<label for="txtPassword">Contraseña:</label> 
-					<% if (hayClienteModificar) {%>
-					  <label onclick="openModalPassword()" class="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded m-4">
-					    Cambiar Contraseña
-					  </label>				
-					<%} else { %>
-						<input type="password" id="txtPassword" name="txtPassword" class="w-full p-2 rounded" required>
-					<%} %>					
+					<div class="flex flex-col">
+						<label for="txtPassword">Contraseña:</label> 
+						<% if (hayClienteModificar) {%>
+						  <label onclick="openModalPassword()" class="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded m-4">
+						    Cambiar Contraseña
+						  </label>				
+						<%} else { %>
+							<input type="password" id="txtPassword" name="txtPassword" class="w-full p-2 rounded" required>
+						<%} %>					
+					</div>
 				</div>
+				<div></div>
+				<div>
+					<% if (!hayClienteModificar) {%>
+						<div class="flex flex-col">
+							<label for="txtRepetirPassword">Repita Contraseña:</label> 
+							<input type="password" id="txtRepetirPassword" name="txtRepetirPassword" class="w-full p-2 rounded" required>
+						</div>
+					<%} %>					
 				</div>
 			</div>
 			<div class="flex">
