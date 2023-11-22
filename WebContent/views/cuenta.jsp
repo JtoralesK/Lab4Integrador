@@ -27,10 +27,9 @@
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 <br>
-<h2 class="text-center mx-auto text-4xl">ID Cliente </h2>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
-<form method="get" action="<%= request.getContextPath() %>/servletCuentasClientes" >
+<form method="get" action="<%= request.getContextPath() %>/servletCuentasMovimientos" >
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
@@ -51,7 +50,9 @@
 		<tbody class="bg-white divide-y divide-gray-200">
 <%
 //List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
-List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("ListaMovimientos");
+int paginaActual = (Integer) request.getAttribute("paginaActual");
+int totalPaginas = (Integer) request.getAttribute("totalPaginas");
+List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("listaPaginada");
 		for(movimiento movimientos : ListaMovimientos ){ 
 %>
 			<tr>
@@ -67,9 +68,10 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("Lista
 	</table>
 	<jsp:include page="paginacion.jsp" />
 	<jsp:include page="modal.jsp" />
+</form>
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
+<form method="get" action="<%= request.getContextPath() %>/servletCuentasPrestamos" >
 <br>
-	
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
@@ -95,7 +97,9 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("Lista
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
 		<% //List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
-		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("ListaPrestamos");
+		int paginaActual1 = (Integer) request.getAttribute("paginaActual");
+		int totalPaginas1 = (Integer) request.getAttribute("totalPaginas");
+		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("listaPaginada");
  		for(prestamo prestamos : ListaPrestamos ){ %>
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
@@ -111,8 +115,8 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("Lista
 		<%}%>
 		</tbody>
 	</table>
-</form>
 	<jsp:include page="paginacion.jsp" />
 	<jsp:include page="modal.jsp" />
+</form>
 </body>
 </html>

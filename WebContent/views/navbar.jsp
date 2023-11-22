@@ -69,7 +69,7 @@
 		    </div>
 		</div>
 	<%} else {%>
-		<form method="get" action="<%= request.getContextPath() %>/servletCuentasClientes"> 
+		<form method="get" action="<%= request.getContextPath() %>/servletCuentasPrestamos"> 
 			<input type="hidden" name="accion" value="cuentas">
 			<button class="group-hover:bg-gray-200 focus:outline-none">Cuentas</button>
 		</form>
