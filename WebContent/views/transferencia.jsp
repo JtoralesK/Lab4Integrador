@@ -68,7 +68,7 @@
                 <thead>
                     <tr>
                         <th class="border-b-2 p-2">Fecha</th>
-                        <th class="border-b-2 p-2">Concepto</th>
+                        <th class="border-b-2 p-2">Cuenta</th>
                         <th class="border-b-2 p-2">Importe</th>
                     </tr>
                 </thead>
@@ -80,9 +80,9 @@
 				                if (count < 5) {
 				    %>
 				                    <tr>
-				                        <td class="border-b p-2"><%= mov.getFecha() %></td>
-				                        <td class="border-b p-2"><%= mov.getConcepto() %></td>
-				                        <td class="border-b p-2">$<%= mov.getImporte()*-1 %></td>
+				                        <td class="text-center border-b p-2"><%= mov.getFecha() %></td>
+				                        <td class="text-center border-b p-2"><%= mov.getN_cuenta() %></td>
+				                        <td class="text-center border-b p-2">$<%= mov.getImporte()*-1 %></td>
 				                    </tr>
 				    <%
 				                    count++;

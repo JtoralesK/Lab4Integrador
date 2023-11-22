@@ -47,6 +47,7 @@ public class servletTransferencia extends HttpServlet {
 			cliente cliente = new clienteNeg().obtenerClientePorIdUsuario(loggedUser.getId());
 			List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
 			List<movimiento> lista = new movimientosNeg().listarMovimientosPorIdClienteYTipo(cliente.getId(), eTipoMovimiento.Transferencia);
+			Collections.reverse(lista);
 			Collections.sort(lista, (m1, m2) -> m2.getFecha().compareTo(m1.getFecha()));
 			request.setAttribute("lista", lista);
 			request.setAttribute("cuentas", cuentas);
