@@ -100,14 +100,15 @@ public class cuentaDao {
 		return cuentas;
 	}
 	
-	public List<cuenta> selectAllByOneClientId(Long idCliente){
+	public List<cuenta> selectAllByOneClientId(Long idCliente, boolean estado){
 		List<cuenta> cuentas = new ArrayList<>();
 		Connection connection = cn.Open();
 		String query = "select n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
-				+ "WHERE id_cliente = ? AND estado = 1;";
+				+ "WHERE id_cliente = ? AND estado = ?;";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setLong(1, idCliente);
+			preparedStatement.setBoolean(2, estado);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				cuenta cta = mapResultSetToCuenta(rs);

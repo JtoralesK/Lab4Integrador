@@ -31,13 +31,13 @@
 				<%if(user.getTipoUsuario()==eTipoUsuario.Administrador){ %>
 				<div class="flex flex-row gap-5 py-3">
 					<div class="w-1/5 h-16  border rounded-lg border-gray-300  ">
-					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200" href="/ProjectBeta1/views/repMovimientos.jsp">
+					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200" href="<%= request.getContextPath() %>/servletInformeMovimiento">
 					<span class="text-2xl"><i class="fa-solid fa-money-bill-transfer"></i></span>
 					<p class="text-lg font-bold">Movimientos</p>
 					</a>
 					</div>
 					<div class="w-1/5 h-16  border rounded-lg border-gray-300">
-					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200 " href="/ProjectBeta1/views/repPrestamos.jsp">
+					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200 " href="<%= request.getContextPath() %>/servletInformePrestamos">
 					<span class="text-2xl"><i class="fa-solid fa-chart-pie"></i></span>
 					<p class="text-lg font-bold">Reporte Prestamos</p>
 					</a>
@@ -81,10 +81,12 @@
       				 </form>
 					</div>
 					<div class="w-1/4 h-16  border rounded-lg border-gray-300">
-					<a class=" w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200" href="/ProjectBeta1/views/cuenta.jsp">
+					<form class="w-full h-full" method="get" action="<%= request.getContextPath() %>/servletCuentasClientes">
+        	   	   <button class="w-full h-full flex flex-row items-center gap-3 justify-center hover:bg-gray-200">
 					<span class="text-2xl"><i class="fa-regular fa-eye"></i></span>
-					<p class="text-lg font-bold">Gestionar Cuentas</p>
-					</a>
+		           	<p class="text-lg font-bold">Gestionar Cuentas</p>
+		            </button>
+      				 </form>
 					</div>
 					<div class="w-1/4 h-16  border rounded-lg border-gray-300 ">
 					 <form class="w-full h-full"  method="post" action="<%= request.getContextPath() %>/servletPrestamo">

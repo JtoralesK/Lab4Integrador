@@ -92,7 +92,7 @@ public class servletInformePrestamos extends HttpServlet {
 		LocalDate dias30 = LocalDate.now().minusDays(30);
 		List<prestamo> listaPrestamos = new prestamoNeg().listar();
 		for (prestamo prestamo : listaPrestamos) {
-			if(prestamo.getFechaRevision().isAfter(dias30) &&
+			if(prestamo.getFechaSolicitud().isAfter(dias30) &&
 				prestamo.getEstadoPrestamo()==estado) {
 				cantidad++;
 			}

@@ -148,7 +148,7 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plazo</th>
 				<th
-					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Aprobación</th>
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Revisión</th>
 				<th
 					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interes</th>
 				<th
@@ -163,7 +163,7 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 				<tr>
 					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
 					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getIdCuenta() %></td>
-					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getImporte() %></td>
+					<td class="px-6 py-4 whitespace-nowrap">$ <%=prestamos.getImporte() %></td>
 					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaSolicitud() %></td>
 					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getEstadoPrestamo() %></td>
 					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getPlazo() %></td>

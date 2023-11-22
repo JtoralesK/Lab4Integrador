@@ -37,7 +37,7 @@
 		</div>
 		</div>
 		
-		<a href="repPrestamos.jsp">
+		<a href="<%= request.getContextPath()%>/servletInformePrestamos">
 		<div class="h-36 flex-1 bg-white p-8 shadow-md overflow-hidden">
 		<span class=" rounded-3xl p-4 bg-gray-100"><i class="fa-regular fa-credit-card"></i></span>
 		<div class="flex flex-col mt-3">

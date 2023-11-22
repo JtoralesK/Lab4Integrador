@@ -7,13 +7,13 @@
 <head>
 <%
 	request.setAttribute("titulo", "Reporte de préstamos");
-	float importeTotal = request.getAttribute("importeTotal")!=null ? (float)request.getAttribute("importeTotal") : 0;
+	String importeTotal = String.format("%,.2f",request.getAttribute("importeTotal")!=null ? (double)request.getAttribute("importeTotal") : 0);
 	LocalDate fechaInicio = (LocalDate)request.getAttribute("fechaInicio");
 	LocalDate fechaFin = (LocalDate)request.getAttribute("fechaFin");
 	eEstadoPrestamo selectedState = (eEstadoPrestamo)request.getAttribute("estado");
-	float indicadorPendientes = (float) request.getAttribute("indicadorPendientes");
+	String indicadorPendientes = String.format("%,.2f",(float) request.getAttribute("indicadorPendientes"));
 	int aprobados30 = (int) request.getAttribute("indicadorAprobados");
-	float indicadorImporte30 = (float) request.getAttribute("indicadorImporte");
+	String indicadorImporte30 = String.format("%,.2f",(float) request.getAttribute("indicadorImporte"));
 	int rechazados30 = (int) request.getAttribute("indicadorRechazados");
 %>
 <jsp:include page="head.jsp" />

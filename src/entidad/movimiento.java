@@ -1,7 +1,10 @@
 package entidad;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 
 public class movimiento {
@@ -87,6 +90,9 @@ public String getConcepto() {
 public void setConcepto(String concepto) {
 	this.concepto = concepto;
 }
-
+public LocalDateTime getFechaYHora() {
+	if(fecha == null || hora == null) return null;
+	return LocalDateTime.of(fecha, hora);	
+}
 
 }

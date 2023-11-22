@@ -27,7 +27,10 @@ public class cuentaNeg {
 		return cuentaDao.selectAllByOneUserId(idUsuario);
 	}
 	public List<cuenta> selectAllByOneClientId(Long idCliente) {
-		return cuentaDao.selectAllByOneClientId(idCliente);
+		return cuentaDao.selectAllByOneClientId(idCliente, true);
+	}
+	public List<cuenta> selectAllByOneClientId(Long idCliente, boolean estado){
+		return cuentaDao.selectAllByOneClientId(idCliente, estado);
 	}
 	public Boolean updateRegisterState(int n_cuenta, Long id_Cliente, boolean stateToChange) {
 		return cuentaDao.updateRegisterState(n_cuenta, id_Cliente,stateToChange);
@@ -44,7 +47,7 @@ public class cuentaNeg {
 	public boolean altaCuenta(Long idCliente,eTipoCuenta tipoCuenta) {
 		boolean estado= false;
 		cuenta cuenta = new cuenta();
-		int cantCuentas = selectAllByOneClientId(idCliente).size();
+		int cantCuentas = selectAllByOneClientId(idCliente).size() + selectAllByOneClientId(idCliente,false).size();
 		int tipo = tipoCuenta == eTipoCuenta.CajaDeAhorro ? 10 : 20;
 		String stringCuenta = "12" + Long.toString(idCliente) + Integer.toString(tipo)+ Integer.toString(cantCuentas); 
 		Long nroCuenta = Long.parseLong(stringCuenta);
