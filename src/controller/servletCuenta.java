@@ -112,7 +112,6 @@ public class servletCuenta extends HttpServlet {
 			}catch (Exception e) {
 				request.setAttribute("modal", true);
 				request.setAttribute("texto", "Algo salió mal, contacte al soporte");
-				System.out.println(e.getMessage());
 			}finally {
 				request.getRequestDispatcher("/views/altaCuentas.jsp").forward(request, response);
 			}

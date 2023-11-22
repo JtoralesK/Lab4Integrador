@@ -59,7 +59,6 @@ public class cuentaDao {
 				query += " AND estado = ?";
 			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-				System.out.println(query);
 				int paramIndex = 1;
 				if (e != null) {
 					preparedStatement.setInt(paramIndex++, e == eTipoCuenta.CajaDeAhorro ? 1 : 2);
