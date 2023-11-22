@@ -16,7 +16,7 @@
 <body class="bg-gray-100">
 	<jsp:include page="navbar.jsp" />
 	<div class="flex justify-center">
-		<div class="flex m-4 w-10/12 justify-between">
+		<div class="flex m-4 w-11/12 justify-between">
 		    <form action="/ProjectBeta1/servletCliente" method="get">
 		        <label for="busqueda" class="sr-only">Búsqueda:</label>
 		        <input type="text" id="busqueda" name="busqueda" placeholder="Buscar..." class="w-64 border border-gray-300 rounded-md p-2">
@@ -32,7 +32,7 @@
 	</div>
 	<div class="flex justify-center">
 	
-	<table class="w-10/12 bg-white p-4 shadow-md rounded-md mb-4 mx-auto table-fixed">
+	<table class="w-11/12 bg-white p-4 shadow-md rounded-md mb-4 mx-auto table-fixed">
 		<thead>
 			<tr>
 				<th class="px-4 py-2">Id</th>
