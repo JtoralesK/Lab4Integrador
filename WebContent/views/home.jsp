@@ -131,10 +131,15 @@
 				</div>
 				</div>
 				</div>
-				<%
 				
+			<%
 			}
-			%>
+						
+			if (list.isEmpty()) {
+				%>
+			<p class=" font-bold text-red-500 text-xl" >No se encontraron cuentas asociadas a tu usuario.</p>
+			<%} %>
+			
 			</div>
 		</div>
 			
