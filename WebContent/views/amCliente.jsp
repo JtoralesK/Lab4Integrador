@@ -62,6 +62,7 @@
 				<div>
 					<label for="cbNacionalidad">Nacionalidad:</label> 
 					<select id="cbNacionalidad" name="cbNacionalidad" class="w-full p-2 rounded" required>
+						<option value="-1">Seleccione una nacionalidad</option>
 					<%for (nacionalidad nacionalidad : nacionalidades) {
 						if (hayClienteModificar && nacionalidad.getId() == clienteModificar.getNacionalidad().getId()) { %>
 							<option value="<%=nacionalidad.getId()%>" selected><%=nacionalidad.getNombre()%></option>
