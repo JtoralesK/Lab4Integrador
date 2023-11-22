@@ -3,7 +3,7 @@ package entidad;
 import java.time.LocalDate;
 
 public class cuenta {
-	private int id_cuenta;
+	private Long id_cuenta;
 	private Long id_cliente;
 	private eTipoCuenta tipoCuenta;
 	private double saldo;
@@ -14,7 +14,7 @@ public class cuenta {
 	public cuenta () {
 		
 	}
-	public cuenta(int id_cuenta, Long id_cliente, eTipoCuenta id_tipo_cuenta, double saldo, LocalDate fecha_creacion,
+	public cuenta(Long id_cuenta, Long id_cliente, eTipoCuenta id_tipo_cuenta, double saldo, LocalDate fecha_creacion,
 			String cbu) {
 		super();
 		this.id_cuenta = id_cuenta;
@@ -25,11 +25,11 @@ public class cuenta {
 		this.cbu = cbu;
 	}
 
-	public int getId_cuenta() {
+	public Long getId_cuenta() {
 		return id_cuenta;
 	}
 
-	public void setId_cuenta(int id_cuenta) {
+	public void setId_cuenta(Long id_cuenta) {
 		this.id_cuenta = id_cuenta;
 	}
 

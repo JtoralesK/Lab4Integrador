@@ -63,7 +63,7 @@ public class servletTransferencia extends HttpServlet {
 		if(request.getParameter("btnConfirmTransferencia") != null) {
 			try{
 				String concepto = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
-				int idCuentaOrigen = Integer.parseInt(request.getParameter("origen"));
+				Long idCuentaOrigen = Long.parseLong(request.getParameter("origen"));
 				String cbu = request.getParameter("destino");
 				double importe = Double.parseDouble(request.getParameter("importe"));
 				transferir(idCuentaOrigen, cbu, importe, concepto);
@@ -79,7 +79,7 @@ public class servletTransferencia extends HttpServlet {
 		}
 	}
 	
-	private boolean transferir(int idCuentaOrigen, String cbu, double importe, String concepto) {
+	private boolean transferir(Long idCuentaOrigen, String cbu, double importe, String concepto) {
 		
 		cuentaNeg cuentaNeg = new cuentaNeg();
 		movimiento movimiento = new movimiento();

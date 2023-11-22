@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidad.cliente;
 import entidad.movimiento;
 import entidad.prestamo;
 import negocio.movimientosNeg;
@@ -37,8 +38,9 @@ public class servletCuentasClientes extends HttpServlet {
 		/*Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
 		cliente cliente = new cliente();
 		cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());*/
-		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(101);
-		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente((long) 101);
+		cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
+		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
+		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
 		request.setAttribute("ListaMovimientos", ListaMovimientos);
 		request.setAttribute("ListaPrestamos", ListaPrestamos);
 		RequestDispatcher rd = request.getRequestDispatcher("/views/cuenta.jsp");   

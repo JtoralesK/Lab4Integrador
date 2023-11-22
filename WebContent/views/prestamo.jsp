@@ -97,7 +97,7 @@
 						contador++;%>
 						<tr>
 							<td class="p-2 text-center">
-							<select <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado ? "disabled" : "" %> id="cbCuenta" name="cbCuenta" class="border border-gray-300 rounded-md p-2">
+							<select <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado || prestamo.getPlazo() - prestamo.getCuotasPagas() == 0 ? "disabled" : "" %> id="cbCuenta<%=contador%>" name="cbCuenta<%=contador%>" class="border border-gray-300 rounded-md p-2">
 									<option value="-1">Seleccione una cuenta</option>						
 								<%for (cuenta cuenta : cuentas) {%>
 										<option value="<%=cuenta.getId_cuenta()%>">N° <%=cuenta.getId_cuenta()%></option>
@@ -109,8 +109,8 @@
 							<td class="p-2 text-center">$<%=new DecimalFormat("#.##").format(cuota)%></td>
 							<td class="p-2 text-center"><%=prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aprobado ? prestamo.getPlazo() - prestamo.getCuotasPagas() : "x"%></td>
 							<td class="p-2 text-center">
-							<select <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado ? "disabled" : "" %> id="cbCuotasPagar" name="cbCuotasPagar" class="border border-gray-300 rounded-md p-2">
-								<%if(prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aprobado){
+							<select <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado || prestamo.getPlazo() - prestamo.getCuotasPagas() == 0 ? "disabled" : "" %> id="cbCuotasPagar" name="cbCuotasPagar" class="border border-gray-300 rounded-md p-2">
+								<%if(prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aprobado && prestamo.getPlazo() - prestamo.getCuotasPagas() != 0){
 								for (int i = 1; i <= prestamo.getPlazo() - prestamo.getCuotasPagas(); i++) {%>
 									<option value="<%=i%>"><%=i%></option>
 								<%}} else {%>
@@ -124,7 +124,7 @@
 								<input id="idPrestamo<%=contador%>" name="idPrestamo<%=contador%>" type="hidden" value="<%=prestamo.getId()%>">
 								<input id="cuotasPagas<%=contador%>" name="cuotasPagas<%=contador%>" type="hidden" value="<%=prestamo.getCuotasPagas()%>">
 								<input id="cuota<%=contador%>" name="cuota<%=contador%>" type="hidden" value="<%=cuota%>">
-								<button id="btnPagarPrestamo" name="btnPagarPrestamo" value="<%=contador%>" type="submit" <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado ? "disabled" : "" %> class="text-white px-4 py-2 rounded-md <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"%> ">Pagar</button>
+								<button id="btnPagarPrestamo" name="btnPagarPrestamo" value="<%=contador%>" type="submit" <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado || prestamo.getPlazo() - prestamo.getCuotasPagas() == 0 ? "disabled" : "" %> class="text-white px-4 py-2 rounded-md <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Aprobado || prestamo.getPlazo() - prestamo.getCuotasPagas() == 0 ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"%> ">Pagar</button>
 							</td>
 						</tr>
 					<%} %>						

@@ -103,6 +103,9 @@
                     <td class="p-2 text-center">
                     <form method="post" action="<%= request.getContextPath() %>/servletPrestamo">
                     	<input type="hidden" name="idPrestamo" value="<%=prestamo.getId()%>">
+                    	<input type="hidden" name="importePrestamo" value="<%=prestamo.getImporte()%>">                    	
+                    	<input type="hidden" name="idCuenta" value="<%=prestamo.getIdCuenta()%>">                    	
+                    	<input type="hidden" name="idCliente" value="<%=prestamo.getIdCliente()%>">                    	
                         <button <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : "" %> id="btnAprobar" name="btnAprobar" class="text-white px-4 py-2 rounded-md  <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"%> ">Aprobar</button>       
                         <button <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "disabled" : "" %> id="btnRechazar" name="btnRechazar" class="text-white px-4 py-2 rounded-md  <%=prestamo.getEstadoPrestamo() != eEstadoPrestamo.Pendiente ? "bg-gray-400" : "bg-red-500 hover:bg-red-600"%>">Rechazar</button>
                     </form>
