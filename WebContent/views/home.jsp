@@ -2,7 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="entidad.Usuario"%>
 <%@page import="entidad.eTipoUsuario"%>
-<%@page import="datos.cuentaDao"%>
 <%@page import="java.util.List"%>
 <%@ page import="entidad.cuenta" %>
 
@@ -115,8 +114,7 @@
 		
 			<div class="flex flex-row gap-5 py-5 ">
 				<%
-					cuentaDao ctaDao = new cuentaDao();
-						List<cuenta> list = ctaDao.selectAllByOneUserId(user.getId());
+						List<cuenta> list = (List<cuenta>)request.getAttribute("cuentas");
 						for(cuenta c : list){
 				%>
 				<div class="w-1/3 h-24  border rounded-lg border-gray-300 py-3 px-6">

@@ -30,7 +30,7 @@ public class servletConfig extends HttpServlet {
             
         	request.getSession().setAttribute("loggedUser", Config.switchUser());;
 
-            response.sendRedirect(request.getContextPath() + "/views/home.jsp");
+            response.sendRedirect(request.getContextPath() + "/servletHome");
         }
     }
 }

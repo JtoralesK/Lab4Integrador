@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+<<<<<<< HEAD
 import entidad.Usuario;
+=======
+>>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
 import entidad.cliente;
 import entidad.movimiento;
 import entidad.prestamo;
@@ -41,10 +44,17 @@ public class servletCuentasClientes extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   /* Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
 		cliente cliente = new cliente();
+<<<<<<< HEAD
 		cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());
 		int id = cliente.getId().intValue();*/
 		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(101);
 		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente((long) 101);
+=======
+		cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());*/
+		cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
+		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
+		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
+>>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
 		request.setAttribute("ListaMovimientos", ListaMovimientos);
 		request.setAttribute("ListaPrestamos", ListaPrestamos);
 		//RequestDispatcher rd = request.getRequestDispatcher("/views/cuenta.jsp");

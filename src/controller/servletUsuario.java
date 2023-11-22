@@ -69,7 +69,7 @@ public class servletUsuario extends HttpServlet {
         			cliente loggedCliente = clienteNeg.obtenerClientePorIdUsuario(foundUser.getId());
         			request.getSession().setAttribute("loggedCliente", loggedCliente);
         		}
-            	response.sendRedirect(request.getContextPath() + "/views/home.jsp");
+            	response.sendRedirect(request.getContextPath() + "/servletHome");
             } else {
                 textoAMostrar = "El usuario o la contraseña son incorrectos";
                 ErrorLogin(request, response, textoAMostrar);

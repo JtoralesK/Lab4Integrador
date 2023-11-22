@@ -104,7 +104,7 @@ public class cuentaDao {
 		List<cuenta> cuentas = new ArrayList<>();
 		Connection connection = cn.Open();
 		String query = "select n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
-				+ "WHERE id_cliente = ?";
+				+ "WHERE id_cliente = ? AND estado = 1;";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setLong(1, idCliente);
@@ -121,14 +121,14 @@ public class cuentaDao {
 		return cuentas;
 	}
 	
-	public cuenta buscarPorIdCuenta(int idCuenta) {
+	public cuenta buscarPorIdCuenta(Long idCuenta) {
 		cuenta cuenta = new cuenta();
 		Connection connection = cn.Open();
 		String query = "select 1 n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
 				+ "WHERE n_cuenta = ?";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-			preparedStatement.setInt(1, idCuenta);
+			preparedStatement.setLong(1, idCuenta);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
 				cuenta = mapResultSetToCuenta(rs);
@@ -161,14 +161,14 @@ public class cuentaDao {
 		return cuenta;
 	}
 	
-	public boolean modificarSaldo(int idCuenta,double saldo) {
+	public boolean modificarSaldo(Long idCuenta,double saldo) {
 		boolean estado = true;
 
 		try (Connection connection = cn.Open();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement("UPDATE cuentas SET saldo = ? WHERE n_cuenta = ?")) {
 			preparedStatement.setDouble(1, saldo);
-			preparedStatement.setInt(2, idCuenta);
+			preparedStatement.setLong(2, idCuenta);
 
 			estado = preparedStatement.executeUpdate() > 0;
 
@@ -190,7 +190,7 @@ public class cuentaDao {
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-			preparedStatement.setInt(1, cta.getId_cuenta());
+			preparedStatement.setLong(1, cta.getId_cuenta());
 			preparedStatement.setLong(2, cta.getId_cliente());
 			preparedStatement.setInt(3, cta.tipoCuenta().ordinal() + 1);
 			preparedStatement.setDouble(4, cta.getSaldo());
@@ -234,7 +234,7 @@ public class cuentaDao {
 
 	private cuenta mapResultSetToCuenta(ResultSet rs) throws SQLException {
 		cuenta cta = new cuenta();
-		cta.setId_cuenta(Integer.parseInt(rs.getString("n_cuenta")));
+		cta.setId_cuenta(Long.parseLong(rs.getString("n_cuenta")));
 		cta.setId_cliente(Long.parseLong(rs.getString("id_cliente")));
 		int tipoCuentaOrdinal = rs.getInt("id_tipo_cuenta") - 1;
 		cta.setId_tipo_cuenta(eTipoCuenta.values()[tipoCuentaOrdinal]);

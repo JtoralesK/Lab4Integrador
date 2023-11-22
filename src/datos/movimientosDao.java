@@ -28,7 +28,7 @@ public class movimientosDao {
 	                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 	        
 	        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-	            preparedStatement.setInt(1, movimiento.getN_cuenta());
+	            preparedStatement.setLong(1, movimiento.getN_cuenta());
 	            preparedStatement.setLong(2, movimiento.getId_cliente());
 	            preparedStatement.setInt(3, movimiento.getTipoMovimiento().ordinal() + 1); 
 	            preparedStatement.setDate(4, java.sql.Date.valueOf(movimiento.getFecha()));
@@ -63,7 +63,7 @@ public class movimientosDao {
 	            while (rs.next()) {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
-	            			rs.getInt("n_cuenta"),
+	            			rs.getLong("n_cuenta"),
 	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
@@ -81,7 +81,7 @@ public class movimientosDao {
 	        return movimientos;
 	    }
 	    /****Listar por clientes****/
-	    public List<movimiento> listarMovimientosPorIdCliente(int idCliente) {
+	    public List<movimiento> listarMovimientosPorIdCliente(Long idCliente) {
 	        List<movimiento> movimientos = new ArrayList<>();
 	        cn.Open();
 
@@ -92,7 +92,7 @@ public class movimientosDao {
 	            while (rs.next()) {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
-	            			rs.getInt("n_cuenta"),
+	            			rs.getLong("n_cuenta"),
 	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
@@ -122,7 +122,7 @@ public class movimientosDao {
 	            while (rs.next()) {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
-	            			rs.getInt("n_cuenta"),
+	            			rs.getLong("n_cuenta"),
 	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
@@ -152,7 +152,7 @@ public class movimientosDao {
 	            while (rs.next()) {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
-	            			rs.getInt("n_cuenta"),
+	            			rs.getLong("n_cuenta"),
 	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),
@@ -184,7 +184,7 @@ public class movimientosDao {
 	            while (rs.next()) {
 	            	movimiento movimiento = new movimiento(
 	            			rs.getInt("id_movimiento"),
-	            			rs.getInt("n_cuenta"),
+	            			rs.getLong("n_cuenta"),
 	            			rs.getLong("id_cliente"),
 	            			eTipoMovimiento.values()[rs.getInt("id_tipo_movimiento")-1],
 	            			rs.getDate("fecha").toLocalDate(),

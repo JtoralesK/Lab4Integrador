@@ -6,6 +6,7 @@ import java.util.List;
 
 import datos.PrestamoDao;
 import entidad.cliente;
+import entidad.eEstadoPrestamo;
 import entidad.eTipoMovimiento;
 import entidad.movimiento;
 import entidad.prestamo;
@@ -20,13 +21,25 @@ public class prestamoNeg {
 		return prestamoDao.listar();
 	}
 	public boolean actualizar(prestamo prestamo){
+		if (prestamo.getEstadoPrestamo() == eEstadoPrestamo.Aprobado)
+		{
+			movimiento nuevoMovimiento = new movimiento();
+			nuevoMovimiento.setId_cliente(prestamo.getIdCliente());
+			nuevoMovimiento.setN_cuenta(prestamo.getIdCuenta());
+			nuevoMovimiento.setTipoMovimiento(eTipoMovimiento.AltaPrestamo);
+			nuevoMovimiento.setFecha(LocalDate.now());
+			nuevoMovimiento.setHora(LocalTime.now());
+			nuevoMovimiento.setImporte((double) prestamo.getImporte());
+			nuevoMovimiento.setConcepto("Nuevo prestamo adquirido");
+			new movimientosNeg().nuevoMovimiento(nuevoMovimiento);
+		}
 		return prestamoDao.actualizar(prestamo);
 	}
 	/*** Listar por cliente***/
 	public List<prestamo> listarXcliente(Long cliente){
 		return prestamoDao.listarXcliente(cliente);
 	}
-	public boolean pagarPrestamo(cliente cliente, int nCuenta, Long idPrestamo, int cuotasPagar, int cuotasPagas, float cuota)
+	public boolean pagarPrestamo(cliente cliente, Long nCuenta, Long idPrestamo, int cuotasPagar, int cuotasPagas, float cuota)
 	{	
 		int contador = 0;
 		for (int i = cuotasPagas + 1; i <= cuotasPagas + cuotasPagar; i++)
@@ -37,7 +50,7 @@ public class prestamoNeg {
 			nuevoMovimiento.setTipoMovimiento(eTipoMovimiento.PagoPrestamo);
 			nuevoMovimiento.setFecha(LocalDate.now());
 			nuevoMovimiento.setHora(LocalTime.now());
-			nuevoMovimiento.setImporte((double) cuota);
+			nuevoMovimiento.setImporte((double) cuota * -1);
 			nuevoMovimiento.setConcepto("Cuota numero " + i);
 			Long idMovimiento = new movimientosNeg().nuevoMovimiento(nuevoMovimiento);
 			

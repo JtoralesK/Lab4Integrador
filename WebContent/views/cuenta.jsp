@@ -2,15 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 
     <%@page import="entidad.movimiento"%>
-    <%@page import="negocio.movimientosNeg"%>
     <%@page import="entidad.eTipoMovimiento"%>
     <%@page import="java.util.List"%>
     <%@page import="java.util.ArrayList"%>
     <%@page import="entidad.Usuario"%>
     <%@page import="entidad.cliente"%>
-    <%@page import="negocio.clienteNeg"%>
 	<%@page import="entidad.prestamo"%>
-    <%@page import="negocio.prestamoNeg"%>
     <%@ page import="java.time.LocalDate" %>
 	<%@ page import="java.time.LocalTime" %>
     
@@ -49,10 +46,14 @@
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
 <%
+<<<<<<< HEAD
 //List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
 int paginaActual = (Integer) request.getAttribute("paginaActual");
 int totalPaginas = (Integer) request.getAttribute("totalPaginas");
 List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("listaPaginada");
+=======
+List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("ListaMovimientos");
+>>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
 		for(movimiento movimientos : ListaMovimientos ){ 
 %>
 			<tr>
@@ -66,9 +67,13 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 		<%}%>
 		</tbody>
 	</table>
+<<<<<<< HEAD
 	<jsp:include page="paginacion.jsp" />
 	<jsp:include page="modal.jsp" />
 </form>
+=======
+
+>>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
 <form method="get" action="<%= request.getContextPath() %>/servletCuentasPrestamos" >
 <br>
@@ -96,10 +101,15 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
+<<<<<<< HEAD
 		<% //List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
 		int paginaActual1 = (Integer) request.getAttribute("paginaActual");
 		int totalPaginas1 = (Integer) request.getAttribute("totalPaginas");
 		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("listaPaginada");
+=======
+		<% 
+		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("ListaPrestamos");
+>>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
  		for(prestamo prestamos : ListaPrestamos ){ %>
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
@@ -115,7 +125,11 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 		<%}%>
 		</tbody>
 	</table>
+<<<<<<< HEAD
 	<jsp:include page="paginacion.jsp" />
+=======
+</form>
+>>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
 	<jsp:include page="modal.jsp" />
 </form>
 </body>

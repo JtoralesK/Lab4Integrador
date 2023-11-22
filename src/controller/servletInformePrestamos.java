@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import datos.PrestamoDao;
 import entidad.eEstadoPrestamo;
 import entidad.prestamo;
+import negocio.prestamoNeg;
 
 
 /**
@@ -62,7 +62,7 @@ public class servletInformePrestamos extends HttpServlet {
 	}
 	
 	private float getImportePrestamosFiltrados(LocalDate fechaInicio,LocalDate fechaFin, eEstadoPrestamo estado) {
-		List<prestamo> listaPrestamos = new PrestamoDao().listar();
+		List<prestamo> listaPrestamos = new prestamoNeg().listar();
 		float importeTotal = 0;
 		for(prestamo prestamo : listaPrestamos) {
 			if(prestamo.getFechaRevision().isAfter(fechaInicio) &&
@@ -76,7 +76,7 @@ public class servletInformePrestamos extends HttpServlet {
 	
 	private float getImporteTotalPendiente() {
 		float total = 0;
-		List<prestamo> listaPrestamos = new PrestamoDao().listar();
+		List<prestamo> listaPrestamos = new prestamoNeg().listar();
 		for (prestamo prestamo : listaPrestamos) {
 			int plazo = prestamo.getPlazo();
 			int cuotasPagas = prestamo.getCuotasPagas();
@@ -90,7 +90,7 @@ public class servletInformePrestamos extends HttpServlet {
 	private int getCantidad30dias(eEstadoPrestamo estado) {
 		int cantidad = 0;
 		LocalDate dias30 = LocalDate.now().minusDays(30);
-		List<prestamo> listaPrestamos = new PrestamoDao().listar();
+		List<prestamo> listaPrestamos = new prestamoNeg().listar();
 		for (prestamo prestamo : listaPrestamos) {
 			if(prestamo.getFechaRevision().isAfter(dias30) &&
 				prestamo.getEstadoPrestamo()==estado) {

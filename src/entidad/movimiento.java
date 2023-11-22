@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public class movimiento {
 private int	idMovimiento;
-private int nCuenta;
+private Long nCuenta;
 private Long idCliente;
 private eTipoMovimiento tipoMovimiento;
 private LocalDate fecha;
@@ -16,7 +16,7 @@ private String concepto="";
 
 
 public movimiento() {}
-public movimiento(int idMovimiento,int nCuenta,Long idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe, String concepto) 
+public movimiento(int idMovimiento,Long nCuenta,Long idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe, String concepto) 
 {
 	this.idMovimiento=idMovimiento;
 	this.nCuenta=nCuenta;
@@ -28,7 +28,7 @@ public movimiento(int idMovimiento,int nCuenta,Long idCliente,eTipoMovimiento ti
 	this.concepto=concepto;
 	
 }
-public movimiento(int nCuenta,Long idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe) 
+public movimiento(Long nCuenta,Long idCliente,eTipoMovimiento tipoMovimiento,LocalDate fecha, LocalTime  hora,Double importe) 
 {
 	this.nCuenta=nCuenta;
 	this.idCliente=idCliente;
@@ -45,10 +45,10 @@ public int getId_movimiento() {
 public void setId_movimiento(int idMovimiento) {
 	this.idMovimiento = idMovimiento;
 }
-public int getN_cuenta() {
+public Long getN_cuenta() {
 	return nCuenta;
 }
-public void setN_cuenta(int nCuenta) {
+public void setN_cuenta(Long nCuenta) {
 	this.nCuenta = nCuenta;
 }
 public Long getId_cliente() {

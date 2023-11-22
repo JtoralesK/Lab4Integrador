@@ -25,7 +25,10 @@
 	<a href="/ProjectBeta1/views/home.jsp" class="group-hover:bg-gray-200 focus:outline-none"><img class="h-15 w-20"  src="/ProjectBeta1/views/Resources/bankLogo.png"></img></a>
 	<div class="w-8/12 w-full flex flex-row justify-around items-center">
 	<div class="flex flex-row gap-5">
-	<a href="/ProjectBeta1/views/home.jsp" class="group-hover:bg-gray-200 focus:outline-none">Home</a>
+	<form method="get" action="<%= request.getContextPath() %>/servletHome">
+        <input type="hidden" name="home" value="home">
+        <button class="group-hover:bg-gray-200 focus:outline-none">Home</button>
+    </form>
 	<% if(user.getTipoUsuario() == eTipoUsuario.Administrador){ %>
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Clientes</button>
@@ -61,7 +64,10 @@
 		<div class="relative group">
 		    <button class="group-hover:bg-gray-200 focus:outline-none">Informes</button>
 		    <div class="hidden absolute bg-white group-hover:block">
-		        <a href="/ProjectBeta1/views/repMovimientos.jsp" class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Movimientos</a>
+		    	<form method="get" action="<%= request.getContextPath() %>/servletInformeMovimiento">
+		        	<input type="hidden" name="informeMovimientos" value="movimientos">
+		        	<button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Movimientos</button>
+		        </form>
 		        <form method="get" action="<%= request.getContextPath() %>/servletInformePrestamos">
 		            <input type="hidden" name="informePrestamos" value="prestamos">
 		            <button class="block hover:bg-gray-200 whitespace-nowrap p-2 text-center">Prestamos</button>

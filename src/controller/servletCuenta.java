@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
 
-import datos.cuentaDao;
 import entidad.cliente;
 import entidad.cuenta;
 import entidad.eTipoCuenta;
