@@ -28,7 +28,7 @@
 <div class="flex justify-center">
 	<div class="w-2/3 flex flex-row gap-5 py-5 ">
 		<%
-				List<cuenta> list = (List<cuenta>)request.getAttribute("cuentas");
+				List<cuenta> list = (List<cuenta>)request.getSession().getAttribute("cuentasLoggedCliente");
 				for(cuenta c : list){
 		%>
 		<div class="w-1/3 h-24 bg-white border rounded-lg border-gray-300 py-3 px-6">
@@ -51,7 +51,6 @@
 </div>
 <h2 class="text-center mx-auto text-4xl">Historial de movimientos</h2>
 <br>
-<form method="get" action="<%= request.getContextPath() %>/servletCuentasMovimientos" >
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
 			<tr>
@@ -77,7 +76,9 @@ int totalPaginas = (Integer) request.getAttribute("totalPaginas");
 int paginaActual2 = (Integer) request.getAttribute("paginaActual2");
 int totalPaginas2 = (Integer) request.getAttribute("totalPaginas2");
 List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("listaPaginada");
+	if(!ListaMovimientos.isEmpty()){
 		for(movimiento movimientos : ListaMovimientos ){ 
+			String importeClass = (movimientos.getImporte() >= 0) ? "text-green-500" : "text-red-500";
 %>
 			<tr>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getId_movimiento() %></td>
@@ -85,9 +86,14 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getTipoMovimiento().name()%></td>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getFecha() %></td>
 				<td class="px-6 py-4 whitespace-nowrap"><%= movimientos.getHora() %>HS</td>
-				<td class="px-6 py-4 whitespace-nowrap text-red-500">$<%= movimientos.getImporte() %></td>
+				<td class="px-6 py-4 whitespace-nowrap <%=importeClass%>">$<%= movimientos.getImporte() %></td>
 			</tr>
 		<%}%>
+		<%}else {%>
+			<tr>
+		        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">No hay movimientos registrados.</td>
+		    </tr>
+		<%} %>
 		</tbody>
 	</table>
 	<!-- PAGINACION 1 -->
@@ -123,10 +129,8 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 	        </ul>
 	    </nav>
 	</div>
-</form>
 
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
-<form method="get" action="<%= request.getContextPath() %>/servletCuentasPrestamos" >
 <br>
 	<table class="w-10/12 divide-y divide-gray-200 mx-auto">
 		<thead>
@@ -154,24 +158,29 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 		<tbody class="bg-white divide-y divide-gray-200">
 		<%
 		List<prestamo>ListaPrestamos = (List<prestamo>)request.getAttribute("listaPaginada2");
- 		for(prestamo prestamos : ListaPrestamos ){ %>
-			<tr>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getIdCuenta() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getImporte() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaSolicitud() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getEstadoPrestamo() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getPlazo() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaRevision() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getInteres() %></td>
-				<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getCuotasPagas() %></td>
-			</tr>
-		<%}%>
+ 		if(!ListaPrestamos.isEmpty()){
+			for(prestamo prestamos : ListaPrestamos ){ %>
+				<tr>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getId()%></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getIdCuenta() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getImporte() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaSolicitud() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getEstadoPrestamo() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getPlazo() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getFechaRevision() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getInteres() %></td>
+					<td class="px-6 py-4 whitespace-nowrap"><%=prestamos.getCuotasPagas() %></td>
+				</tr>
+			<%}}else{%>
+				<tr>
+			        <td colspan="9" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">No hay prestamos registrados.</td>
+			    </tr>
+			<%} %>
 		</tbody>
 	</table>
 	<!-- PAGINACION 2 -->
 	<div class="text-center mb-4">
-		<nav aria-label="pagination">
+		<nav aria-label="pagination2">
 			<ul class="inline-flex -space-x-px text-sm mt-1">
 		        <%-- Anterior --%>
 		        <% if (paginaActual2 > 1) { %>
@@ -203,6 +212,5 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("lista
 	    </nav>
 	</div>
 	<jsp:include page="modal.jsp" />
-</form>
 </body>
 </html>

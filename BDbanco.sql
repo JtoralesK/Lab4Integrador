@@ -122,7 +122,7 @@ CREATE TABLE movimientos
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     importe DECIMAL(15, 2) NOT NULL,
-    concepto CHAR(20) NULL,
+    concepto CHAR(30) NULL,
     CONSTRAINT PK_Movimientos PRIMARY KEY (id_movimiento),
     CONSTRAINT FK_PK_MovimientossXCuentas FOREIGN KEY (n_cuenta,id_cliente) REFERENCES cuentas (n_cuenta,id_cliente),
     CONSTRAINT FK_MovimientosXTipoDeMovimientos FOREIGN KEY (id_tipo_movimiento) REFERENCES tipo_movimientos (id_tipo_movimiento)

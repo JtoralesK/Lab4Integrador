@@ -45,10 +45,10 @@ public class servletCuentasClientes extends HttpServlet {
 		
 		cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
 		List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
-		request.setAttribute("cuentas", cuentas);
 		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
 		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
 		HttpSession session = request.getSession();
+		session.setAttribute("cuentasLoggedCliente", cuentas);
 		session.setAttribute("lista", ListaMovimientos);
 		session.setAttribute("lista2", ListaPrestamos);
 		
