@@ -33,7 +33,6 @@ public class servletHome extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("sisoy");
 		Usuario loggedUser = (Usuario) request.getSession().getAttribute("loggedUser");
 		if(loggedUser.getTipoUsuario() == eTipoUsuario.Cliente) {
 			List<cuenta> cuentas = new cuentaNeg().selectAllByOneUserId(loggedUser.getId());

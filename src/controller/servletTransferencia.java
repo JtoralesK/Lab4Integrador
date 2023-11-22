@@ -17,6 +17,7 @@ import entidad.cliente;
 import entidad.cuenta;
 import entidad.eTipoMovimiento;
 import entidad.movimiento;
+import excepciones.ArgumentoInvalidoException;
 import excepciones.CbuIncorrecto;
 import excepciones.ErrorGenerico;
 import negocio.clienteNeg;
@@ -90,18 +91,17 @@ public class servletTransferencia extends HttpServlet {
 		movimiento.setTipoMovimiento(eTipoMovimiento.Transferencia);
 		cuenta cuentaOrigen = cuentaNeg.buscarPorIdCuenta(idCuentaOrigen);
 		cuenta cuentaDestino = cuentaNeg.buscarPorCbu(cbu);
+		if(cuentaOrigen.getId_cuenta() == cuentaDestino.getId_cuenta()) throw new ArgumentoInvalidoException("No se puede transferir a la misma cuenta de origen");
 		if(cuentaDestino == null || !cuentaDestino.isEstado()) throw new CbuIncorrecto();
 		movimiento.setN_cuenta(idCuentaOrigen);
 		movimiento.setId_cliente(cuentaOrigen.getId_cliente());
 		movimiento.setImporte(importe*-1);
 		if(movNeg.nuevoMovimiento(movimiento) == -1) throw new ErrorGenerico();
-		System.out.println("mov origen");
 		//seteo cuenta destino
 		movimiento.setN_cuenta(cuentaDestino.getId_cuenta());
 		movimiento.setId_cliente(cuentaDestino.getId_cliente());
 		movimiento.setImporte(importe);
 		if(movNeg.nuevoMovimiento(movimiento) == -1) throw new ErrorGenerico();
-		System.out.println("mov destino");
 		return true;
 	}
 }
