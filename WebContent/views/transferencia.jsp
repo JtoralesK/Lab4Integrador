@@ -51,8 +51,8 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="mensaje" class="text-sm font-medium block">Concepto (Opcional = max 20 caracteres):</label>
-                    <textarea id="msj" maxlength="20" class="w-full border border-gray-300 rounded-md p-2" rows="4"></textarea>
+                    <label for="mensaje" class="text-sm font-medium block">Concepto (Opcional = max 30 caracteres):</label>
+                    <textarea id="msj" maxlength="30" class="w-full border border-gray-300 rounded-md p-2" rows="4"></textarea>
                 </div>
                 <div class="flex items-center justify-center gap-10">
                     <button type="button" name="cancelar" value="true"

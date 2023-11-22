@@ -41,7 +41,8 @@ public class servletInformePrestamos extends HttpServlet {
 				fechaInicio = LocalDate.parse(request.getParameter("fechaInicio"));
 				request.setAttribute("fechaInicio",fechaInicio);
 			}
-			float importeTotal= getImportePrestamosFiltrados(fechaInicio, fechaFin, estado);
+			double importeTotal = getImportePrestamosFiltrados(fechaInicio, fechaFin, estado);
+			System.out.println(importeTotal);
 			request.setAttribute("importeTotal", importeTotal);
 		}
 		float indicadorPendientes = getImporteTotalPendiente();
