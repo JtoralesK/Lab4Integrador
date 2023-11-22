@@ -15,7 +15,7 @@ public class movimientosNeg {
 		return movimientos.listarMovimientos();
 	}
 	
-	public List<movimiento> listarMovimientosPorIdCliente(int idCliente)
+	public List<movimiento> listarMovimientosPorIdCliente(Long idCliente)
 	{
 		return new movimientosDao().listarMovimientosPorIdCliente(idCliente);
 	}

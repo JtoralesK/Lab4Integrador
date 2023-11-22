@@ -58,7 +58,7 @@ public class PrestamoDao {
 		String query = "SELECT P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision"
 				+ ", P.interes, COUNT(PP.cuota) AS cuotasPagas " + 
 				"FROM prestamos P " + 
-				"INNER JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
+				"LEFT JOIN pagos_prestamos PP ON P.id_prestamo = PP.id_prestamo " + 
 				"GROUP BY  P.id_prestamo, P.n_cuenta, P.id_cliente, P.importe, P.fecha_solicitud, P.id_estado, P.plazo, P.fecha_revision " +
 				"ORDER BY P.fecha_solicitud; ";
 		
@@ -75,7 +75,7 @@ public class PrestamoDao {
             			LocalDate.parse(rs.getString("fecha_solicitud"), formatter),
             			eEstadoPrestamo.values()[rs.getInt("id_estado") - 1],
             			rs.getInt("plazo"),
-            			LocalDate.parse(rs.getString("fecha_Revision"), formatter)
+            			rs.getString("fecha_Revision") != null ? LocalDate.parse(rs.getString("fecha_Revision"), formatter) : null
         			);
             	prestamo.setId(rs.getLong("id_prestamo"));
             	prestamo.setCuotasPagas(rs.getInt("cuotasPagas"));

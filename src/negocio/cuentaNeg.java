@@ -33,7 +33,7 @@ public class cuentaNeg {
 		return cuentaDao.updateRegisterState(n_cuenta, id_Cliente,stateToChange);
 	}
 	
-	public cuenta buscarPorIdCuenta(int idCuenta) {
+	public cuenta buscarPorIdCuenta(Long idCuenta) {
 		return cuentaDao.buscarPorIdCuenta(idCuenta);
 	}
 	
@@ -47,7 +47,7 @@ public class cuentaNeg {
 		int cantCuentas = selectAllByOneClientId(idCliente).size();
 		int tipo = tipoCuenta == eTipoCuenta.CajaDeAhorro ? 10 : 20;
 		String stringCuenta = "12" + Long.toString(idCliente) + Integer.toString(tipo)+ Integer.toString(cantCuentas); 
-		int nroCuenta = Integer.parseInt(stringCuenta);
+		Long nroCuenta = Long.parseLong(stringCuenta);
 		StringBuilder sb = new StringBuilder("2");
         int cantidadCeros = 22 - 1 - stringCuenta.length();
         for (int i = 0; i < cantidadCeros; i++) {
@@ -76,7 +76,7 @@ public class cuentaNeg {
 		return estado;
 	}
 	
-	public boolean modificarSaldo(int idCuenta, double importe) {
+	public boolean modificarSaldo(Long idCuenta, double importe) {
 		double saldo = buscarPorIdCuenta(idCuenta).getSaldo();
 		saldo += importe;
 		if(saldo<0) throw new SaldoInsuficienteException();

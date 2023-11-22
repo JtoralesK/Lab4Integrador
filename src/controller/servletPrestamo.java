@@ -84,7 +84,7 @@ public class servletPrestamo extends HttpServlet {
 		{
 			String texto = "";
 			if (request.getParameter("btnAprobar") != null)
-			{
+			{				
 				texto = AprobarRechazarPrestamo(request, eEstadoPrestamo.Aprobado);
 			}
 			
@@ -104,8 +104,8 @@ public class servletPrestamo extends HttpServlet {
 			String texto = "";
 			try
 			{
-				int nCuenta = Integer.parseInt(request.getParameter("cbCuenta"));
 				int contadorPrestamo = Integer.parseInt(request.getParameter("btnPagarPrestamo"));
+				Long nCuenta = Long.parseLong(request.getParameter("cbCuenta"+contadorPrestamo));
 				if (nCuenta == -1)
 				{
 					throw new ArgumentoInvalidoException("Seleccione una cuenta para pagar");
@@ -207,6 +207,9 @@ public class servletPrestamo extends HttpServlet {
 	{
 		prestamo prestamo = new prestamo();
 		prestamo.setId(Long.parseLong(request.getParameter("idPrestamo")));
+		prestamo.setIdCuenta(Long.parseLong(request.getParameter("idCuenta")));
+		prestamo.setIdCliente(Long.parseLong(request.getParameter("idCliente")));
+		prestamo.setImporte(Float.parseFloat(request.getParameter("importePrestamo")));
 		prestamo.setEstadoPrestamo(estadoPrestamo);
 		if (new prestamoNeg().actualizar(prestamo))
 		{

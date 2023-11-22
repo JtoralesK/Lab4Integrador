@@ -61,8 +61,7 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("Lista
 		<%}%>
 		</tbody>
 	</table>
-	<jsp:include page="paginacion.jsp" />
-	<jsp:include page="modal.jsp" />
+
 <h1 class="text-center mx-auto text-4xl">Historial de Préstamos</h1>
 <br>
 	
@@ -108,7 +107,6 @@ List<movimiento>ListaMovimientos = (List<movimiento>)request.getAttribute("Lista
 		</tbody>
 	</table>
 </form>
-	<jsp:include page="paginacion.jsp" />
 	<jsp:include page="modal.jsp" />
 </body>
 </html>
