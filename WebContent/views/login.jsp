@@ -16,7 +16,7 @@
   <div class="flex flex-row">
    <div class="w-8/12 h-screen bg-blue-800 ">
    <div class="px-10 pt-20 ">
-    <h1 class="text-5xl text-white pt-[12rem]">Te damos la bienvenida a <b>Bice</b> Digital</h1>
+    <h1 class="text-5xl text-white pt-[12rem]">Te damos la bienvenida a <b>Prosperity Bank</b></h1>
    <p class="text-3xl text-white ">Accede a tu cuenta</p>
    </div>
   </div>
