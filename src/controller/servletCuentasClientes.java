@@ -10,15 +10,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-<<<<<<< HEAD
 import entidad.Usuario;
-=======
->>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
 import entidad.cliente;
+import entidad.cuenta;
 import entidad.movimiento;
 import entidad.prestamo;
 import negocio.clienteNeg;
+import negocio.cuentaNeg;
 import negocio.movimientosNeg;
 import negocio.prestamoNeg;
 
@@ -42,26 +42,18 @@ public class servletCuentasClientes extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	   /* Usuario usuario = (Usuario)session.getAttribute("loggedUser"); 
-		cliente cliente = new cliente();
-<<<<<<< HEAD
-		cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());
-		int id = cliente.getId().intValue();*/
-		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(101);
-		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente((long) 101);
-=======
-		cliente=new clienteNeg().obtenerClientePorIdUsuario(usuario.getId());*/
+		
 		cliente cliente = (cliente)request.getSession().getAttribute("loggedCliente");
+		List<cuenta> cuentas = new cuentaNeg().selectAllByOneClientId(cliente.getId());
+		request.setAttribute("cuentas", cuentas);
 		List<movimiento>ListaMovimientos = new movimientosNeg().listarMovimientosPorIdCliente(cliente.getId());
 		List<prestamo>ListaPrestamos = new prestamoNeg().listarXcliente(cliente.getId());
->>>>>>> e0e4f9b1672c4fb2b9a47a02423ca4aa3ab7c595
-		request.setAttribute("ListaMovimientos", ListaMovimientos);
-		request.setAttribute("ListaPrestamos", ListaPrestamos);
-		//RequestDispatcher rd = request.getRequestDispatcher("/views/cuenta.jsp");
-		int numeroDePagina = 1;
-		int elementosPorPagina = 10;
-		RequestDispatcher dr = request.getRequestDispatcher("/servletPaginacion?redirectUrl=cuenta.jsp&p=" + numeroDePagina + "&s=" + elementosPorPagina);	
-       dr.forward(request, response);
+		HttpSession session = request.getSession();
+		session.setAttribute("lista", ListaMovimientos);
+		session.setAttribute("lista2", ListaPrestamos);
+		
+		RequestDispatcher dr = request.getRequestDispatcher("/servletPaginacion?redirectUrl=cuenta.jsp");	
+		dr.forward(request, response);
 		
 	}
 

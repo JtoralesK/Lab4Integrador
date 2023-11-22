@@ -125,7 +125,6 @@
 				<p>$<%=c.getSaldo() %></p>
 				<div class="w-full flex flex-row justify-between">
 				<span></span>
-				<p class="font-bold text-lg">************</p>
 				</div>
 				</div>
 				</div>
