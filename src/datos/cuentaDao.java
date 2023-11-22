@@ -145,7 +145,7 @@ public class cuentaDao {
 	public cuenta buscarPorCbu(String cbu) {
 		cuenta cuenta = new cuenta();
 		Connection connection = cn.Open();
-		String query = "select 1 n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
+		String query = "select n_cuenta,id_cliente,id_tipo_cuenta,saldo,fecha_creacion,cbu,estado from cuentas "
 				+ "WHERE cbu = ?";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
