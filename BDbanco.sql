@@ -265,21 +265,21 @@ select "Indefinido";
 
 /*****************************************************************/
 INSERT INTO  clientes(dni,cuil,nombre,apellido,id_sexo,id_nacionalidad,fecha_nacimiento,direccion,id_localidad,mail,telefono,id_usuario)
-select 78984123,207853981,"Jean","Esquen",1,2,"2002-09-01","Urquiza 1126",1,"jeanesuqen@gmail.com",1153535,5 union
-select 78924789,207897891,"Franco","Marcolongo",1,1,"2001-08-25","Martinez 322",5,"Franco@gmail.com",1135353,6 union
-select 78941287,207869871,"Agustin","Sbernini",3,1,"2001-08-26","Calle 123",4,"Agustin@gmail.com",1196666,7 union
-select 86442156,208664561,"Javier","Torales",1,1,"2001-08-27","Martinez 1322",5,"Javier@gmail.com",1158988,8 union
-select 65441264,206564641,"Ariana","Martines",2,3,"2001-10-28","Roca 1132,",14,"Ari@hotmail.com",1199999,9 union
-select 45667845,204536451,"Juana","Herrera",2,4,"1987-11-08","Valle 2663",13,"boquita@gmailcom",1118925,10 union
-select 64565645,206256451,"Gustavo","Martin",1,4,"1999-05-31","Jose perez 2434",9,"jeanesuqen@gmail.com",1155756,11 union
-select 45694546,204565461,"Mariana","Martin",2,5,"1996-02-06","Villa luro 3445",2,"River@gmail.com",1139654,12 union
-select 45497635,204524451,"Juan","Perez",1,6,"1990-08-01","Markes 2334",9,"Juan5100@gmail.com",1189355,13 union
-select 45656490,204566461,"Juana","Esquel",4,8,"2002-07-23","San martin 2344",12,"Juana@hotmail.com",1125686,14 union
-select 54803456,205464561,"Carlos","Fonseca",1,9,"1993-06-30","Samiento 3445",10,"CFA@gmail.com",1125668,15 union
-select 54194654,205468541,"Carla","Fonseca",5,5,"1985-05-05","Congreso 2455",3,"Carla1234@gmail.com",1182656,16 union
-select 64424656,206452461,"Mariano","Ramirez",5,4,"2000-10-19","Palermo 3545",5,"Mramirez@gmail.com",1155665,17 union
-select 54664345,205461451,"Rut","Nah",2,15,"2000-11-03","Peru 2455",7,"Rut1234@gmail.com",1123205,18 union
-select 64568824,206445641,"Flor","Arispe",2,14,"2001-09-07","Mexico 3545",6,"Farispe@hotmail.com",1189654,15;
+select 78984123,20785351217,"Jean","Esquen",1,2,"2002-09-01","Urquiza 1126",1,"jeanesuqen@gmail.com",1153535,5 union
+select 78924789,20785391217,"Franco","Marcolongo",1,1,"2001-08-25","Martinez 322",5,"Franco@gmail.com",1135353,6 union
+select 78941287,20785361217,"Agustin","Sbernini",3,1,"2001-08-26","Calle 123",4,"Agustin@gmail.com",1196666,7 union
+select 86442156,20865361217,"Javier","Torales",1,1,"2001-08-27","Martinez 1322",5,"Javier@gmail.com",1158988,8 union
+select 65441264,20655361217,"Ariana","Martines",2,3,"2001-10-28","Roca 1132,",14,"Ari@hotmail.com",1199999,9 union
+select 45667845,20455331217,"Juana","Herrera",2,4,"1987-11-08","Valle 2663",13,"boquita@gmailcom",1118925,10 union
+select 64565645,20625351217,"Gustavo","Martin",1,4,"1999-05-31","Jose perez 2434",9,"jeanesuqen@gmail.com",1155756,11 union
+select 45694546,20455361217,"Mariana","Martin",2,5,"1996-02-06","Villa luro 3445",2,"River@gmail.com",1139654,12 union
+select 45497635,20455321217,"Juan","Perez",1,6,"1990-08-01","Markes 2334",9,"Juan5100@gmail.com",1189355,13 union
+select 45656490,20455361217,"Juana","Esquel",4,8,"2002-07-23","San martin 2344",12,"Juana@hotmail.com",1125686,14 union
+select 54803456,20545361217,"Carlos","Fonseca",1,9,"1993-06-30","Samiento 3445",10,"CFA@gmail.com",1125668,15 union
+select 54194654,20545361217,"Carla","Fonseca",5,5,"1985-05-05","Congreso 2455",3,"Carla1234@gmail.com",1182656,16 union
+select 64424656,20645351217,"Mariano","Ramirez",5,4,"2000-10-19","Palermo 3545",5,"Mramirez@gmail.com",1155665,17 union
+select 54664345,20545361217,"Rut","Nah",2,15,"2000-11-03","Peru 2455",7,"Rut1234@gmail.com",1123205,18 union
+select 64568824,20645341217,"Flor","Arispe",2,14,"2001-09-07","Mexico 3545",6,"Farispe@hotmail.com",1189654,15;
 
 /*******************************************************************************************************************************/
 INSERT INTO  tipo_cuentas(nombre)
